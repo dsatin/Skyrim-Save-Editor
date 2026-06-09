@@ -1,0 +1,17 @@
+{
+  "build": "inventory_tabs_save_changes",
+  "changes": [
+    "Added category tabs above Player Inventory table with per-category counts.",
+    "Tabs filter the current table without changing queued edit state.",
+    "Added Save Changes button that backs up and overwrites the current save with queued count edits.",
+    "Kept Save Changes As for writing a separate copy.",
+    "Search now combines with the active category tab.",
+    "Removed duplicate count queue set call."
+  ],
+  "safety": {
+    "count_min": 0,
+    "count_max": 999999999,
+    "save_changes": "creates backup before replacing current save",
+    "new_item_insertion": "disabled; existing rows only"
+  }
+}

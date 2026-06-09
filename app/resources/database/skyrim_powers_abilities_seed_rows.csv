@@ -1,0 +1,59 @@
+Category,EditorID,FormID,Name,Value,Source,Notes
+Powers,AdrenalineRush,000E40CE,Adrenaline Rush,,https://skyrimcommands.com/spells,Redguard greater racial power; player.addspell/removespell compatible.
+Powers,AncestorsWrath,000E40D4,Ancestor's Wrath,,https://skyrimcommands.com/spells,Dunmer greater racial power; player.addspell/removespell compatible.
+Powers,BattleCry,000E40C3,Battle Cry,,https://skyrimcommands.com/spells,Nord greater racial power; player.addspell/removespell compatible.
+Powers,BeastForm,00092C48,Beast Form,,https://skyrimcommands.com/spells,Werewolf transformation power; player.addspell/removespell compatible but quest/state may matter.
+Powers,BerserkerRage,000AA026,Berserker Rage,,https://skyrimcommands.com/spells,Orc greater racial power; player.addspell/removespell compatible.
+Powers,CommandAnimal,000E40CF,Command Animal,,https://skyrimcommands.com/spells,Bosmer greater racial power; player.addspell/removespell compatible.
+Powers,Dragonskin,000AA022,Dragonskin,,https://skyrimcommands.com/spells,Breton greater racial power; player.addspell/removespell compatible.
+Powers,DreadCloak,000ED0A9,Dread Cloak,,https://skyrimcommands.com/spells,Vampire greater power; player.addspell/removespell compatible.
+Powers,Highborn,000E40C8,Highborn,,https://skyrimcommands.com/spells,Altmer greater racial power; player.addspell/removespell compatible.
+Powers,Histskin,000E40D5,Histskin,,https://skyrimcommands.com/spells,Argonian greater racial power; player.addspell/removespell compatible.
+Powers,NightEye,000AA01D,Night Eye,,https://skyrimcommands.com/spells,Khajiit lesser racial power; player.addspell/removespell compatible.
+Powers,NightingaleStrife,000F1987,Nightingale Strife,,https://skyrimcommands.com/spells,Nightingale faction power; only one Nightingale power should normally be active.
+Powers,NightingaleSubterfuge,000F1986,Nightingale Subterfuge,,https://skyrimcommands.com/spells,Nightingale faction power; only one Nightingale power should normally be active.
+Powers,ShadowcloakOfNocturnal,00017122,Shadowcloak of Nocturnal,,https://skyrimcommands.com/spells,Nightingale faction power; only one Nightingale power should normally be active.
+Powers,SummonSpectralAssassin,000618C6,Summon Spectral Assassin,,https://skyrimcommands.com/spells,Dark Brotherhood power; player.addspell/removespell compatible.
+Powers,TheRitualStonePower,000E7329,The Ritual Stone,,https://skyrimcommands.com/spells,Standing Stone power; in-game rules normally allow one Standing Stone effect/power.
+Powers,TheSerpentStonePower,000E5F61,The Serpent Stone,,https://skyrimcommands.com/spells,Standing Stone power; in-game rules normally allow one Standing Stone effect/power.
+Powers,TheShadowStonePower,000E732A,The Shadow Stone,,https://skyrimcommands.com/spells,Standing Stone power; in-game rules normally allow one Standing Stone effect/power.
+Powers,TheTowerStonePower,000E7328,The Tower Stone,,https://skyrimcommands.com/spells,Standing Stone power/effect entry; player.addspell/removespell compatible.
+Powers,VampiresSeduction,000C4DE2,Vampire's Seduction,,https://skyrimcommands.com/spells,Vampire power; stage/quest state may matter.
+Powers,VampiresServantWeak,000ED0A4,Vampire's Servant I,,https://skyrimcommands.com/spells,Vampire power variant; stage/quest state may matter.
+Powers,VampiresServantMedium,000ED0A5,Vampire's Servant II,,https://skyrimcommands.com/spells,Vampire power variant; stage/quest state may matter.
+Powers,VampiresServantStrong,000ED0A6,Vampire's Servant III,,https://skyrimcommands.com/spells,Vampire power variant; stage/quest state may matter.
+Powers,VampiresServantVeryStrong,000ED0A7,Vampire's Servant IV,,https://skyrimcommands.com/spells,Vampire power variant; stage/quest state may matter.
+Powers,VampiresSight,000C4DE1,Vampire's Sight,,https://skyrimcommands.com/spells,Vampire lesser power; stage/quest state may matter.
+Powers,VoiceOfTheEmperor,000E40CA,Voice of the Emperor,,https://skyrimcommands.com/spells,Imperial greater racial power; player.addspell/removespell compatible.
+Abilities,AgentOfDibella,0010A766,Agent of Dibella,,https://skyrimcommands.com/spells,Passive/active-effect style ability; player.addspell/removespell compatible.
+Abilities,AncientKnowledge,0010EB60,Ancient Knowledge,,https://skyrimcommands.com/spells,Passive/active-effect style ability; player.addspell/removespell compatible.
+Active Effects,BlessingOfAkatosh,000FB988,Blessing of Akatosh,,https://skyrimcommands.com/spells,Blessing active effect; normally temporary and shrine-controlled.
+Active Effects,BlessingOfArkay,000FB994,Blessing of Arkay,,https://skyrimcommands.com/spells,Blessing active effect; normally temporary and shrine-controlled.
+Active Effects,BlessingOfDibella,000FB995,Blessing of Dibella,,https://skyrimcommands.com/spells,Blessing active effect; normally temporary and shrine-controlled.
+Active Effects,BlessingOfJulianos,000FB996,Blessing of Julianos,,https://skyrimcommands.com/spells,Blessing active effect; normally temporary and shrine-controlled.
+Active Effects,BlessingOfKynareth,000FB997,Blessing of Kynareth,,https://skyrimcommands.com/spells,Blessing active effect; normally temporary and shrine-controlled.
+Active Effects,BlessingOfMara,000FB998,Blessing of Mara,,https://skyrimcommands.com/spells,Blessing active effect; normally temporary and shrine-controlled.
+Active Effects,BlessingOfNocturnal,0010E8AE,Blessing of Nocturnal,,https://skyrimcommands.com/spells,Blessing active effect; normally temporary and shrine-controlled.
+Active Effects,BlessingOfStendarr,000FB999,Blessing of Stendarr,,https://skyrimcommands.com/spells,Blessing active effect; normally temporary and shrine-controlled.
+Active Effects,BlessingOfTalos,000FB99A,Blessing of Talos,,https://skyrimcommands.com/spells,Blessing active effect; normally temporary and shrine-controlled.
+Active Effects,BlessingOfZenithar,000FB99B,Blessing of Zenithar,,https://skyrimcommands.com/spells,Blessing active effect; normally temporary and shrine-controlled.
+Abilities,ChampionOfTheNight,000F5B54,Champion of the Night,,https://skyrimcommands.com/spells,Vampire passive active effect; player.addspell/removespell compatible.
+Active Effects,HomecookedMeal,000F5FF8,Homecooked Meal,,https://skyrimcommands.com/spells,Temporary food active effect; usually not treated as permanent unlock.
+Abilities,ImperialLuck,000EB7EB,Imperial Luck,,https://skyrimcommands.com/spells,Imperial passive ability; player.addspell/removespell compatible.
+Abilities,ResistDiseaseAbility,000F5BA0,Resist Disease,,https://skyrimcommands.com/spells,Passive/active-effect style ability; player.addspell/removespell compatible.
+Abilities,SailorsRepose,000D397F,Sailor's Repose,,https://skyrimcommands.com/spells,Passive/active-effect style ability; player.addspell/removespell compatible.
+Abilities,SinderionsSerendipity,0010BF09,Sinderion's Serendipity,,https://skyrimcommands.com/spells,Passive/active-effect style ability; player.addspell/removespell compatible.
+Active Effects,TheApprenticeStoneEffect,000E5F4E,The Apprentice Stone Active Effect,,https://skyrimcommands.com/spells,Standing Stone active effect; in-game rules normally allow one stone at a time.
+Active Effects,TheAtronachStoneEffect,000E5F51,The Atronach Stone Active Effect,,https://skyrimcommands.com/spells,Standing Stone active effect; in-game rules normally allow one stone at a time.
+Active Effects,TheLadyStoneEffect,000E5F54,The Lady Stone Active Effect,,https://skyrimcommands.com/spells,Standing Stone active effect; in-game rules normally allow one stone at a time.
+Active Effects,TheLordStoneEffect,000E5F58,The Lord Stone Active Effect,,https://skyrimcommands.com/spells,Standing Stone active effect; in-game rules normally allow one stone at a time.
+Active Effects,TheLoverStoneEffect,000E5F5A,The Lover Stone Active Effect,,https://skyrimcommands.com/spells,Standing Stone active effect; in-game rules normally allow one stone at a time.
+Active Effects,TheMageStoneEffect,000E5F47,The Mage Stone Active Effect,,https://skyrimcommands.com/spells,Standing Stone active effect; in-game rules normally allow one stone at a time.
+Active Effects,TheSteedStoneEffect,000E5F5E,The Steed Stone Active Effect,,https://skyrimcommands.com/spells,Standing Stone active effect; in-game rules normally allow one stone at a time.
+Active Effects,TheThiefStoneEffect,000E5F45,The Thief Stone Active Effect,,https://skyrimcommands.com/spells,Standing Stone active effect; in-game rules normally allow one stone at a time.
+Active Effects,TheWarriorStoneEffect,000E5F4C,The Warrior Stone Active Effect,,https://skyrimcommands.com/spells,Standing Stone active effect; in-game rules normally allow one stone at a time.
+Active Effects,WaterbreathingAbility,000AA01B,Waterbreathing Active Effect,,https://skyrimcommands.com/spells,Passive/active-effect style ability; player.addspell/removespell compatible.
+Active Effects,WellRested,000FB984,Well Rested,,https://skyrimcommands.com/spells,Rested active effect; normally temporary and rest-controlled.
+Active Effects,LoverComfort,000CDA1D,Lover's Comfort,,Curated seed,Temporary rested active effect; player.addspell/removespell compatible but game state may expire it.
+Active Effects,Rested,000FB981,Rested,,Curated seed,Temporary rested active effect; player.addspell/removespell compatible but game state may expire it.
+Active Effects,MarriageRestedBonus,000CDA1C,Marriage Rested Bonus,,Curated seed,Temporary spouse/rested active effect; player.addspell/removespell compatible but game state may expire it.

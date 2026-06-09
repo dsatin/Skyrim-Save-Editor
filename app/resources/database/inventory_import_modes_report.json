@@ -1,0 +1,18 @@
+{
+  "build": "inventory_import_modes",
+  "changes": [
+    "Inventory CSV import now asks for an import mode before applying rows.",
+    "Replace Inventory mode sets matching existing rows to the CSV count and sets editable rows not present in the CSV to 0.",
+    "Add To Current mode adds each CSV count to the currently shown New Count for matching existing rows.",
+    "Import still queues unsaved changes only; Save Changes or Save Changes As is required to write the save.",
+    "Import report now includes rows zeroed during replace mode."
+  ],
+  "safety": [
+    "Still only patches existing inventory rows.",
+    "Still validates counts against MAX_SAFE_INVENTORY_COUNT.",
+    "Brand-new item row insertion remains disabled."
+  ],
+  "files_updated": [
+    "app/ui/main_window.py"
+  ]
+}

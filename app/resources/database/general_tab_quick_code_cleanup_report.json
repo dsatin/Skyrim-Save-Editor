@@ -1,0 +1,22 @@
+{
+  "build": "general_tab_quick_code_cleanup",
+  "changes": [
+    "Added a General side-rail page.",
+    "Moved real safe header edits into General: player name, level, sex, current XP, needed XP.",
+    "Added common editable inventory values to General for existing mapped Gold and Lockpick rows.",
+    "General save writes through fixed-size header patching and exact inventory payload-offset patching.",
+    "General Save Copy writes a separate edited save, and in-place Save Edits creates a backup first.",
+    "File menu Save Edits / Save Copy now routes General, Player Inventory, and Raw Editor by active page.",
+    "Renamed Raw Editor -> Quick Code Formats to Quick Codes.",
+    "Split Quick Codes into Builder, Decoder, and Reference internal tabs to reduce clutter."
+  ],
+  "safety": [
+    "General only enables common inventory values when the loaded save already has an editable mapped row.",
+    "Missing Gold/Lockpick rows remain disabled rather than being guessed or blindly inserted.",
+    "General in-place saves stage edits to a temporary file before replacing the loaded save."
+  ],
+  "validation": [
+    "python -m py_compile app/ui/main_window.py",
+    "python -m compileall -q app"
+  ]
+}

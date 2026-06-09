@@ -1,0 +1,97 @@
+[
+  {
+    "category": "Alchemy",
+    "url": "https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Alchemy",
+    "notes": "Food, beverages, potions, poisons"
+  },
+  {
+    "category": "Arrows",
+    "url": "https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Arrows",
+    "notes": "Arrows and bolts"
+  },
+  {
+    "category": "Blades",
+    "url": "https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Blade_Weapons",
+    "notes": "Daggers, swords, greatswords"
+  },
+  {
+    "category": "Blunts",
+    "url": "https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Blunt_Weapons",
+    "notes": "Axes, maces, battleaxes, warhammers"
+  },
+  {
+    "category": "Books",
+    "url": "https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Books",
+    "notes": "Books, notes, journals"
+  },
+  {
+    "category": "Bows",
+    "url": "https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Bows",
+    "notes": "Bows"
+  },
+  {
+    "category": "Clothing",
+    "url": "https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing",
+    "notes": "Clothes and robes"
+  },
+  {
+    "category": "Enchantments",
+    "url": "https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments",
+    "notes": "Object enchantments"
+  },
+  {
+    "category": "Heavy Armor",
+    "url": "https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Heavy_Armor",
+    "notes": "Heavy armor"
+  },
+  {
+    "category": "Ingredients",
+    "url": "https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Ingredients",
+    "notes": "Alchemy ingredients"
+  },
+  {
+    "category": "Jewelry",
+    "url": "https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Jewelry",
+    "notes": "Amulets, rings, circlets"
+  },
+  {
+    "category": "Keys",
+    "url": "https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Keys",
+    "notes": "Keys"
+  },
+  {
+    "category": "Light Armor",
+    "url": "https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Light_Armor",
+    "notes": "Light armor"
+  },
+  {
+    "category": "Misc",
+    "url": "https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Miscellaneous_Items",
+    "notes": "Miscellaneous inventory records"
+  },
+  {
+    "category": "Shouts",
+    "url": "https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Shouts",
+    "notes": "Dragon shouts"
+  },
+  {
+    "category": "Skills",
+    "url": "https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills",
+    "notes": "Skill actor values"
+  },
+  {
+    "category": "Soul Gems",
+    "url": "https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Soul_Gems",
+    "notes": "Soul gems"
+  },
+  {
+    "category": "Spells",
+    "url": "https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells",
+    "notes": "Spells"
+  },
+  {
+    "category": "Staves",
+    "url": "https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves",
+    "notes": "Staves"
+  }
+]

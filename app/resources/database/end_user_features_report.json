@@ -1,0 +1,21 @@
+{
+  "build": "end_user_features",
+  "base": "inventory_visual_cleanup_build",
+  "side_rail_tabs_added": 0,
+  "features": [
+    "Backups / Restore panel on Save / Load",
+    "Inventory quick selected count buttons: 0, 1, 10, 99, 999, 99,999",
+    "Queued inventory edit preview table showing item, FormID, current, queued, and delta",
+    "Remove selected queued edit",
+    "Copy AddItem command from selected inventory row",
+    "Save Changes confirmation now includes old-to-new edit preview",
+    "Reference IDs command helpers: Copy FormID, Copy player.additem, Find In Inventory",
+    "No new developer/research side tabs added"
+  ],
+  "safety": [
+    "Inventory count validation still uses MAX_SAFE_INVENTORY_COUNT",
+    "Save Changes still creates a backup first",
+    "Restore Backup creates another backup before overwriting the current save",
+    "New-item insertion remains disabled until mapped safely"
+  ]
+}

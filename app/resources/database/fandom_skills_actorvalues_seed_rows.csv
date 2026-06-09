@@ -1,0 +1,96 @@
+Category,EditorID,FormID,Name,Value,Source,Notes
+Skills,OneHanded,,One-Handed,OneHanded,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Skill actor value token
+Skills,TwoHanded,,Two-Handed,TwoHanded,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Skill actor value token
+Skills,Marksman,,Archery,Marksman,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Skill actor value token
+Skills,Block,,Block,Block,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Skill actor value token
+Skills,Smithing,,Smithing,Smithing,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Skill actor value token
+Skills,HeavyArmor,,Heavy Armor,HeavyArmor,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Skill actor value token
+Skills,LightArmor,,Light Armor,LightArmor,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Skill actor value token
+Skills,Pickpocket,,Pickpocket,Pickpocket,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Skill actor value token
+Skills,Lockpicking,,Lockpicking,Lockpicking,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Skill actor value token
+Skills,Sneak,,Sneak,Sneak,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Skill actor value token
+Skills,Alchemy,,Alchemy,Alchemy,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Skill actor value token
+Skills,Speechcraft,,Speech,Speechcraft,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Skill actor value token
+Skills,Alteration,,Alteration,Alteration,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Skill actor value token
+Skills,Conjuration,,Conjuration,Conjuration,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Skill actor value token
+Skills,Destruction,,Destruction,Destruction,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Skill actor value token
+Skills,Illusion,,Illusion,Illusion,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Skill actor value token
+Skills,Restoration,,Restoration,Restoration,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Skill actor value token
+Skills,Enchanting,,Enchanting,Enchanting,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Skill actor value token
+ActorValues,Health,,Health,health,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,Magicka,,Magicka,magicka,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,Stamina,,Stamina,stamina,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,CarryWeight,,Carry Weight,carryweight,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,SpeedMult,,Movement Speed Multiplier,speedmult,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,HealRate,,Health Regeneration Rate,healrate,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,MagickaRate,,Magicka Regeneration Rate,magickarate,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,StaminaRate,,Stamina Regeneration Rate,staminarate,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,HealRateMult,,Health Regeneration Multiplier,healratemult,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,MagickaRateMult,,Magicka Regeneration Multiplier,magickaratemult,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,StaminaRateMult,,Stamina Regeneration Multiplier,staminaratemult,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,AttackDamageMult,,Attack Damage Multiplier,attackdamagemult,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,WeaponSpeedMult,,Weapon Speed Multiplier,weaponspeedmult,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,LeftWeaponSpeedMult,,Left Weapon Speed Multiplier,leftweaponspeedmult,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,ShoutRecoveryMult,,Shout Recovery Multiplier,shoutrecoverymult,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,DamageResist,,Armor Rating / Damage Resist,damageresist,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,PoisonResist,,Poison Resist,poisonresist,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,FireResist,,Fire Resist,fireresist,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,FrostResist,,Frost Resist,frostresist,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,ElectricResist,,Shock Resist,electricresist,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,MagicResist,,Magic Resist,magicresist,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,DiseaseResist,,Disease Resist,diseaseresist,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,Paralysis,,Paralysis,paralysis,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,Invisibility,,Invisibility,invisibility,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,WaterBreathing,,Water Breathing,waterbreathing,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,WaterWalking,,Water Walking,waterwalking,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,NightEye,,Night Eye,nighteye,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,DetectLifeRange,,Detect Life Range,detectliferange,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,Fame,,Fame,fame,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,Infamy,,Infamy,infamy,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,FavorActive,,Favor Active,favoractive,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,Confidence,,Confidence,confidence,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,Aggression,,Aggression,aggression,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,Morality,,Morality,morality,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,Energy,,Energy,energy,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,Mood,,Mood,mood,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,Variable01,,Variable01,variable01,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,Variable02,,Variable02,variable02,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,Variable03,,Variable03,variable03,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,Variable04,,Variable04,variable04,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,Variable05,,Variable05,variable05,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,Variable06,,Variable06,variable06,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,Variable07,,Variable07,variable07,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,Variable08,,Variable08,variable08,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,Variable09,,Variable09,variable09,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,Variable10,,Variable10,variable10,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,WaitingForPlayer,,Waiting For Player,waitingforplayer,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,Blindness,,Blindness,blindness,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,WardPower,,Ward Power,wardpower,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,WardDeflection,,Ward Deflection,warddeflection,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,BowSpeedBonus,,Bow Speed Bonus,bowspeedbonus,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,BypassVendorStolenCheck,,Bypass Vendor Stolen Check,bypassvendorstolencheck,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,BypassVendorKeywordCheck,,Bypass Vendor Keyword Check,bypassvendorkeywordcheck,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,FavorPointsBonus,,Favor Points Bonus,favorpointsbonus,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,LastBribedIntimidated,,Last Bribed/Intimidated,lastbribedintimidated,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,LastFlattered,,Last Flattered,lastflattered,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,MovementNoiseMult,,Movement Noise Multiplier,movementnoisemult,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,DragonSouls,,Dragon Souls,dragonsouls,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,CombatHealthRegenMult,,Combat Health Regen Multiplier,combathealthregenmult,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,OneHandedPowerMod,,One-Handed Power Mod,onehandedpowermod,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,TwoHandedPowerMod,,Two-Handed Power Mod,twohandedpowermod,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,MarksmanPowerMod,,Archery Power Mod,marksmanpowermod,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,BlockPowerMod,,Block Power Mod,blockpowermod,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,SmithingPowerMod,,Smithing Power Mod,smithingpowermod,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,HeavyArmorPowerMod,,Heavy Armor Power Mod,heavyarmorpowermod,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,LightArmorPowerMod,,Light Armor Power Mod,lightarmorpowermod,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,PickpocketPowerMod,,Pickpocket Power Mod,pickpocketpowermod,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,LockpickingPowerMod,,Lockpicking Power Mod,lockpickingpowermod,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,SneakPowerMod,,Sneak Power Mod,sneakpowermod,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,AlchemyPowerMod,,Alchemy Power Mod,alchemypowermod,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,SpeechcraftPowerMod,,Speech Power Mod,speechcraftpowermod,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,AlterationPowerMod,,Alteration Power Mod,alterationpowermod,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,ConjurationPowerMod,,Conjuration Power Mod,conjurationpowermod,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,DestructionPowerMod,,Destruction Power Mod,destructionpowermod,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,IllusionPowerMod,,Illusion Power Mod,illusionpowermod,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,RestorationPowerMod,,Restoration Power Mod,restorationpowermod,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.
+ActorValues,EnchantingPowerMod,,Enchanting Power Mod,enchantingpowermod,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Skills,Actor value token for forceav/setav/modav style commands.

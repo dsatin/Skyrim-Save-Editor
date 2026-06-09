@@ -1,0 +1,18 @@
+{
+  "title": "Magic direct patch report",
+  "findings": [
+    "Uploaded PC and decrypted PS4 saves contain a high-confidence learned-magic list inside Player ChangeForm 400014 for normal spells and powers.",
+    "The learned-magic list layout is a little-endian u32 entry count followed by compact 3-byte RefIDs.",
+    "Shouts are not represented by that learned-spell list in the tested saves.",
+    "Shouts are represented by individual Word-of-Power ChangeForms whose RefID is the shout word ID.",
+    "Observed shout word ChangeForm payloads use the 6-byte pattern 49 00 XX 00 00 00, where XX=00 is locked and XX=01 is unlocked.",
+    "Direct Apply now routes spell/power changes through the learned-magic list patcher and shout changes through the Word-of-Power patcher.",
+    "Magic Favorites / hotkey data remains read-only."
+  ],
+  "safety_notes": [
+    "Direct learned-list patching is refused if the detector cannot locate a medium/high-confidence list.",
+    "FE/light-plugin FormIDs are skipped until compact light-plugin RefIDs are mapped.",
+    "Checking a missing shout word inserts a new Word-of-Power ChangeForm and updates the changeform count and downstream table offset; keep backups until the save is verified in-game.",
+    "The generated teachword/unlockword console script remains available as a fallback."
+  ]
+}

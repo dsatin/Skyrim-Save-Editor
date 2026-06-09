@@ -1,0 +1,9 @@
+{
+  "build": "inventory and actor values",
+  "changes": [
+    "Common inventory values now include an explicit Sync From Inventory action and readback verification after General saves.",
+    "Added General > Stats for Carry Weight, Health, Magicka, Stamina, and related rates using the validated actor-value block shared with Skills.",
+    "Stats edits preview exact payload offsets and write directly to the ESS payload with backup/copy options."
+  ],
+  "safety": "Actor-value edits require the same validated skill/actor block before writing and reject ambiguous locations."
+}

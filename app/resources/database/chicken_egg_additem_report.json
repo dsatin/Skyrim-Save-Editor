@@ -1,0 +1,65 @@
+{
+  "purpose": "Controlled new-item row mapping from grabbing 2 Chicken Eggs.",
+  "summary": {
+    "before": {
+      "file": "SAVEDATA(3).DAT",
+      "save_number": 4,
+      "player": "Test Subject #000000000001",
+      "level": 3,
+      "location": "Skyrim",
+      "game_date": "003.23.22",
+      "payload_size": 7960700,
+      "change_forms": 16503,
+      "inventory_rows": 102,
+      "editable_rows": 99,
+      "chicken_egg_count": 0,
+      "inventory_start": "0x145",
+      "inventory_end": "0x53c"
+    },
+    "after": {
+      "file": "SAVEDATA(4).DAT",
+      "save_number": 5,
+      "player": "Test Subject #000000000001",
+      "level": 3,
+      "location": "Skyrim",
+      "game_date": "003.25.22",
+      "payload_size": 8008141,
+      "change_forms": 16517,
+      "inventory_rows": 103,
+      "editable_rows": 100,
+      "chicken_egg_count": 2,
+      "inventory_start": "0x137",
+      "inventory_end": "0x536"
+    }
+  },
+  "count_changes": [
+    {
+      "form_id": "00023D77",
+      "name": "Chicken's Egg",
+      "before": 0,
+      "after": 2,
+      "delta": 2
+    }
+  ],
+  "confirmed_simple_row": {
+    "form_id": "00023D77",
+    "name": "Chicken's Egg",
+    "amount": 2,
+    "player_data_offset": "0x52e",
+    "payload_offset": "0x7c6c7",
+    "raw_row_hex": "42 3D 77 02 00 00 00 00",
+    "layout": "3-byte default RefID + signed int32 count + 1-byte extra-data flag"
+  },
+  "build_changes": [
+    "Player inventory scanner now uses the packaged reference database when scoring known FormIDs, fixing under-counting on the newest save.",
+    "Added insert_simple_player_inventory_item() for simple missing base items with no extra data.",
+    "Item Database / AddItem now includes Add Missing To Save, which backs up the current save before inserting.",
+    "Direct insertion is limited to normal base FormIDs and simple stacks; existing rows still use count editing."
+  ],
+  "safety_notes": [
+    "Back up is created before writing.",
+    "Unsupported XX/FE/FF IDs are rejected for direct insertion.",
+    "Enchanted, tempered, poisoned, equipped, owned, or custom-extra-data items are not supported by direct insertion yet.",
+    "The generated save parses back through the editor; user should test in-game on a copy before relying on it."
+  ]
+}

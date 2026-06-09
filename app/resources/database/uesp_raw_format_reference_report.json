@@ -1,0 +1,21 @@
+{
+  "build": "skyrim_save_lab_uesp_raw_format_reference_build",
+  "source_note": "UESP page itself blocked direct tool fetch with HTTP 403, so the immediate implementation was based on the user-provided UESP screenshots plus the existing parser's mapped fields.",
+  "changes": [
+    "Added Raw Editor -> Format Reference tab.",
+    "Added searchable UESP-style structure map for File, Header, Plugin Info, Light Plugin Info, File Location Table, Global Data, RefID, Change Form, Change Form Types, and Unknown 3 Table.",
+    "Kept the new tab documentation-only; actual writable bytes remain in Mapped Fields with fixed-size safety checks.",
+    "Updated Raw Editor notes to point users toward the new reference map.",
+    "No direct missing-item insertion behavior was changed in this patch."
+  ],
+  "validation": [
+    "python -m py_compile app/ui/main_window.py",
+    "python -m compileall -q app"
+  ],
+  "next_mapping_targets": [
+    "Use File Location Table offsets to build navigable section jump links.",
+    "Use Global Data type map to label parsed global-data rows more clearly.",
+    "Use Change Form type map to decode raw type bytes into record codes in the Change Forms tab.",
+    "Map actual player stats/actor values from non-header data before enabling edits."
+  ]
+}

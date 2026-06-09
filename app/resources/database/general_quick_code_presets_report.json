@@ -1,0 +1,11 @@
+{
+  "build": "general_tab_skyrim_quick_code_presets",
+  "changes": [
+    "Added General-page Skyrim preset code generator for pasted Dynamite/Almighty codes.",
+    "Added editable preset values for All Skills Level, Carry Weight, Health/Magicka/Stamina, Add EXP, and Perk Points.",
+    "Added copy-ready generated Save Wizard custom-code output.",
+    "Improved Quick Code decoder so whole pasted tables with credits/notes are accepted and non-code text is ignored.",
+    "Improved Type 8/B search decoding so following search-data words are consumed instead of misread as write codes."
+  ],
+  "safety": "Preset codes remain copy/generator only because they are search/pointer codes, not verified direct ESS offsets. Existing General direct edits still use mapped save offsets and backups."
+}

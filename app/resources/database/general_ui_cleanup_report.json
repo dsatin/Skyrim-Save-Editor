@@ -1,0 +1,10 @@
+{
+  "pass": "general_ui_cleanup",
+  "changes": [
+    "Split the General page into Player, Common, Preset Codes, and Review subtabs.",
+    "Added a compact action bar with Reload, Preview, Save Copy, and Save Edits.",
+    "Wrapped General subtab contents in scroll areas to prevent compressed rows.",
+    "Reduced long stacked cards and repeated notes on the main General screen."
+  ],
+  "safety": "No patching logic was changed. This is a layout-only cleanup around the existing General editors and quick-code preset generator."
+}

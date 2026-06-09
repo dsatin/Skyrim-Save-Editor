@@ -1,0 +1,478 @@
+Category,EditorID,FormID,Name,Value,Source,Notes
+Spells,AlterationCandlelight,00043324,Alteration: Candlelight,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,AlterationOakflesh,0005AD5C,Alteration: Oakflesh,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,AlterationMagelight,00043323,Alteration: Magelight,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,AlterationStoneflesh,0005AD5D,Alteration: Stoneflesh,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,AlterationAshShell,XX017731,Alteration: Ash Shell,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,AlterationDetectLife,000211EE,Alteration: Detect Life,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,AlterationIronflesh,00051B16,Alteration: Ironflesh,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,AlterationTelekinesis,0001A4CC,Alteration: Telekinesis,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,AlterationTransmute,00109111,Alteration: Transmute,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,AlterationWaterbreathing,0005D175,Alteration: Waterbreathing,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,AlterationAshRune,XX0177AF,Alteration: Ash Rune,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,AlterationDetectDead,000211EF,Alteration: Detect Dead,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,AlterationEbonyflesh,0005AD5E,Alteration: Ebonyflesh,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,AlterationParalyze,0005AD5F,Alteration: Paralyze,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,AlterationDragonhide,000CDB70,Alteration: Dragonhide,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,AlterationMassParalysis,000B62E6,Alteration: Mass Paralysis,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,AlterationEquilibrium,000DA746,Alteration: Equilibrium,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationBoundDagger,XX01CE06,Conjuration: Bound Dagger,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationBoundSword,000211EB,Conjuration: Bound Sword,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationConjureFamiliar,000640B6,Conjuration: Conjure Familiar,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationRaiseZombie,0007E8E1,Conjuration: Raise Zombie,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationBoundBattleaxe,000211EC,Conjuration: Bound Battleaxe,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationConjureBoneman,XX0045BA,Conjuration: Conjure Boneman,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationConjureFlameAtronach,000204C3,Conjuration: Conjure Flame Atronach,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationFlamingFamiliar,0009CE26,Conjuration: Flaming Familiar,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationReanimateCorpse,00065BD7,Conjuration: Reanimate Corpse,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationSoulTrap,0004DBA4,Conjuration: Soul Trap,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationSummonArvak,XX00C600,Conjuration: Summon Arvak,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationBanishDaedra,0006D22C,Conjuration: Banish Daedra,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationBoundBow,000211ED,Conjuration: Bound Bow,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationConjureAshSpawn,XX01CDF6,Conjuration: Conjure Ash Spawn,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationConjureFrostAtronach,000204C4,Conjuration: Conjure Frost Atronach,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationConjureMistman,XX0045B8,Conjuration: Conjure Mistman,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationConjureSeeker,XX033C66,Conjuration: Conjure Seeker,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationRevenant,00096D94,Conjuration: Revenant,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationConjureAshGuardian,XX017782,Conjuration: Conjure Ash Guardian,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationCommandDaedra,0006F953,Conjuration: Command Daedra,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationConjureDragonPriest,0010FC16,Conjuration: Conjure Dragon Priest,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationConjureDremoraLord,0010DDEC,Conjuration: Conjure Dremora Lord,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationConjureStormAtronach,000204C5,Conjuration: Conjure Storm Atronach,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationConjureWrathman,XX0045B3,Conjuration: Conjure Wrathman,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationDreadZombie,00096D95,Conjuration: Dread Zombie,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationExpelDaedra,0006F952,Conjuration: Expel Daedra,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationFlameThrall,0007E5D5,Conjuration: Flame Thrall,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationDeadThrall,0007E8DF,Conjuration: Dead Thrall,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationFrostThrall,0007E5D6,Conjuration: Frost Thrall,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationStormThrall,0007E5D7,Conjuration: Storm Thrall,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationSpectralArrow,000AB23D,Conjuration: Spectral Arrow,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationSummonArnielSShade,0006A153,Conjuration: Summon Arniel's Shade,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ConjurationSummonUnboundDremora,00099F39,Conjuration: Summon Unbound Dremora,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionFlames,00012FCD,Destruction: Flames,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionFrostbite,0002B96B,Destruction: Frostbite,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionSparks,0002DD2A,Destruction: Sparks,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionFireRune,0005DB90,Destruction: Fire Rune,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionFirebolt,00012FD0,Destruction: Firebolt,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionFreeze,XX02732D,Destruction: Freeze,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionFrostRune,0006796F,Destruction: Frost Rune,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionIceSpike,0002B96C,Destruction: Ice Spike,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionIgnite,XX02732B,Destruction: Ignite,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionLightningBolt,0002DD29,Destruction: Lightning Bolt,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionLightningRune,00067970,Destruction: Lightning Rune,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionChainLightning,00045F9D,Destruction: Chain Lightning,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionFireball,0001C789,Destruction: Fireball,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionFlameCloak,0003AE9F,Destruction: Flame Cloak,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionFrostCloak,0003AEA2,Destruction: Frost Cloak,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionIceStorm,00045F9C,Destruction: Ice Storm,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionLightningCloak,0003AEA3,Destruction: Lightning Cloak,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionWhirlwindCloak,XX01772D,Destruction: Whirlwind Cloak,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionIcySpear,0010F7EC,Destruction: Icy Spear,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionIncinerate,0010F7ED,Destruction: Incinerate,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionThunderbolt,0010F7EE,Destruction: Thunderbolt,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionWallOfFlames,00035D7F,Destruction: Wall of Flames,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionWallOfFrost,00035D80,Destruction: Wall of Frost,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionWallOfStorms,00035D81,Destruction: Wall of Storms,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionBlizzard,0007E8E4,Destruction: Blizzard,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionFireStorm,0007A82B,Destruction: Fire Storm,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionLightningStorm,0007E8E5,Destruction: Lightning Storm,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionArnielSConvection,0006A104,Destruction: Arniel's Convection,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionVampiricDrainLevel1,0008D5BF,Destruction: Vampiric Drain Level 1,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionVampiricDrainLevel2,0008D5C0,Destruction: Vampiric Drain Level 2,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionVampiricDrainLevel3,0008D5C1,Destruction: Vampiric Drain Level 3,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,DestructionVampiricDrainLevel4,0008D5C2,Destruction: Vampiric Drain Level 4,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,IllusionClairvoyance,00021143,Illusion: Clairvoyance,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,IllusionCourage,0004DEE8,Illusion: Courage,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,IllusionFury,0004DEEB,Illusion: Fury,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,IllusionCalm,0004DEE9,Illusion: Calm,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,IllusionFear,0004DEEA,Illusion: Fear,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,IllusionMuffle,0008F3EB,Illusion: Muffle,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,IllusionFrenzy,0004DEEE,Illusion: Frenzy,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,IllusionFrenzyRune,XX0177B7,Illusion: Frenzy Rune,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,IllusionRally,0004DEEC,Illusion: Rally,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,IllusionInvisibility,00027EB6,Illusion: Invisibility,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,IllusionPacify,0004DEED,Illusion: Pacify,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,IllusionRout,0004DEEF,Illusion: Rout,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,IllusionCallToArms,0007E8DD,Illusion: Call to Arms,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,IllusionHarmony,0007E8DB,Illusion: Harmony,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,IllusionHysteria,0007E8DE,Illusion: Hysteria,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,IllusionMayhem,0007E8DA,Illusion: Mayhem,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,IllusionVisionOfTheTenthEye,000B323E,Illusion: Vision of the Tenth Eye,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,RestorationHealing,00012FCC,Restoration: Healing,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,RestorationLesserWard,00013018,Restoration: Lesser Ward,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,RestorationFastHealing,0002F3B8,Restoration: Fast Healing,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,RestorationHealingHands,0004D3F2,Restoration: Healing Hands,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,RestorationNecromanticHealing,XX00E8D2,Restoration: Necromantic Healing,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,RestorationSteadfastWard,000211F1,Restoration: Steadfast Ward,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,RestorationSunFire,XX003F52,Restoration: Sun Fire,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,RestorationTurnLesserUndead,0004B146,Restoration: Turn Lesser Undead,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,RestorationCloseWounds,000B62EF,Restoration: Close Wounds,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,RestorationGreaterWard,000211F0,Restoration: Greater Ward,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,RestorationHealOther,00012FD2,Restoration: Heal Other,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,RestorationHealUndead,XX00E8D4,Restoration: Heal Undead,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,RestorationPoisonRune,XX01D74B,Restoration: Poison Rune,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,RestorationRepelLesserUndead,0004D3F8,Restoration: Repel Lesser Undead,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,RestorationStendarrSAura,XX0038B5,Restoration: Stendarr's Aura,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,RestorationTurnUndead,0005DD5D,Restoration: Turn Undead,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,RestorationVampireSBane,XX0038B6,Restoration: Vampire's Bane,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,RestorationCircleOfProtection,0005312D,Restoration: Circle of Protection,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,RestorationGrandHealing,000B62EE,Restoration: Grand Healing,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,RestorationRepelUndead,0005DD60,Restoration: Repel Undead,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,RestorationTurnGreaterUndead,0005DD5E,Restoration: Turn Greater Undead,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,RestorationBaneOfTheUndead,0008C1AB,Restoration: Bane of the Undead,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,RestorationGuardianCircle,000E0CCF,Restoration: Guardian Circle,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,TheGiftOfCharity,000EEF58,The Gift of Charity,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,AncientKnowledge,0010EB60,Ancient Knowledge,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Spells,ProwlerSProfit,000F20BE,Prowler's Profit,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Spells,Spell rows from Fandom spells page.
+Staves,StaffOfMagelight,000BE121,Staff of Magelight,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfParalysis,00029B73,Staff of Paralysis,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,SildSStaff,000A88C9,Sild's Staff,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfBanishing,00029B79,Staff of Banishing,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfDaedricCommand,00029B7B,Staff of Daedric Command,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfDreadZombies,00029B7C,Staff of Dread Zombies,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfExpulsion,00029B7E,Staff of Expulsion,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfReanimation,00029B76,Staff of Reanimation,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfRevenants,00029B7A,Staff of Revenants,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfSoulTrapping,000BE122,Staff of Soul Trapping,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfTheFamiliar,00029B75,Staff of the Familiar,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfTheFlameAtronach,00029B78,Staff of the Flame Atronach,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfTheFrostAtronach,000BE120,Staff of the Frost Atronach,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfTheStormAtronach,00029B7D,Staff of the Storm Atronach,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfZombies,00029B74,Staff of Zombies,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,AetherialStaff,XX00575E,Aetherial Staff,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,DragonPriestStaffWallOfLightning,0004DE5B,Dragon Priest Staff (Wall of Lightning),,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,DragonPriestStaffWallOfFire,0007E5BB,Dragon Priest Staff (Wall of Fire),,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,EyeOfMelka,000B3DFA,Eye of Melka,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,ForswornStaff,000FA2C1,Forsworn Staff,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,ForswornStaffVariant,000CC826,Forsworn Staff Variant,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,HevnoraakSStaff,0010076D,Hevnoraak's Staff,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfFireballs,00029B82,Staff of Fireballs,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfFirebolts,0004C6CA,Staff of Firebolts,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfFlames,0004DEE0,Staff of Flames,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfFrostbite,0004DEE1,Staff of Frostbite,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfChainLightning,00029B84,Staff of Chain Lightning,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfHagSWrath,0007A4FB,Staff of Hag's Wrath,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfIceSpikes,0004DED8,Staff of Ice Spikes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfIceStorms,00029B83,Staff of Ice Storms,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfIcySpear,0010FCF7,Staff of Icy Spear,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfIncineration,0010FCF2,Staff of Incineration,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfJyrikGauldurson,000E5F43,Staff of Jyrik Gauldurson,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfLightningBolts,0004DEE3,Staff of Lightning Bolts,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfSparks,0004DEE2,Staff of Sparks,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfTheFlameWall,00029B85,Staff of the Flame Wall,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfTheFrostWall,00029B86,Staff of the Frost Wall,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfTheStormWall,00029B87,Staff of the Storm Wall,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfThunderbolts,0010FCF4,Staff of Thunderbolts,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfMagnus,00035369,Staff of Magnus,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,GadnorSStaffOfCharming,00046E0B,Gadnor's Staff of Charming,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,GrandStaffOfCharming,00029B91,Grand Staff of Charming,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,HalldirSStaff,000AB704,Halldir's Staff,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfArcaneAuthority,000940D8,Staff of Arcane Authority,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfCalm,00029B8B,Staff of Calm,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfCourage,00029B88,Staff of Courage,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfFear,00029B8C,Staff of Fear,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfFrenzy,00029B8F,Staff of Frenzy,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfFury,00029B89,Staff of Fury,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfInspiration,00029B8E,Staff of Inspiration,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfTandil,0006A093,Staff of Tandil,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfVanquishment,00029B92,Staff of Vanquishment,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,GrandStaffOfRepulsion,00029B9B,Grand Staff of Repulsion,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,GrandStaffOfTurning,00029B97,Grand Staff of Turning,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,MinorStaffOfTurning,00029B94,Minor Staff of Turning,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfMending,00029B99,Staff of Mending,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfRepulsion,00029B9A,Staff of Repulsion,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfTheHealingHand,00029B93,Staff of the Healing Hand,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,StaffOfTurning,00029B95,Staff of Turning,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,AlterationStaff,0007E646,Alteration Staff,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,BrokenStaff,0001CB30,Broken Staff,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,ConjurationStaff,0007E647,Conjuration Staff,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,DestructionStaff,000BE11F,Destruction Staff,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,IllusionStaff,0007A91B,Illusion Staff,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,NecromanticStaff,000284F5,Necromantic Staff,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,RestorationStaff,00051B0C,Restoration Staff,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,SanguineRose,0001CB36,Sanguine Rose,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,SkullOfCorruption,00035066,Skull of Corruption,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Staves,Wabbajack,0009B2B2,Wabbajack,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Staves,Staff rows from Fandom staves page.
+Clothing,BeltedTunic,0001BE1A,Belted Tunic,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,BlacksmithSApron,0005B69F,Blacksmith's Apron,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,BlacksmithSApronVariant,0006FF37,Blacksmith's Apron Variant,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,BoySBlueTunic,XX00C744,Boy's Blue Tunic,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,BoySGreenTunic,XX00C743,Boy's Green Tunic,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,BoySGreyTunic,XX00C745,Boy's Grey Tunic,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,BoySRedTunic,XX00C742,Boy's Red Tunic,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,BoySYellowTunic,XX00C746,Boy's Yellow Tunic,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,ChefSTunic,0001BC82,Chef's Tunic,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,ChildSClothes,0006D92C,Child's Clothes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,Clothes,000F1229,Clothes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,ClothesVariant1,000209A6,Clothes Variant 1,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,ClothesVariant2,0006C1DA,Clothes Variant 2,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,ClothesVariant3,00017695,Clothes Variant 3,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,ClothesVariant4,0006C1D9,Clothes Variant 4,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,ClothesVariant5,0006C1D8,Clothes Variant 5,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,ClothesVariant6,0003452E,Clothes Variant 6,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,ClothesVariant7,000261C0,Clothes Variant 7,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,ClothesVariant8,0005B6A1,Clothes Variant 8,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,ClothesVariant9,0006FF38,Clothes Variant 9,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,ClothesVariant10,0004223C,Clothes Variant 10,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,ClothesVariant11,0006FF45,Clothes Variant 11,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,CultistRobes,XX037B8A,Cultist Robes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,CultistRobesVariant,XX01CDA6,Cultist Robes Variant,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,DunmerOutfit,XX03706A,Dunmer Outfit,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,DunmerOutfitVariant1,XX01CDAA,Dunmer Outfit Variant 1,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,DunmerOutfitVariant2,XX037065,Dunmer Outfit Variant 2,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,DunmerOutfitVariant3,XX037066,Dunmer Outfit Variant 3,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,DunmerOutfitVariant4,XX03706B,Dunmer Outfit Variant 4,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,DunmerOutfitVariant5,XX03706C,Dunmer Outfit Variant 5,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,EmbellishedRobes,000E84C4,Embellished Robes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,EmbroideredGarments,000EAD49,Embroidered Garments,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,FineClothes,000CEE80,Fine Clothes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,FineClothesVariant1,00086991,Fine Clothes Variant 1,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,FineClothesVariant2,000F8713,Fine Clothes Variant 2,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,FineClothesVariant3,000F8715,Fine Clothes Variant 3,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,FineRaiment,000CEE76,Fine Raiment,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,FurTrimmedCloak,0008698C,Fur-Trimmed Cloak,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,GirlSBlueDress,XX00D81E,Girl's Blue Dress,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,GirlSGreenDress,XX00D81F,Girl's Green Dress,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,GirlSGreyDress,XX00D820,Girl's Grey Dress,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,GirlSRedDress,XX00D821,Girl's Red Dress,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,GirlSYellowDress,XX00D822,Girl's Yellow Dress,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,HammerfellGarb,0007BC19,Hammerfell Garb,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,MinerSClothes,00080697,Miner's Clothes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,MournerSClothes,000646A7,Mourner's Clothes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,NobleClothes,0005DB7B,Noble Clothes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,RadiantRaimentFineClothes,000E9EB5,Radiant Raiment Fine Clothes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,RaggedRobes,00013105,Ragged Robes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,RaggedTrousers,0008F19A,Ragged Trousers,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,RedguardClothes,000E0DD0,Redguard Clothes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,RoughspunTunic,0003C9FE,Roughspun Tunic,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,TavernClothes,000D191F,Tavern Clothes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,VampireRobes,XX019ADF,Vampire Robes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,Boots,0001BE1B,Boots,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,BootsVariant1,000209A5,Boots Variant 1,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,BootsVariant2,000261BD,Boots Variant 2,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,BootsVariant3,0003452F,Boots Variant 3,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,BootsVariant4,0006B46C,Boots Variant 4,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,BootsVariant5,000D1921,Boots Variant 5,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,BootsVariant6,000BACD7,Boots Variant 6,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,BootsVariant7,000C5D12,Boots Variant 7,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,BootsVariant8,000E0DD4,Boots Variant 8,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,BootsVariant9,000CF8B0,Boots Variant 9,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,BootsVariant10,0004223D,Boots Variant 10,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,BootsVariant11,00080699,Boots Variant 11,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,BootsVariant12,000C36E8,Boots Variant 12,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,BootsDawnguard,XX01570B,Boots Dawnguard,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,BootsDragonborn,XX0376D9,Boots Dragonborn,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,CollegeBoots,0010E2DC,College Boots,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,CollegeBootsVariant,0010E2CE,College Boots Variant,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,CuffedBoots,000CEE78,Cuffed Boots,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,CultistBoots,XX037B8E,Cultist Boots,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,DunmerShoes,XX03705A,Dunmer Shoes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,FineBoots,00086993,Fine Boots,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,FineBootsVariant,000CEE82,Fine Boots Variant,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,Footwraps,0003CA00,Footwraps,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,FurLinedBoots,0005DB7E,Fur-Lined Boots,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,MothPriestSandals,XX0047D9,Moth Priest Sandals,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,PleatedShoes,0008698E,Pleated Shoes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,PsiijicBoots,00065B9B,Psiijic Boots,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,RaggedBoots,00013106,Ragged Boots,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,RedguardBoots,0007BC15,Redguard Boots,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,Shoes,00018801,Shoes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,ShoesVariant1,0005B6A0,Shoes Variant 1,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,ShoesVariant2,000E80A8,Shoes Variant 2,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,ShoesVariant3,0005B69E,Shoes Variant 3,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,ThalmorBoots,00065BAC,Thalmor Boots,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,VampireBoots,XX019AE1,Vampire Boots,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,BlackRobes,00106661,Black Robes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,BlueRobes,000A199B,Blue Robes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,CollegeRobes,000D3DEA,College Robes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,GreenRobes,0010CFF0,Green Robes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,GreyRobes,0010CFF1,Grey Robes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,GreybeardSRobe,00036A44,Greybeard's Robe,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,HoodedBlackRobes,00107108,Hooded Black Robes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,HoodedMonkRobes,00107106,Hooded Monk Robes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,MageRobes,0006B46B,Mage Robes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,MonkRobes,000BACF3,Monk Robes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,MothPriestRobes,XX0047D7,Moth Priest Robes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,PsiijicRobes,00065B94,Psiijic Robes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,VaerminaRobes,000E739B,Vaermina Robes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,RedHoodedRobes,0010CFEB,Red Hooded Robes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,RedRobes,0010CFF2,Red Robes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,SkaalVillagerSOutfit,XX01CDA9,Skaal Villager's Outfit,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,AlikRHood,0007BC1A,Alik'r Hood,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,ChefSHat,0001BCA7,Chef's Hat,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,Cowl,00017696,Cowl,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,FineHat,000CEE84,Fine Hat,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,Hat,000209AA,Hat,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,HatVariant1,000330B3,Hat Variant 1,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,HatVariant2,000330BC,Hat Variant 2,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,HatVariant3,0004223B,Hat Variant 3,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,MageHood,000D3DE8,Mage Hood,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,MageHoodVariant1,0010D6A6,Mage Hood Variant 1,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,MageHoodVariant2,0010D6A7,Mage Hood Variant 2,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,MothPriestBlindfold,XX0047DA,Moth Priest Blindfold,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,MournerSHat,000646AB,Mourner's Hat,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,PsiijicHood,00065B99,Psiijic Hood,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,RaggedCap,00013104,Ragged Cap,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,RedguardHood,000E0DD2,Redguard Hood,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,VampireHood,XX019ADE,Vampire Hood,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,Gloves,000261C1,Gloves,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,PrisonerSCuffs,0010E039,Prisoner's Cuffs,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,PsiijicGloves,00065B9D,Psiijic Gloves,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,ThalmorGloves,00065BB3,Thalmor Gloves,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,VampireGloves,XX019AE3,Vampire Gloves,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,EmperorSRobes,00015516,Emperor's Robes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,PartyClothes,000E40DF,Party Clothes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,RefinedTunic,000E84C6,Refined Tunic,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,SheogorathOutfit,000C7CBB,Sheogorath Outfit,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,TelvanniRobes,XX0376ED,Telvanni Robes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,UlfricSClothes,00062303,Ulfric's Clothes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,WeddingDress,00088956,Wedding Dress,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,ArchmageSRobes,0010F570,Archmage's Robes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,MiraakSRobes,XX039E1E,Miraak's Robes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,MiraakSRobesVariant1,XX039D20,Miraak's Robes Variant 1,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,MiraakSRobesVariant2,XX039D22,Miraak's Robes Variant 2,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,MythicDawnRobesHooded,000B144D,Mythic Dawn Robes Hooded,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,MythicDawnRobesUnhooded,00109C11,Mythic Dawn Robes Unhooded,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,NocturnalSClothes,00088952,Nocturnal's Clothes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,TaronDrethSRobes,XX014C03,Taron Dreth's Robes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,TemplePriestRobes,XX01CDAB,Temple Priest Robes,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,TemplePriestHood,XX03B04E,Temple Priest Hood,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,WeddingWreath,0008895A,Wedding Wreath,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,ArmBandages,0004F006,Arm Bandages,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,MysticTuningGloves,00026C3B,Mystic Tuning Gloves,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,MythicDawnGloves,000B145B,Mythic Dawn Gloves,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,UlfricSBracers,0006230B,Ulfric's Bracers,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,MythicDawnBoots,000B1460,Mythic Dawn Boots,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,PartyBoots,000E40DE,Party Boots,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,TemplePriestBoots,XX03B04B,Temple Priest Boots,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,UlfricSBoots,00062311,Ulfric's Boots,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Clothing,WeddingSandals,00088958,Wedding Sandals,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Clothing,Clothing/apparel rows from Fandom clothing page.
+Enchantments,AbsorbHealth,000AA155,Absorb Health,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,AbsorbMagicka,000AA156,Absorb Magicka,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,AbsorbStamina,000AA157,Absorb Stamina,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,AnimalDamage,00101BDC,Animal Damage,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,Banish,000ACBB5,Banish,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,BanishDamageHealth,000173DC,Banish - Damage Health,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,ChaurusPoison,0006F6FC,Chaurus Poison,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,DamageHealthBleeding,0010582C,Damage Health Bleeding,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,DrainHealth,00091F7A,Drain Health,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,DrainMagicka,00091F7E,Drain Magicka,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,DrainStamina,00091F7D,Drain Stamina,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,DragonDamage,000FF9F7,Dragon Damage,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,DragonDamageIi,000F1AC2,Dragon Damage II,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,EbonyBladeAbsorbHealth,0010FAF1,Ebony Blade Absorb Health,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,ElfSlayer,000F23F9,Elf Slayer,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,ExtraDamageNord,0010582E,Extra Damage Nord,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FalmerPoison,00109D7C,Falmer Poison,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FearLow,0005B451,Fear Low,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FearMedium,000BEE93,Fear Medium,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FearHigh,000BEE94,Fear High,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FireDamage,0004605A,Fire Damage,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FireDamageHigh,00050CF6,Fire Damage High,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FireDamageUndeadExplosion,000FEFBC,Fire Damage + Undead Explosion,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FireHazardHigh,0002ACD4,Fire Hazard High,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FortifyArchery,0007A0FE,Fortify Archery,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FrostDamage,0004605B,Frost Damage,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FrostDamageHigh,00078C11,Frost Damage High,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FrostDamageIi,00106617,Frost Damage II,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,HagSEndDrainHealth,000FB409,Hag's End Drain Health,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,HagSEndSoulTrap,000FB407,Hag's End Soul Trap,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,HuntsmanSProwess,00105831,Huntsman’s Prowess,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,IceHazardHigh,0003E07B,Ice Hazard High,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,IceWraithBite,000A26F5,Ice Wraith Bite,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,IgnoreArmorDamage,00105834,Ignore Armor Damage,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,InstantKill,00091AE5,Instant Kill,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,MagickaDamage,0005B44F,Magicka Damage,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,MoonlightDamage,0003B0B1,Moonlight Damage,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,NotchedPickaxe,001019AF,Notched Pickaxe,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,NotchedPickaxeIi,001019D6,Notched Pickaxe II,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,Paralysis,000ACBB6,Paralysis,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,ParalyzeChillrend,00106616,Paralyze Chillrend,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,ParalyzeIi,0006F702,Paralyze II,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,ParalyzeIii,0009AA3F,Paralyze III,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,RedEagleFireDamage,000FB405,Red Eagle Fire Damage,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,RedEagleTurnUndead,000FB408,Red Eagle Turn Undead,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,RestoreHealth,0010CB93,Restore Health,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,ShockDamage,0004605C,Shock Damage,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,ShockDamageHigh,00050CF9,Shock Damage High,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,ShockHazardHigh,00045D5A,Shock Hazard High,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,DragonBreath,000549B4,Dragon Breath,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,Silvered,0010B116,Silvered,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,SoulTrap,0005B452,Soul Trap,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,SpiderBite,00053473,Spider Bite,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,SprigganPoisonDamage,000F23D3,Spriggan Poison Damage,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,StaminaDamage,0005B450,Stamina Damage,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,TurnUndead,0005B46B,Turn Undead,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,TrollsbaneFireDamage,000F5D15,Trollsbane Fire Damage,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,UnrelentingForceStrong,00016D46,Unrelenting Force Strong,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,VenomfangPoison,0010FC23,Venomfang Poison,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,WindshearBashEffect,00105A01,Windshear Bash Effect,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,Transmogrify,001092A0,Transmogrify,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,StaffEnchantmentFrenzy,0010FDD4,Staff Enchantment - Frenzy,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,StaffEnchantmentFrostbite,0010FDD3,Staff Enchantment - Frostbite,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,StaffEnchantmentSparks,0010FDD2,Staff Enchantment - Sparks,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,StaffEnchantmentFlames,0010FDD1,Staff Enchantment - Flames,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,StaffEnchantmentIncinerate,0010F7F1,Staff Enchantment - Incinerate,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,StaffEnchantmentIcySpear,0010F7F0,Staff Enchantment - Icy Spear,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,StaffEnchantmentThunderbolt,0010F7EF,Staff Enchantment - Thunderbolt,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,StaffEnchantmentConjureStormAtronach,0010EE49,Staff Enchantment - Conjure Storm Atronach,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,StaffEnchantmentConjureFrostAtronach,0010EE48,Staff Enchantment - Conjure Frost Atronach,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,Backstab,000FF15C,Backstab,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FlameCloak,0010FC13,Flame Cloak,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FortifyArmorRating,00017120,Fortify Armor Rating,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FortifyBarter,0007A104,Fortify Barter,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FortifyCarryWeight,0007A0F4,Fortify Carry Weight,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FortifyConjuration,0010962F,Fortify Conjuration,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FortifyHealth,0010F814,Fortify Health,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FortifyLockpicking,0007A0FC,Fortify Lockpicking,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FortifyMagickaAlchemy,0003EAF8,Fortify Magicka Alchemy,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FortifyMagicka,00049504,Fortify Magicka,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FortifyRestorationAlchemy,0003EB28,Fortify Restoration Alchemy,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FortifySneak,0007A103,Fortify Sneak,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FortifyRestoration,00109634,Fortify Restoration,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,HealthRegeneration,000946F3,Health Regeneration,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,KonahrikSPrivilege,0010FC14,Konahrik's Privilege,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,Muffle,00092A57,Muffle,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,RegenerateHealth,0010F812,Regenerate Health,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,RegenerateMagicka,00109630,Regenerate Magicka,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,RegenerateStaminaAlchemy,0003EB08,Regenerate Stamina Alchemy,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,RegenerateStamina,0007A105,Regenerate Stamina,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,ResistPoison,000FF15E,Resist Poison,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,ShadowcloakOfNocturnal,00017121,Shadowcloak of Nocturnal,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,Waterbreathing,00092A48,Waterbreathing,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,ShieldChargeDamageStamina,00017331,Shield Charge Damage Stamina,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,DamageStaminaRegeneration,0001729D,Damage Stamina Regeneration,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,DamageHealthRegeneration,0001729B,Damage Health Regeneration,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,VoiceDragonrendBlankHostile,00017192,Voice Dragonrend Blank Hostile,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,AncientKnowledgeNoDisplay,0010FDD7,Ancient Knowledge No Display,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,ConjureDragonPriest,0010FC12,Conjure Dragon Priest,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,SinderionSSerendipity,0010F84C,Sinderion's Serendipity,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,SummonDremora,0010E38E,Summon Dremora,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,ConjureDremoraLord,0010DDED,Conjure Dremora Lord,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FeedBlood,0010F99E,Feed Blood,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,AbsorbMagickaDraugrBow,0010F221,Absorb Magicka Draugr Bow,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,AbsorbHealthDraugrAxe,0010F220,Absorb Health Draugr Axe,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,AbsorbStaminaDraugrSword,0010F21F,Absorb Stamina Draugr Sword,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,AncientKnowledge,0010EB61,Ancient Knowledge,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,ImperialLuck,0010EAD0,Imperial Luck,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FortifyDestruction,0010E80D,Fortify Destruction,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FortifyIllusion,0010E80E,Fortify Illusion,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FortifyAlteration,0010E809,Fortify Alteration,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,ResistShock,0010E4FC,Resist Shock,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,ResistFrost,0010E4FB,Resist Frost,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,ResistFire,0010E4FA,Resist Fire,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,KyneSPeace1,0010E4F6,Kyne's Peace 1,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,KyneSPeace2,0010E4F7,Kyne's Peace 2,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,KyneSPeace3,0010E4F8,Kyne's Peace 3,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,DetectLifeEnemyInterior,001019D9,Detect Life Enemy Interior,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,DetectLifeEnemyExterior,001019D8,Detect Life Enemy Exterior,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,DetectLifeFriendInterior,001019DB,Detect Life Friend Interior,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,DetectLifeFriendExterior,001019DA,Detect Life Friend Exterior,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FireballTrap,00101929,Fireball Trap,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FlamesTrap,00101928,Flames Trap,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,ChainLightningTrap,0010192B,Chain Lightning Trap,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,LightningBoltTrap,0010192C,Lightning Bolt Trap,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,IceStormTrap,0010192E,Ice Storm Trap,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,IceSpikeTrap,0010192F,Ice Spike Trap,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,FrostbiteTrap,00101930,Frostbite Trap,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.
+Enchantments,PoisonDamageTrap,00101931,Poison Damage Trap,,https://elderscrolls.fandom.com/wiki/Console_Commands_(Skyrim)/Enchantments,Enchantment effect rows from Fandom enchantments page; Fandom warns these are effect/enchantment IDs and not all are guaranteed to work.

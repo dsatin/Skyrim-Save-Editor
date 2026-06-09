@@ -1,0 +1,2001 @@
+{
+  "build": "bleak_falls_barrow_save_analysis",
+  "database_rows": 3934,
+  "new_seed_rows_added": 8,
+  "milestone_summary": {
+    "save_path": "/mnt/data/SAVEDATA(2).DAT",
+    "player_name": "Test Subject #000000000001",
+    "level": 3,
+    "location": "Dragonsreach",
+    "game_date": "002.16.14",
+    "save_number": 3,
+    "file_size": 2817763,
+    "payload_size": 7885227,
+    "change_forms": 16337,
+    "inventory_rows": 83,
+    "named_inventory_rows": 83,
+    "unknown_inventory_rows": 0,
+    "editable_inventory_rows": 78,
+    "category_counts": {
+      "Alchemy": 6,
+      "Arrows": 2,
+      "Beverages": 4,
+      "Blades": 4,
+      "Blunts": 4,
+      "Books": 5,
+      "Bows": 1,
+      "Clothing": 2,
+      "Currency": 1,
+      "Food": 6,
+      "Gems": 1,
+      "Heavy Armor": 3,
+      "Ingredients": 6,
+      "Jewelry": 2,
+      "Keys": 1,
+      "Light Armor": 9,
+      "Misc": 20,
+      "Ores and Ingots": 2,
+      "Poisons": 1,
+      "Scrolls": 1,
+      "Soul Gems": 1,
+      "Spell Tomes": 1
+    },
+    "key_items": {
+      "Ancient Nord Arrow": 27,
+      "Ancient Nord Greatsword": 1,
+      "Arvel's Journal": 1,
+      "Gold": 488,
+      "Golden Claw": 1,
+      "Honed Ancient Nord Sword": 1,
+      "Lockpicks": 15,
+      "Scroll of Guardian Circle": 1,
+      "Spell Tome: Oakflesh": 1
+    }
+  },
+  "saves": {
+    "fresh": {
+      "header": {
+        "player": "Test Subject #000000000001",
+        "level": 1,
+        "location": "Helgen Keep",
+        "game_date": "000.12.08",
+        "save_number": 1,
+        "compression": "LZ4"
+      },
+      "file_size": 2501731,
+      "payload_size": 7078221,
+      "change_forms": 11710,
+      "inventory_rows": 18,
+      "named_inventory_rows": 18,
+      "unknown_inventory_rows": 0,
+      "editable_inventory_rows": 18,
+      "coverage_percent": 100.0,
+      "unknown_form_ids": [],
+      "category_counts": {
+        "Alchemy": 6,
+        "Arrows": 1,
+        "Blades": 2,
+        "Blunts": 1,
+        "Books": 1,
+        "Bows": 1,
+        "Clothing": 2,
+        "Currency": 1,
+        "Heavy Armor": 1,
+        "Misc": 2
+      },
+      "inventory": [
+        {
+          "form_id": "0000000A",
+          "name": "Lockpick",
+          "category": "Misc",
+          "count": 10,
+          "editable": true,
+          "payload_offset": 433726
+        },
+        {
+          "form_id": "00013790",
+          "name": "Iron War Axe",
+          "category": "Blunts",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 433734
+        },
+        {
+          "form_id": "0001397E",
+          "name": "Iron Dagger",
+          "category": "Blades",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 433742
+        },
+        {
+          "form_id": "0003B562",
+          "name": "Long Bow",
+          "category": "Bows",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 433750
+        },
+        {
+          "form_id": "0001397D",
+          "name": "Iron Arrow",
+          "category": "Arrows",
+          "count": 23,
+          "editable": true,
+          "payload_offset": 433758
+        },
+        {
+          "form_id": "0001D4EC",
+          "name": "Torch",
+          "category": "Misc",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 433766
+        },
+        {
+          "form_id": "0000000F",
+          "name": "Gold",
+          "category": "Currency",
+          "count": 140,
+          "editable": true,
+          "payload_offset": 433774
+        },
+        {
+          "form_id": "0003EADD",
+          "name": "Potion of Minor Healing",
+          "category": "Alchemy",
+          "count": 5,
+          "editable": true,
+          "payload_offset": 433782
+        },
+        {
+          "form_id": "00012EB6",
+          "name": "Iron Shield",
+          "category": "Heavy Armor",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 433790
+        },
+        {
+          "form_id": "0003EAE0",
+          "name": "Potion of Minor Magicka",
+          "category": "Alchemy",
+          "count": 5,
+          "editable": true,
+          "payload_offset": 433798
+        },
+        {
+          "form_id": "00039B4A",
+          "name": "Potion of Resist Fire",
+          "category": "Alchemy",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 433806
+        },
+        {
+          "form_id": "0003EAE5",
+          "name": "Potion of Minor Stamina",
+          "category": "Alchemy",
+          "count": 5,
+          "editable": true,
+          "payload_offset": 433814
+        },
+        {
+          "form_id": "0003EB2A",
+          "name": "Potion of the Warrior",
+          "category": "Alchemy",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 433822
+        },
+        {
+          "form_id": "0003EB33",
+          "name": "Potion of Light Feet",
+          "category": "Alchemy",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 433830
+        },
+        {
+          "form_id": "00012EB7",
+          "name": "Iron Sword",
+          "category": "Blades",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 433838
+        },
+        {
+          "form_id": "000F86FE",
+          "name": "The Book of the Dragonborn",
+          "category": "Books",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 433846
+        },
+        {
+          "form_id": "0003C9FE",
+          "name": "Roughspun Tunic",
+          "category": "Clothing",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 433854
+        },
+        {
+          "form_id": "0003CA00",
+          "name": "Footwraps",
+          "category": "Clothing",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 433864
+        }
+      ]
+    },
+    "unbound": {
+      "header": {
+        "player": "Test Subject #000000000001",
+        "level": 1,
+        "location": "Skyrim",
+        "game_date": "000.52.57",
+        "save_number": 2,
+        "compression": "LZ4"
+      },
+      "file_size": 2527974,
+      "payload_size": 7066074,
+      "change_forms": 12158,
+      "inventory_rows": 67,
+      "named_inventory_rows": 65,
+      "unknown_inventory_rows": 2,
+      "editable_inventory_rows": 62,
+      "coverage_percent": 97.01,
+      "unknown_form_ids": [
+        "000EE5C0",
+        "0010DD3A"
+      ],
+      "category_counts": {
+        "Alchemy": 6,
+        "Arrows": 1,
+        "Beverages": 2,
+        "Blades": 3,
+        "Blunts": 4,
+        "Books": 4,
+        "Bows": 1,
+        "Clothing": 4,
+        "Currency": 1,
+        "Food": 4,
+        "Heavy Armor": 1,
+        "Ingredients": 5,
+        "Keys": 1,
+        "Light Armor": 8,
+        "Misc": 18,
+        "Poisons": 1,
+        "Spell Tomes": 1,
+        "Unknown": 2
+      },
+      "inventory": [
+        {
+          "form_id": "0003CA00",
+          "name": "Footwraps",
+          "category": "Clothing",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 402786
+        },
+        {
+          "form_id": "0003C9FE",
+          "name": "Roughspun Tunic",
+          "category": "Clothing",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 402794
+        },
+        {
+          "form_id": "000F86FE",
+          "name": "The Book of the Dragonborn",
+          "category": "Books",
+          "count": 0,
+          "editable": false,
+          "payload_offset": 402802
+        },
+        {
+          "form_id": "00012EB7",
+          "name": "Iron Sword",
+          "category": "Blades",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 402810
+        },
+        {
+          "form_id": "0003EB33",
+          "name": "Potion of Light Feet",
+          "category": "Alchemy",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 402824
+        },
+        {
+          "form_id": "0003EB2A",
+          "name": "Potion of the Warrior",
+          "category": "Alchemy",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 402832
+        },
+        {
+          "form_id": "0003EAE5",
+          "name": "Potion of Minor Stamina",
+          "category": "Alchemy",
+          "count": 4,
+          "editable": true,
+          "payload_offset": 402840
+        },
+        {
+          "form_id": "00039B4A",
+          "name": "Potion of Resist Fire",
+          "category": "Alchemy",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 402848
+        },
+        {
+          "form_id": "0003EAE0",
+          "name": "Potion of Minor Magicka",
+          "category": "Alchemy",
+          "count": 0,
+          "editable": false,
+          "payload_offset": 402856
+        },
+        {
+          "form_id": "00012EB6",
+          "name": "Iron Shield",
+          "category": "Heavy Armor",
+          "count": 0,
+          "editable": false,
+          "payload_offset": 402864
+        },
+        {
+          "form_id": "0003EADD",
+          "name": "Potion of Minor Healing",
+          "category": "Alchemy",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 402872
+        },
+        {
+          "form_id": "0000000F",
+          "name": "Gold",
+          "category": "Currency",
+          "count": 54,
+          "editable": true,
+          "payload_offset": 402880
+        },
+        {
+          "form_id": "0001D4EC",
+          "name": "Torch",
+          "category": "Misc",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 402888
+        },
+        {
+          "form_id": "0001397D",
+          "name": "Iron Arrow",
+          "category": "Arrows",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 402896
+        },
+        {
+          "form_id": "0003B562",
+          "name": "Long Bow",
+          "category": "Bows",
+          "count": 0,
+          "editable": false,
+          "payload_offset": 402904
+        },
+        {
+          "form_id": "0001397E",
+          "name": "Iron Dagger",
+          "category": "Blades",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 402912
+        },
+        {
+          "form_id": "00013790",
+          "name": "Iron War Axe",
+          "category": "Blunts",
+          "count": 0,
+          "editable": false,
+          "payload_offset": 402920
+        },
+        {
+          "form_id": "0000000A",
+          "name": "Lockpick",
+          "category": "Misc",
+          "count": 8,
+          "editable": true,
+          "payload_offset": 402928
+        },
+        {
+          "form_id": "00013ED9",
+          "name": "Imperial Light Armor",
+          "category": "Light Armor",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 402936
+        },
+        {
+          "form_id": "00013ED7",
+          "name": "Imperial Light Boots",
+          "category": "Light Armor",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 402951
+        },
+        {
+          "form_id": "000B5178",
+          "name": "Helgen Keep Key",
+          "category": "Keys",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 402966
+        },
+        {
+          "form_id": "000319E3",
+          "name": "Tankard",
+          "category": "Misc",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 402974
+        },
+        {
+          "form_id": "0003133B",
+          "name": "Alto Wine",
+          "category": "Beverages",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 402982
+        },
+        {
+          "form_id": "0003133C",
+          "name": "Surilie Brothers Wine",
+          "category": "Beverages",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 402990
+        },
+        {
+          "form_id": "000319E5",
+          "name": "Wooden Ladle",
+          "category": "Misc",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 402998
+        },
+        {
+          "form_id": "0006717F",
+          "name": "Broom",
+          "category": "Misc",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 403006
+        },
+        {
+          "form_id": "0003199A",
+          "name": "Wooden Bowl",
+          "category": "Misc",
+          "count": 6,
+          "editable": true,
+          "payload_offset": 403014
+        },
+        {
+          "form_id": "00012FDF",
+          "name": "Basket",
+          "category": "Misc",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 403022
+        },
+        {
+          "form_id": "0001ACD1",
+          "name": "Mixed Unit Tactics",
+          "category": "Books",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 403036
+        },
+        {
+          "form_id": "00013EDB",
+          "name": "Imperial Light Helmet",
+          "category": "Light Armor",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 403044
+        },
+        {
+          "form_id": "00012FE9",
+          "name": "Basket",
+          "category": "Misc",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 403054
+        },
+        {
+          "form_id": "00012FE7",
+          "name": "Basket",
+          "category": "Misc",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 403062
+        },
+        {
+          "form_id": "00013914",
+          "name": "Hide Shield",
+          "category": "Light Armor",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 403070
+        },
+        {
+          "form_id": "000A6D7B",
+          "name": "Stormcloak Armor",
+          "category": "Light Armor",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 403078
+        },
+        {
+          "form_id": "000A6D7F",
+          "name": "Fur Boots",
+          "category": "Light Armor",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 403094
+        },
+        {
+          "form_id": "000A6D7D",
+          "name": "Fur Gauntlets",
+          "category": "Light Armor",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 403110
+        },
+        {
+          "form_id": "00013980",
+          "name": "Iron Battleaxe",
+          "category": "Blunts",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 403126
+        },
+        {
+          "form_id": "00064B3F",
+          "name": "Cabbage",
+          "category": "Food",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 403134
+        },
+        {
+          "form_id": "00064B40",
+          "name": "Carrot",
+          "category": "Food",
+          "count": 4,
+          "editable": true,
+          "payload_offset": 403142
+        },
+        {
+          "form_id": "00064B41",
+          "name": "Potato",
+          "category": "Food",
+          "count": 7,
+          "editable": true,
+          "payload_offset": 403150
+        },
+        {
+          "form_id": "00012FE6",
+          "name": "Kettle",
+          "category": "Misc",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 403164
+        },
+        {
+          "form_id": "00012FEC",
+          "name": "Basket",
+          "category": "Misc",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 403172
+        },
+        {
+          "form_id": "00012FEA",
+          "name": "Basket",
+          "category": "Misc",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 403180
+        },
+        {
+          "form_id": "00013981",
+          "name": "Iron Warhammer",
+          "category": "Blunts",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 403188
+        },
+        {
+          "form_id": "00034CDF",
+          "name": "Salt Pile",
+          "category": "Ingredients",
+          "count": 6,
+          "editable": true,
+          "payload_offset": 403196
+        },
+        {
+          "form_id": "000318FB",
+          "name": "Cast Iron Pot",
+          "category": "Misc",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 403204
+        },
+        {
+          "form_id": "000318FA",
+          "name": "Cast Iron Pot",
+          "category": "Misc",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 403212
+        },
+        {
+          "form_id": "00033761",
+          "name": "Paper Roll",
+          "category": "Misc",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 403226
+        },
+        {
+          "form_id": "00031941",
+          "name": "Wooden Plate",
+          "category": "Misc",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 403234
+        },
+        {
+          "form_id": "00065C98",
+          "name": "Bread",
+          "category": "Food",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 403242
+        },
+        {
+          "form_id": "00012FEB",
+          "name": "Basket",
+          "category": "Misc",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 403250
+        },
+        {
+          "form_id": "0007E8C8",
+          "name": "Rock Warbler Egg",
+          "category": "Ingredients",
+          "count": 3,
+          "editable": true,
+          "payload_offset": 403258
+        },
+        {
+          "form_id": "00013982",
+          "name": "Iron Mace",
+          "category": "Blunts",
+          "count": 4,
+          "editable": true,
+          "payload_offset": 403266
+        },
+        {
+          "form_id": "00013EDA",
+          "name": "Imperial Light Bracers",
+          "category": "Light Armor",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 403279
+        },
+        {
+          "form_id": "000EE5C0",
+          "name": "Unknown item",
+          "category": "Unknown",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 403292
+        },
+        {
+          "form_id": "00013986",
+          "name": "Steel Dagger",
+          "category": "Blades",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 403305
+        },
+        {
+          "form_id": "0001ACB9",
+          "name": "Brief History of the Empire, v1",
+          "category": "Books",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 403313
+        },
+        {
+          "form_id": "0001ACBA",
+          "name": "Brief History of the Empire, v2",
+          "category": "Books",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 403321
+        },
+        {
+          "form_id": "0010DD3A",
+          "name": "Unknown item",
+          "category": "Unknown",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 403329
+        },
+        {
+          "form_id": "0010D667",
+          "name": "Expert Robes",
+          "category": "Clothing",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 403342
+        },
+        {
+          "form_id": "0009CD53",
+          "name": "Spell Tome: Sparks",
+          "category": "Spell Tomes",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 403355
+        },
+        {
+          "form_id": "00034CDD",
+          "name": "Bone Meal",
+          "category": "Ingredients",
+          "count": 3,
+          "editable": true,
+          "payload_offset": 403363
+        },
+        {
+          "form_id": "00013105",
+          "name": "Ragged Robes",
+          "category": "Clothing",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 403371
+        },
+        {
+          "form_id": "000E41B8",
+          "name": "Frostbite Venom",
+          "category": "Poisons",
+          "count": 3,
+          "editable": true,
+          "payload_offset": 403384
+        },
+        {
+          "form_id": "0009151B",
+          "name": "Spider Egg",
+          "category": "Ingredients",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 403392
+        },
+        {
+          "form_id": "0006BC02",
+          "name": "Bear Claws",
+          "category": "Ingredients",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 403400
+        },
+        {
+          "form_id": "0003AD52",
+          "name": "Bear Pelt",
+          "category": "Misc",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 403408
+        }
+      ]
+    },
+    "bleak_falls_barrow": {
+      "header": {
+        "player": "Test Subject #000000000001",
+        "level": 3,
+        "location": "Dragonsreach",
+        "game_date": "002.16.14",
+        "save_number": 3,
+        "compression": "LZ4"
+      },
+      "file_size": 2817763,
+      "payload_size": 7885227,
+      "change_forms": 16337,
+      "inventory_rows": 83,
+      "named_inventory_rows": 83,
+      "unknown_inventory_rows": 0,
+      "editable_inventory_rows": 78,
+      "coverage_percent": 100.0,
+      "unknown_form_ids": [],
+      "category_counts": {
+        "Alchemy": 6,
+        "Arrows": 2,
+        "Beverages": 4,
+        "Blades": 4,
+        "Blunts": 4,
+        "Books": 5,
+        "Bows": 1,
+        "Clothing": 2,
+        "Currency": 1,
+        "Food": 6,
+        "Gems": 1,
+        "Heavy Armor": 3,
+        "Ingredients": 6,
+        "Jewelry": 2,
+        "Keys": 1,
+        "Light Armor": 9,
+        "Misc": 20,
+        "Ores and Ingots": 2,
+        "Poisons": 1,
+        "Scrolls": 1,
+        "Soul Gems": 1,
+        "Spell Tomes": 1
+      },
+      "inventory": [
+        {
+          "form_id": "00013982",
+          "name": "Iron Mace",
+          "category": "Blunts",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 528373
+        },
+        {
+          "form_id": "0007E8C8",
+          "name": "Rock Warbler Egg",
+          "category": "Ingredients",
+          "count": 3,
+          "editable": true,
+          "payload_offset": 528381
+        },
+        {
+          "form_id": "00012FEB",
+          "name": "Basket",
+          "category": "Misc",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528389
+        },
+        {
+          "form_id": "00065C98",
+          "name": "Bread",
+          "category": "Food",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 528397
+        },
+        {
+          "form_id": "00031941",
+          "name": "Wooden Plate",
+          "category": "Misc",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528414
+        },
+        {
+          "form_id": "00033761",
+          "name": "Paper Roll",
+          "category": "Misc",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528422
+        },
+        {
+          "form_id": "000318FA",
+          "name": "Cast Iron Pot",
+          "category": "Misc",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 528430
+        },
+        {
+          "form_id": "000318FB",
+          "name": "Cast Iron Pot",
+          "category": "Misc",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 528444
+        },
+        {
+          "form_id": "00034CDF",
+          "name": "Salt Pile",
+          "category": "Ingredients",
+          "count": 7,
+          "editable": true,
+          "payload_offset": 528452
+        },
+        {
+          "form_id": "00013981",
+          "name": "Iron Warhammer",
+          "category": "Blunts",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528460
+        },
+        {
+          "form_id": "00012FEA",
+          "name": "Basket",
+          "category": "Misc",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528468
+        },
+        {
+          "form_id": "00012FEC",
+          "name": "Basket",
+          "category": "Misc",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528476
+        },
+        {
+          "form_id": "00012FE6",
+          "name": "Kettle",
+          "category": "Misc",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 528484
+        },
+        {
+          "form_id": "00064B41",
+          "name": "Potato",
+          "category": "Food",
+          "count": 7,
+          "editable": true,
+          "payload_offset": 528492
+        },
+        {
+          "form_id": "00064B40",
+          "name": "Carrot",
+          "category": "Food",
+          "count": 6,
+          "editable": true,
+          "payload_offset": 528506
+        },
+        {
+          "form_id": "00064B3F",
+          "name": "Cabbage",
+          "category": "Food",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 528523
+        },
+        {
+          "form_id": "00013980",
+          "name": "Iron Battleaxe",
+          "category": "Blunts",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528531
+        },
+        {
+          "form_id": "000A6D7D",
+          "name": "Fur Gauntlets",
+          "category": "Light Armor",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528539
+        },
+        {
+          "form_id": "000A6D7F",
+          "name": "Fur Boots",
+          "category": "Light Armor",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528552
+        },
+        {
+          "form_id": "000A6D7B",
+          "name": "Stormcloak Armor",
+          "category": "Light Armor",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 528565
+        },
+        {
+          "form_id": "00013914",
+          "name": "Hide Shield",
+          "category": "Light Armor",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528581
+        },
+        {
+          "form_id": "00012FE7",
+          "name": "Basket",
+          "category": "Misc",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 528589
+        },
+        {
+          "form_id": "00012FE9",
+          "name": "Basket",
+          "category": "Misc",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 528597
+        },
+        {
+          "form_id": "00013EDB",
+          "name": "Imperial Light Helmet",
+          "category": "Light Armor",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528605
+        },
+        {
+          "form_id": "0001ACD1",
+          "name": "Mixed Unit Tactics",
+          "category": "Books",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528615
+        },
+        {
+          "form_id": "00012FDF",
+          "name": "Basket",
+          "category": "Misc",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 528623
+        },
+        {
+          "form_id": "0003199A",
+          "name": "Wooden Bowl",
+          "category": "Misc",
+          "count": 6,
+          "editable": true,
+          "payload_offset": 528637
+        },
+        {
+          "form_id": "0006717F",
+          "name": "Broom",
+          "category": "Misc",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528645
+        },
+        {
+          "form_id": "000319E5",
+          "name": "Wooden Ladle",
+          "category": "Misc",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 528653
+        },
+        {
+          "form_id": "0003133C",
+          "name": "Surilie Brothers Wine",
+          "category": "Beverages",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 528661
+        },
+        {
+          "form_id": "0003133B",
+          "name": "Alto Wine",
+          "category": "Beverages",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 528669
+        },
+        {
+          "form_id": "000319E3",
+          "name": "Tankard",
+          "category": "Misc",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 528677
+        },
+        {
+          "form_id": "000B5178",
+          "name": "Helgen Keep Key",
+          "category": "Keys",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528685
+        },
+        {
+          "form_id": "00013ED7",
+          "name": "Imperial Light Boots",
+          "category": "Light Armor",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528693
+        },
+        {
+          "form_id": "00013ED9",
+          "name": "Imperial Light Armor",
+          "category": "Light Armor",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528701
+        },
+        {
+          "form_id": "0000000A",
+          "name": "Lockpick",
+          "category": "Misc",
+          "count": 15,
+          "editable": true,
+          "payload_offset": 528711
+        },
+        {
+          "form_id": "00013790",
+          "name": "Iron War Axe",
+          "category": "Blunts",
+          "count": 0,
+          "editable": false,
+          "payload_offset": 528719
+        },
+        {
+          "form_id": "0001397E",
+          "name": "Iron Dagger",
+          "category": "Blades",
+          "count": 0,
+          "editable": false,
+          "payload_offset": 528727
+        },
+        {
+          "form_id": "0003B562",
+          "name": "Long Bow",
+          "category": "Bows",
+          "count": 0,
+          "editable": false,
+          "payload_offset": 528735
+        },
+        {
+          "form_id": "0001397D",
+          "name": "Iron Arrow",
+          "category": "Arrows",
+          "count": 41,
+          "editable": true,
+          "payload_offset": 528743
+        },
+        {
+          "form_id": "0001D4EC",
+          "name": "Torch",
+          "category": "Misc",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 528751
+        },
+        {
+          "form_id": "0000000F",
+          "name": "Gold",
+          "category": "Currency",
+          "count": 488,
+          "editable": true,
+          "payload_offset": 528759
+        },
+        {
+          "form_id": "0003EADD",
+          "name": "Potion of Minor Healing",
+          "category": "Alchemy",
+          "count": 8,
+          "editable": true,
+          "payload_offset": 528767
+        },
+        {
+          "form_id": "00012EB6",
+          "name": "Iron Shield",
+          "category": "Heavy Armor",
+          "count": 0,
+          "editable": false,
+          "payload_offset": 528784
+        },
+        {
+          "form_id": "0003EAE0",
+          "name": "Potion of Minor Magicka",
+          "category": "Alchemy",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 528792
+        },
+        {
+          "form_id": "00039B4A",
+          "name": "Potion of Resist Fire",
+          "category": "Alchemy",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 528800
+        },
+        {
+          "form_id": "0003EAE5",
+          "name": "Potion of Minor Stamina",
+          "category": "Alchemy",
+          "count": 4,
+          "editable": true,
+          "payload_offset": 528808
+        },
+        {
+          "form_id": "0003EB2A",
+          "name": "Potion of the Warrior",
+          "category": "Alchemy",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528816
+        },
+        {
+          "form_id": "0003EB33",
+          "name": "Potion of Light Feet",
+          "category": "Alchemy",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528824
+        },
+        {
+          "form_id": "00012EB7",
+          "name": "Iron Sword",
+          "category": "Blades",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528832
+        },
+        {
+          "form_id": "000F86FE",
+          "name": "The Book of the Dragonborn",
+          "category": "Books",
+          "count": 0,
+          "editable": false,
+          "payload_offset": 528846
+        },
+        {
+          "form_id": "0003C9FE",
+          "name": "Roughspun Tunic",
+          "category": "Clothing",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528854
+        },
+        {
+          "form_id": "0003CA00",
+          "name": "Footwraps",
+          "category": "Clothing",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528862
+        },
+        {
+          "form_id": "000134AA",
+          "name": "Thistle Branch",
+          "category": "Ingredients",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 528870
+        },
+        {
+          "form_id": "00077E1C",
+          "name": "Blue Mountain Flower",
+          "category": "Ingredients",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528878
+        },
+        {
+          "form_id": "00013912",
+          "name": "Hide Bracers",
+          "category": "Light Armor",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528886
+        },
+        {
+          "form_id": "0003AD74",
+          "name": "Wolf Pelt",
+          "category": "Misc",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528899
+        },
+        {
+          "form_id": "0003B97C",
+          "name": "Silver Ring",
+          "category": "Jewelry",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528907
+        },
+        {
+          "form_id": "00064B32",
+          "name": "Eidar Cheese Wedge",
+          "category": "Food",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528915
+        },
+        {
+          "form_id": "000508CA",
+          "name": "Honningbrew Mead",
+          "category": "Beverages",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 528932
+        },
+        {
+          "form_id": "0005ACE4",
+          "name": "Iron Ingot",
+          "category": "Ores and Ingots",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528949
+        },
+        {
+          "form_id": "00034C5D",
+          "name": "Nord Mead",
+          "category": "Beverages",
+          "count": 3,
+          "editable": true,
+          "payload_offset": 528966
+        },
+        {
+          "form_id": "00064B2E",
+          "name": "Red Apple",
+          "category": "Food",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528974
+        },
+        {
+          "form_id": "000ED02E",
+          "name": "A Gentleman's Guide to Whiterun",
+          "category": "Books",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528991
+        },
+        {
+          "form_id": "00012E46",
+          "name": "Iron Gauntlets",
+          "category": "Heavy Armor",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 528999
+        },
+        {
+          "form_id": "0003AD72",
+          "name": "Troll Fat",
+          "category": "Ingredients",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 529009
+        },
+        {
+          "form_id": "00012E4B",
+          "name": "Iron Boots",
+          "category": "Heavy Armor",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 529017
+        },
+        {
+          "form_id": "00013ED8",
+          "name": "Imperial Studded Armor",
+          "category": "Light Armor",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 529027
+        },
+        {
+          "form_id": "0003AD6F",
+          "name": "Skeever Tail",
+          "category": "Ingredients",
+          "count": 3,
+          "editable": true,
+          "payload_offset": 529035
+        },
+        {
+          "form_id": "0005AD99",
+          "name": "Orichalcum Ingot",
+          "category": "Ores and Ingots",
+          "count": 2,
+          "editable": true,
+          "payload_offset": 529043
+        },
+        {
+          "form_id": "0001AFBF",
+          "name": "Thief",
+          "category": "Books",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 529051
+        },
+        {
+          "form_id": "0002E4E4",
+          "name": "Lesser Soul Gem (Empty)",
+          "category": "Soul Gems",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 529059
+        },
+        {
+          "form_id": "00063B46",
+          "name": "Amethyst",
+          "category": "Gems",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 529067
+        },
+        {
+          "form_id": "00039647",
+          "name": "Golden Claw",
+          "category": "Misc",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 529075
+        },
+        {
+          "form_id": "00039654",
+          "name": "Arvel's Journal",
+          "category": "Books",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 529097
+        },
+        {
+          "form_id": "00034CD6",
+          "name": "Linen Wrap",
+          "category": "Misc",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 529119
+        },
+        {
+          "form_id": "000236A5",
+          "name": "Ancient Nord Greatsword",
+          "category": "Blades",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 529127
+        },
+        {
+          "form_id": "00034182",
+          "name": "Ancient Nord Arrow",
+          "category": "Arrows",
+          "count": 27,
+          "editable": true,
+          "payload_offset": 529135
+        },
+        {
+          "form_id": "000E0CD5",
+          "name": "Scroll of Guardian Circle",
+          "category": "Scrolls",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 529143
+        },
+        {
+          "form_id": "0009E2A8",
+          "name": "Spell Tome: Oakflesh",
+          "category": "Spell Tomes",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 529151
+        },
+        {
+          "form_id": "0010DF39",
+          "name": "Necklace of Minor Lockpicking",
+          "category": "Jewelry",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 529159
+        },
+        {
+          "form_id": "0005BF0F",
+          "name": "Honed Ancient Nord Sword",
+          "category": "Blades",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 529167
+        },
+        {
+          "form_id": "00065A69",
+          "name": "Weak Frenzy Poison",
+          "category": "Poisons",
+          "count": 1,
+          "editable": true,
+          "payload_offset": 529181
+        }
+      ]
+    }
+  },
+  "progress": {
+    "from_unbound_to_bleak_falls": {
+      "level": [
+        1,
+        3
+      ],
+      "location": [
+        "Skyrim",
+        "Dragonsreach"
+      ],
+      "game_date": [
+        "000.52.57",
+        "002.16.14"
+      ],
+      "change_forms_delta": 4179,
+      "inventory_row_delta": 16,
+      "notable_added": [
+        {
+          "form_id": "0003EAE0",
+          "name": "Potion of Minor Magicka",
+          "category": "Alchemy",
+          "count": 2
+        },
+        {
+          "form_id": "000134AA",
+          "name": "Thistle Branch",
+          "category": "Ingredients",
+          "count": 2
+        },
+        {
+          "form_id": "00077E1C",
+          "name": "Blue Mountain Flower",
+          "category": "Ingredients",
+          "count": 1
+        },
+        {
+          "form_id": "00013912",
+          "name": "Hide Bracers",
+          "category": "Light Armor",
+          "count": 1
+        },
+        {
+          "form_id": "0003AD74",
+          "name": "Wolf Pelt",
+          "category": "Misc",
+          "count": 1
+        },
+        {
+          "form_id": "0003B97C",
+          "name": "Silver Ring",
+          "category": "Jewelry",
+          "count": 1
+        },
+        {
+          "form_id": "00064B32",
+          "name": "Eidar Cheese Wedge",
+          "category": "Food",
+          "count": 1
+        },
+        {
+          "form_id": "000508CA",
+          "name": "Honningbrew Mead",
+          "category": "Beverages",
+          "count": 2
+        },
+        {
+          "form_id": "0005ACE4",
+          "name": "Iron Ingot",
+          "category": "Ores and Ingots",
+          "count": 1
+        },
+        {
+          "form_id": "00034C5D",
+          "name": "Nord Mead",
+          "category": "Beverages",
+          "count": 3
+        },
+        {
+          "form_id": "00064B2E",
+          "name": "Red Apple",
+          "category": "Food",
+          "count": 1
+        },
+        {
+          "form_id": "000ED02E",
+          "name": "A Gentleman's Guide to Whiterun",
+          "category": "Books",
+          "count": 1
+        },
+        {
+          "form_id": "00012E46",
+          "name": "Iron Gauntlets",
+          "category": "Heavy Armor",
+          "count": 1
+        },
+        {
+          "form_id": "0003AD72",
+          "name": "Troll Fat",
+          "category": "Ingredients",
+          "count": 2
+        },
+        {
+          "form_id": "00012E4B",
+          "name": "Iron Boots",
+          "category": "Heavy Armor",
+          "count": 1
+        },
+        {
+          "form_id": "00013ED8",
+          "name": "Imperial Studded Armor",
+          "category": "Light Armor",
+          "count": 1
+        },
+        {
+          "form_id": "0003AD6F",
+          "name": "Skeever Tail",
+          "category": "Ingredients",
+          "count": 3
+        },
+        {
+          "form_id": "0005AD99",
+          "name": "Orichalcum Ingot",
+          "category": "Ores and Ingots",
+          "count": 2
+        },
+        {
+          "form_id": "0001AFBF",
+          "name": "Thief",
+          "category": "Books",
+          "count": 1
+        },
+        {
+          "form_id": "0002E4E4",
+          "name": "Lesser Soul Gem (Empty)",
+          "category": "Soul Gems",
+          "count": 1
+        },
+        {
+          "form_id": "00063B46",
+          "name": "Amethyst",
+          "category": "Gems",
+          "count": 1
+        },
+        {
+          "form_id": "00039647",
+          "name": "Golden Claw",
+          "category": "Misc",
+          "count": 1
+        },
+        {
+          "form_id": "00039654",
+          "name": "Arvel's Journal",
+          "category": "Books",
+          "count": 1
+        },
+        {
+          "form_id": "00034CD6",
+          "name": "Linen Wrap",
+          "category": "Misc",
+          "count": 1
+        },
+        {
+          "form_id": "000236A5",
+          "name": "Ancient Nord Greatsword",
+          "category": "Blades",
+          "count": 1
+        },
+        {
+          "form_id": "00034182",
+          "name": "Ancient Nord Arrow",
+          "category": "Arrows",
+          "count": 27
+        },
+        {
+          "form_id": "000E0CD5",
+          "name": "Scroll of Guardian Circle",
+          "category": "Scrolls",
+          "count": 1
+        },
+        {
+          "form_id": "0009E2A8",
+          "name": "Spell Tome: Oakflesh",
+          "category": "Spell Tomes",
+          "count": 1
+        },
+        {
+          "form_id": "0010DF39",
+          "name": "Necklace of Minor Lockpicking",
+          "category": "Jewelry",
+          "count": 1
+        },
+        {
+          "form_id": "0005BF0F",
+          "name": "Honed Ancient Nord Sword",
+          "category": "Blades",
+          "count": 1
+        },
+        {
+          "form_id": "00065A69",
+          "name": "Weak Frenzy Poison",
+          "category": "Poisons",
+          "count": 1
+        }
+      ],
+      "notable_changed": [
+        {
+          "form_id": "00013982",
+          "name": "Iron Mace",
+          "category": "Blunts",
+          "old": 4,
+          "new": 2,
+          "delta": -2
+        },
+        {
+          "form_id": "00065C98",
+          "name": "Bread",
+          "category": "Food",
+          "old": 1,
+          "new": 2,
+          "delta": 1
+        },
+        {
+          "form_id": "00034CDF",
+          "name": "Salt Pile",
+          "category": "Ingredients",
+          "old": 6,
+          "new": 7,
+          "delta": 1
+        },
+        {
+          "form_id": "00064B40",
+          "name": "Carrot",
+          "category": "Food",
+          "old": 4,
+          "new": 6,
+          "delta": 2
+        },
+        {
+          "form_id": "000A6D7D",
+          "name": "Fur Gauntlets",
+          "category": "Light Armor",
+          "old": 2,
+          "new": 1,
+          "delta": -1
+        },
+        {
+          "form_id": "000A6D7F",
+          "name": "Fur Boots",
+          "category": "Light Armor",
+          "old": 2,
+          "new": 1,
+          "delta": -1
+        },
+        {
+          "form_id": "00013ED7",
+          "name": "Imperial Light Boots",
+          "category": "Light Armor",
+          "old": 2,
+          "new": 1,
+          "delta": -1
+        },
+        {
+          "form_id": "00013ED9",
+          "name": "Imperial Light Armor",
+          "category": "Light Armor",
+          "old": 2,
+          "new": 1,
+          "delta": -1
+        },
+        {
+          "form_id": "0000000A",
+          "name": "Lockpick",
+          "category": "Misc",
+          "old": 8,
+          "new": 15,
+          "delta": 7
+        },
+        {
+          "form_id": "0001397E",
+          "name": "Iron Dagger",
+          "category": "Blades",
+          "old": 1,
+          "new": 0,
+          "delta": -1
+        },
+        {
+          "form_id": "0001397D",
+          "name": "Iron Arrow",
+          "category": "Arrows",
+          "old": 1,
+          "new": 41,
+          "delta": 40
+        },
+        {
+          "form_id": "0000000F",
+          "name": "Gold",
+          "category": "Currency",
+          "old": 54,
+          "new": 488,
+          "delta": 434
+        },
+        {
+          "form_id": "0003EADD",
+          "name": "Potion of Minor Healing",
+          "category": "Alchemy",
+          "old": 1,
+          "new": 8,
+          "delta": 7
+        }
+      ],
+      "notable_removed": [
+        {
+          "form_id": "0001397E",
+          "name": "Iron Dagger",
+          "category": "Blades",
+          "old": 1
+        },
+        {
+          "form_id": "00013EDA",
+          "name": "Imperial Light Bracers",
+          "category": "Light Armor",
+          "old": 1
+        },
+        {
+          "form_id": "000EE5C0",
+          "name": "Unknown item",
+          "category": "Unknown",
+          "old": 1
+        },
+        {
+          "form_id": "00013986",
+          "name": "Steel Dagger",
+          "category": "Blades",
+          "old": 1
+        },
+        {
+          "form_id": "0001ACB9",
+          "name": "Brief History of the Empire, v1",
+          "category": "Books",
+          "old": 1
+        },
+        {
+          "form_id": "0001ACBA",
+          "name": "Brief History of the Empire, v2",
+          "category": "Books",
+          "old": 1
+        },
+        {
+          "form_id": "0010DD3A",
+          "name": "Unknown item",
+          "category": "Unknown",
+          "old": 1
+        },
+        {
+          "form_id": "0010D667",
+          "name": "Expert Robes",
+          "category": "Clothing",
+          "old": 1
+        },
+        {
+          "form_id": "0009CD53",
+          "name": "Spell Tome: Sparks",
+          "category": "Spell Tomes",
+          "old": 1
+        },
+        {
+          "form_id": "00034CDD",
+          "name": "Bone Meal",
+          "category": "Ingredients",
+          "old": 3
+        },
+        {
+          "form_id": "00013105",
+          "name": "Ragged Robes",
+          "category": "Clothing",
+          "old": 1
+        },
+        {
+          "form_id": "000E41B8",
+          "name": "Frostbite Venom",
+          "category": "Poisons",
+          "old": 3
+        },
+        {
+          "form_id": "0009151B",
+          "name": "Spider Egg",
+          "category": "Ingredients",
+          "old": 2
+        },
+        {
+          "form_id": "0006BC02",
+          "name": "Bear Claws",
+          "category": "Ingredients",
+          "old": 1
+        },
+        {
+          "form_id": "0003AD52",
+          "name": "Bear Pelt",
+          "category": "Misc",
+          "old": 1
+        }
+      ]
+    }
+  },
+  "new_reference_rows": [
+    {
+      "category": "Food",
+      "editor_id": "FoodBread01B",
+      "form_id": "00065C98",
+      "name": "Bread",
+      "value": "",
+      "source": "Mutagen/Fandom",
+      "notes": "Resolved from Bleak Falls inventory; Mutagen Ingestible FoodBread01B."
+    },
+    {
+      "category": "Light Armor",
+      "editor_id": "ArmorStormcloakCuirass",
+      "form_id": "000A6D7B",
+      "name": "Stormcloak Armor",
+      "value": "",
+      "source": "Mutagen",
+      "notes": "Resolved from Bleak Falls inventory; Stormcloak cuirass."
+    },
+    {
+      "category": "Jewelry",
+      "editor_id": "JewelryRingSilver",
+      "form_id": "0003B97C",
+      "name": "Silver Ring",
+      "value": "",
+      "source": "Mutagen",
+      "notes": "Resolved from Bleak Falls inventory."
+    },
+    {
+      "category": "Light Armor",
+      "editor_id": "ArmorImperialStuddedCuirass",
+      "form_id": "00013ED8",
+      "name": "Imperial Studded Armor",
+      "value": "",
+      "source": "Mutagen",
+      "notes": "Resolved from Bleak Falls inventory."
+    },
+    {
+      "category": "Misc",
+      "editor_id": "MS13GoldenClaw",
+      "form_id": "00039647",
+      "name": "Golden Claw",
+      "value": "",
+      "source": "Mutagen",
+      "notes": "Resolved from Bleak Falls inventory; quest item."
+    },
+    {
+      "category": "Scrolls",
+      "editor_id": "GuardianCircleScroll",
+      "form_id": "000E0CD5",
+      "name": "Scroll of Guardian Circle",
+      "value": "",
+      "source": "Mutagen",
+      "notes": "Resolved from Bleak Falls inventory."
+    },
+    {
+      "category": "Jewelry",
+      "editor_id": "EnchNecklaceLockpicking01",
+      "form_id": "0010DF39",
+      "name": "Necklace of Minor Lockpicking",
+      "value": "",
+      "source": "Mutagen",
+      "notes": "Resolved from Bleak Falls inventory; enchanted necklace."
+    },
+    {
+      "category": "Blades",
+      "editor_id": "DraugrSwordHoned",
+      "form_id": "0005BF0F",
+      "name": "Honed Ancient Nord Sword",
+      "value": "",
+      "source": "Fandom/Mutagen",
+      "notes": "Resolved from Bleak Falls inventory; friendly name from Skyrim weapon tables."
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "build": "inventory_item_database_build",
+  "reference_rows_total": 3934,
+  "inventory_database_rows_available": 3093,
+  "changes": [
+    "Added an Item / Weapon Database inside the Player Inventory tab.",
+    "Added inventory database search/filter by item name, FormID, EditorID, category, source, and notes.",
+    "Added item category filter and Have/Missing status filter.",
+    "Shows whether each database item is already in the loaded save inventory or missing.",
+    "For items already present in the save, Set Existing Item Count updates New Count automatically.",
+    "For items already present in the save, Add Amount To Existing adds the chosen amount onto New Count automatically.",
+    "For missing items, Copy AddItem Command copies player.additem <FormID> <amount>.",
+    "Find In Inventory jumps from a database item to the matching player inventory row when present."
+  ],
+  "safety_notes": [
+    "Direct save editing still only changes existing inventory rows.",
+    "Missing/new item insertion is not enabled yet because the save row structure still needs to be mapped safely.",
+    "Missing items are handled through generated console additem commands for now."
+  ]
+}

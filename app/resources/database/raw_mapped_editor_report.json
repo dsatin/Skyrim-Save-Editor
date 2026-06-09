@@ -1,0 +1,42 @@
+{
+  "build": "skyrim_save_lab_raw_mapped_editor_build",
+  "base": "skyrim_save_lab_notification_adder_retry_build",
+  "features_added": [
+    "Replaced Raw Info with Raw Editor side-rail page",
+    "Mapped Fields tab with searchable/filterable raw offsets",
+    "Editable fixed-size mapped raw fields",
+    "Player Inventory count rows mapped to actual player ACHR change-form bytes",
+    "Read-only structural mapping for payload, file location table, player change form and global data entries",
+    "Change Forms tab with searchable parsed change-form preview",
+    "Parsed JSON retained in a tab",
+    "Hex preview around selected mapped field",
+    "Save Raw Edits in-place with backup",
+    "Save Raw Copy for safer testing",
+    "Ctrl+S/File Save Edits and Save Copy are page-aware for Raw Editor"
+  ],
+  "safety": [
+    "Only fixed-size mapped fields are editable",
+    "Strings must fit existing fixed slots",
+    "Inventory count edits use validate_inventory_amount",
+    "Structural fields are shown read-only for mapping",
+    "Payload edits rebuild compressed payload without changing internal structure size",
+    "Save Raw Edits creates a backup first"
+  ],
+  "validation": [
+    "python -m compileall -q app passed",
+    "Raw mapped inventory count edit test passed: Chicken Egg 2 -> 7"
+  ],
+  "sample_mapping": {
+    "save": "/mnt/data/SAVEDATA(4).DAT",
+    "field_count": 181,
+    "editable_count": 108,
+    "player_inventory_mapped_count": 103,
+    "chicken_egg_field": {
+      "field": "Chicken's Egg (00023D77) New Count",
+      "storage": "payload",
+      "offset": 509642,
+      "virtual_offset": 632636,
+      "current_value": "2"
+    }
+  }
+}
