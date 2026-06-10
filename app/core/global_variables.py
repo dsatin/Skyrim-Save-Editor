@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from pathlib import Path
 import struct
 from typing import Mapping
+import math
 
 from app.core.skyrim_ess import EssDocument, EssParseError, iter_change_forms, read_ess
 
@@ -11,10 +12,14 @@ from app.core.skyrim_ess import EssDocument, EssParseError, iter_change_forms, r
 DRAGONS_ABSORBED_FORM_ID = "0001C0F2"
 DRAGONS_ABSORBED_NAME = "DragonsAbsorbed"
 # The spendable in-game Dragon Souls pool is not the DragonsAbsorbed
-# global variable. Controlled saves with 1 / 100 / 100,000 souls map it
-# to a float32 inside ChangeForm RefID 400014 at this relative offset.
+# global variable. Earlier builds used a fixed player ChangeForm offset,
+# but later PC saves proved that offset is not stable. Keep the legacy
+# constant only for cautious probing; never write it unless the value
+# passes sanity checks.
 DRAGON_SOULS_PLAYER_REFID_HEX = "400014"
 DRAGON_SOULS_PLAYER_RELATIVE_OFFSET = 0x49A5
+DRAGON_SOULS_MIN_SAFE = 0
+DRAGON_SOULS_MAX_SAFE = 999_999
 DRAGON_SOULS_NAME = "Dragon Souls"
 
 
@@ -68,7 +73,14 @@ def read_skyrim_dragon_souls(path: str | Path) -> DragonSoulsValue | None:
         value_payload_offset = data_start + DRAGON_SOULS_PLAYER_RELATIVE_OFFSET
         if value_payload_offset < data_start or value_payload_offset + 4 > int(entry.data_end_offset) - int(doc.payload.virtual_offset):
             return None
+        raw_value = doc.payload.data[value_payload_offset:value_payload_offset + 4]
         value = struct.unpack_from("<f", doc.payload.data, value_payload_offset)[0]
+        # This legacy offset is not stable across the user's PC saves.  If it
+        # reads a sentinel, NaN/Inf, huge value, denormal/tiny garbage, or
+        # fractional garbage, treat Dragon Souls as unmapped instead of
+        # showing/writing the wrong field.
+        if not _is_sane_dragon_souls_value(value, raw_value):
+            return None
         return DragonSoulsValue(
             name=DRAGON_SOULS_NAME,
             value=float(value),
@@ -85,6 +97,21 @@ def read_skyrim_dragon_souls(path: str | Path) -> DragonSoulsValue | None:
     return None
 
 
+def _is_sane_dragon_souls_value(value: float, raw_value: bytes = b"") -> bool:
+    value = float(value)
+    if not math.isfinite(value):
+        return False
+    if value < DRAGON_SOULS_MIN_SAFE or value > DRAGON_SOULS_MAX_SAFE:
+        return False
+    # True zero should be exactly 00 00 00 00.  Tiny denormal values like
+    # F2 05 C8 17 are usually random bytes from the wrong offset.
+    if abs(value) < 0.001:
+        return raw_value == bytes(4)
+    # Dragon Souls are stored/used as whole counts.  A noisy fractional read is
+    # almost certainly the wrong offset.
+    return abs(value - round(value)) < 0.001
+
+
 def patch_skyrim_dragon_souls(source: str | Path, target: str | Path, value: int | float) -> DragonSoulsValue:
     """Patch the spendable Dragon Souls pool and return the original mapping."""
     source = Path(source)
@@ -95,7 +122,9 @@ def patch_skyrim_dragon_souls(source: str | Path, target: str | Path, value: int
         raise EssParseError("No decoded save payload was available.")
     hit = read_skyrim_dragon_souls(source)
     if not hit:
-        raise ValueError("Dragon Souls actor-value field was not found in ChangeForm 400014.")
+        raise ValueError(
+            "Dragon Souls offset is not verified for this save. The old fixed offset read garbage/sentinel data, so the editor refused to write it."
+        )
     payload = bytearray(doc.payload.data)
     if hit.value_payload_offset < 0 or hit.value_payload_offset + 4 > len(payload):
         raise ValueError("Dragon Souls value offset is outside the decoded payload.")

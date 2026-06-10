@@ -3933,3 +3933,22 @@ Misc,MS13GoldenClaw,00039647,Golden Claw,,Mutagen,Resolved from Bleak Falls inve
 Scrolls,GuardianCircleScroll,000E0CD5,Scroll of Guardian Circle,,Mutagen,Resolved from Bleak Falls inventory.
 Jewelry,EnchNecklaceLockpicking01,0010DF39,Necklace of Minor Lockpicking,,Mutagen,Resolved from Bleak Falls inventory; enchanted necklace.
 Blades,DraugrSwordHoned,0005BF0F,Honed Ancient Nord Sword,,Fandom/Mutagen,Resolved from Bleak Falls inventory; friendly name from Skyrim weapon tables.
+Blunts,EnchIronBattleaxeShock01,000896C6,Iron Battleaxe of Sparks,,Skyrim.esm,Curated from unknown-inventory research save; enchanted weapon
+Bows,EnchEbonyBowFrost06,000BF40B,Ebony Bow of Winter,,Skyrim.esm,Curated from unknown-inventory research save; enchanted weapon
+Blades,EnchEbonySwordAbsorbH06,0001D520,Ebony Sword of the Vampire,,Skyrim.esm,Curated from unknown-inventory research save; enchanted weapon
+Blunts,EnchDwarvenBattleaxeFrost03,000ACBA5,Dwarven Battleaxe of Freezing,,Skyrim.esm,Curated from unknown-inventory research save; enchanted weapon
+Heavy Armor,EnchArmorEbonyHelmetWaterbreathing,000CF88C,Ebony Helmet of Waterbreathing,,Skyrim.esm,Curated from unknown-inventory research save; enchanted apparel
+Heavy Armor,EnchArmorEbonyShieldResistFire04,000CF891,Ebony Shield of Major Fire Resist,,Skyrim.esm,Curated from unknown-inventory research save; enchanted apparel
+Heavy Armor,EnchArmorEbonyCuirassHealthRate05,000FE2EB,Ebony Armor of Regeneration,,Skyrim.esm,Curated from unknown-inventory research save; enchanted apparel
+Clothing,ClothesThalmorRobesHooded,0010C698,Hooded Thalmor Robes,,Skyrim.esm,Curated from unknown-inventory research save
+Heavy Armor,EnchArmorEbonyBootsResistFrost04,000CF82C,Ebony Boots of Frost Suppression,,Skyrim.esm,Curated from unknown-inventory research save; enchanted apparel
+Heavy Armor,EnchArmorEbonyGauntletsOneHanded05,000CF867,Ebony Gauntlets of Extreme Wielding,,Skyrim.esm,Curated from unknown-inventory research save; enchanted apparel
+Clothing,ClothesMageHoodNovice,0010DD3A,Novice Hood,,Curated from in-game unknown inventory / Fandom,Enchanted mage hood; Fortify Magicka +30
+Heavy Armor,EnchArmorIronHelmetDestruction01,0007A125,Iron Helmet of Minor Destruction,,Curated from in-game unknown inventory / Fandom,Generic enchanted armor; Destruction spells cost 12% less
+Heavy Armor,EnchArmorIronHelmetDestruction02,000AD58B,Iron Helmet of Destruction,,Curated from in-game unknown inventory / SkyrimCommands,Generic enchanted armor; Destruction spells cost less
+Heavy Armor,EnchArmorIronHelmetDestruction03,000AD58C,Iron Helmet of Major Destruction,,Curated from in-game unknown inventory / Fandom,Generic enchanted armor; Destruction spells cost 17% less
+Clothing,ClothesMageHoodApprentice,0010DD3B,Apprentice Hood,,Curated generic magic apparel pass,Enchanted mage hood; Fortify Magicka
+Clothing,ClothesMageHoodAdept,0010DD3C,Adept Hood,,Curated generic magic apparel pass,Enchanted mage hood; Fortify Magicka
+Jewelry,JewelryRingSilverGarnet,000877AB,Silver Garnet Ring,,SkyrimCommands/Fandom verified exact ID,Observed unknown in uploaded saves; item ID verified by public item references.
+Weapons,BoundWeaponSwordMystic,00058F5F,Bound Sword,,Fandom/UESP verified exact ID,"Observed unknown in uploaded saves; bound weapon/magic-generated item, may have extra data."
+Books,WICastMagic04Letter,00023EE5,Letter from a Friend,,SkyrimCommands/Fandom verified exact ID,Observed unknown in uploaded saves; quest/letter item.

@@ -1,0 +1,442 @@
+{
+  "summary": {
+    "xx_rows": 482,
+    "resolved_official_dlc_rows": 432,
+    "still_unresolved_rows": 50,
+    "by_plugin": {
+      "Dragonborn.esm": 237,
+      "Dawnguard.esm": 132,
+      "UNKNOWN": 50,
+      "HearthFires.esm": 63
+    }
+  },
+  "default_official_order": [
+    "Skyrim.esm",
+    "Update.esm",
+    "Dawnguard.esm",
+    "HearthFires.esm",
+    "Dragonborn.esm"
+  ],
+  "files": [
+    {
+      "file": "fandom_deep_seed_rows.csv",
+      "xx_rows": 64,
+      "resolved_official_dlc": 57,
+      "still_placeholder_or_mod_cc": 7
+    },
+    {
+      "file": "fandom_magic_apparel_seed_rows.csv",
+      "xx_rows": 59,
+      "resolved_official_dlc": 59,
+      "still_placeholder_or_mod_cc": 0
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "xx_rows": 359,
+      "resolved_official_dlc": 316,
+      "still_placeholder_or_mod_cc": 43
+    }
+  ],
+  "unresolved_samples": [
+    {
+      "file": "fandom_deep_seed_rows.csv",
+      "form_id": "XX027663",
+      "name": "Treasure Room Key",
+      "editor_id": "TreasureRoomKey",
+      "source": "Fandom: Console Commands (Skyrim)/Keys",
+      "notes": "Deep linked-page seed pass: Keys"
+    },
+    {
+      "file": "fandom_deep_seed_rows.csv",
+      "form_id": "XX027664",
+      "name": "Whiterun Jail Key",
+      "editor_id": "WhiterunJailKey",
+      "source": "Fandom: Console Commands (Skyrim)/Keys",
+      "notes": "Deep linked-page seed pass: Keys"
+    },
+    {
+      "file": "fandom_deep_seed_rows.csv",
+      "form_id": "XX0012CA",
+      "name": "Space Core",
+      "editor_id": "SpaceCore",
+      "source": "Fandom: Console Commands (Skyrim)/Miscellaneous_Items",
+      "notes": "Deep linked-page seed pass: Miscellaneous Items"
+    },
+    {
+      "file": "fandom_deep_seed_rows.csv",
+      "form_id": "XX020DCF",
+      "name": "Skull",
+      "editor_id": "Skull",
+      "source": "Fandom: Console Commands (Skyrim)/Miscellaneous_Items",
+      "notes": "Deep linked-page seed pass: Miscellaneous Items"
+    },
+    {
+      "file": "fandom_deep_seed_rows.csv",
+      "form_id": "XX000801",
+      "name": "Flawed Varla Stone",
+      "editor_id": "FlawedVarlaStone",
+      "source": "Fandom: Console Commands (Skyrim)/Miscellaneous_Items",
+      "notes": "Deep linked-page seed pass: Miscellaneous Items"
+    },
+    {
+      "file": "fandom_deep_seed_rows.csv",
+      "form_id": "XX183E61",
+      "name": "Sheogorath-Shaped Amber",
+      "editor_id": "SheogorathShapedAmber",
+      "source": "Fandom: Console Commands (Skyrim)/Miscellaneous_Items",
+      "notes": "Deep linked-page seed pass: Miscellaneous Items"
+    },
+    {
+      "file": "fandom_deep_seed_rows.csv",
+      "form_id": "XX12DD3A",
+      "name": "Bliss Bug in a Jar",
+      "editor_id": "BlissBugInAJar",
+      "source": "Fandom: Console Commands (Skyrim)/Miscellaneous_Items",
+      "notes": "Deep linked-page seed pass: Miscellaneous Items"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX003538",
+      "name": "Jazbay Crostata",
+      "editor_id": "JazbayCrostata",
+      "source": "Fandom/UESP curated pass",
+      "notes": "Food expansion"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX00353A",
+      "name": "Jazbay Crostata",
+      "editor_id": "JazbayCrostata",
+      "source": "Fandom linked page seed",
+      "notes": "Exact row seed from linked Alchemy/Food page"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX003534",
+      "name": "Jug of Milk",
+      "editor_id": "JugOfMilk",
+      "source": "Fandom linked page seed",
+      "notes": "Exact row seed from linked Alchemy/Food page"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX003537",
+      "name": "Juniper Berry Crostata",
+      "editor_id": "JuniperBerryCrostata",
+      "source": "Fandom/UESP curated pass",
+      "notes": "Food expansion"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX003539",
+      "name": "Juniper Berry Crostata",
+      "editor_id": "JuniperBerryCrostata",
+      "source": "Fandom linked page seed",
+      "notes": "Exact row seed from linked Alchemy/Food page"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX003536",
+      "name": "Lavender Dumpling",
+      "editor_id": "LavenderDumpling",
+      "source": "Fandom/UESP curated pass",
+      "notes": "Food expansion"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX003540",
+      "name": "Mudcrab Legs",
+      "editor_id": "MudcrabLegs",
+      "source": "Fandom linked page seed",
+      "notes": "Exact row seed from linked Alchemy/Food page"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX003537",
+      "name": "Potato Bread",
+      "editor_id": "PotatoBread",
+      "source": "Fandom linked page seed",
+      "notes": "Exact row seed from linked Alchemy/Food page"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX00353D",
+      "name": "Potato Soup",
+      "editor_id": "PotatoSoup",
+      "source": "Fandom/UESP curated pass",
+      "notes": "Food expansion"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX003538",
+      "name": "Sack of Flour",
+      "editor_id": "SackOfFlour",
+      "source": "Fandom linked page seed",
+      "notes": "Exact row seed from linked Alchemy/Food page"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX003535",
+      "name": "Snowberry Crostata",
+      "editor_id": "SnowberryCrostata",
+      "source": "Fandom/UESP curated pass",
+      "notes": "Food expansion"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX00353B",
+      "name": "Snowberry Crostata",
+      "editor_id": "SnowberryCrostata",
+      "source": "Fandom linked page seed",
+      "notes": "Exact row seed from linked Alchemy/Food page"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX00353F",
+      "name": "Steamed Mudcrab Legs",
+      "editor_id": "SteamedMudcrabLegs",
+      "source": "Fandom/UESP curated pass",
+      "notes": "Food expansion"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX003535",
+      "name": "Argonian Bloodwine",
+      "editor_id": "ArgonianBloodwine",
+      "source": "Fandom linked page seed",
+      "notes": "Exact row seed from linked Alchemy/Beverages page"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX03572E",
+      "name": "Cliff Racer",
+      "editor_id": "CliffRacer",
+      "source": "Fandom/UESP curated pass",
+      "notes": "Beverage expansion"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX0320DF",
+      "name": "Emberbrand Wine",
+      "editor_id": "EmberbrandWine",
+      "source": "Fandom linked page seed",
+      "notes": "Exact row seed from linked Alchemy/Beverages page"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX0207E5",
+      "name": "Flin",
+      "editor_id": "Flin",
+      "source": "Fandom linked page seed",
+      "notes": "Exact row seed from linked Alchemy/Beverages page"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX0248CE",
+      "name": "Matze",
+      "editor_id": "Matze",
+      "source": "Fandom linked page seed",
+      "notes": "Exact row seed from linked Alchemy/Beverages page"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX03572D",
+      "name": "Matze",
+      "editor_id": "Matze",
+      "source": "Fandom/UESP curated pass",
+      "notes": "Beverage expansion"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX024E0B",
+      "name": "Sadri's Sujamma",
+      "editor_id": "SadriSSujamma",
+      "source": "Fandom linked page seed",
+      "notes": "Exact row seed from linked Alchemy/Beverages page"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX0248CC",
+      "name": "Shein",
+      "editor_id": "Shein",
+      "source": "Fandom linked page seed",
+      "notes": "Exact row seed from linked Alchemy/Beverages page"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX03572C",
+      "name": "Shein",
+      "editor_id": "Shein",
+      "source": "Fandom/UESP curated pass",
+      "notes": "Beverage expansion"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX0207E6",
+      "name": "Sujamma",
+      "editor_id": "Sujamma",
+      "source": "Fandom linked page seed",
+      "notes": "Exact row seed from linked Alchemy/Beverages page"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX003536",
+      "name": "Surilie Brothers Wine",
+      "editor_id": "SurilieBrothersWine",
+      "source": "Fandom linked page seed",
+      "notes": "Exact row seed from linked Alchemy/Beverages page"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX0059BA",
+      "name": "Ancestor Moth Wing",
+      "editor_id": "AncestorMothWing",
+      "source": "Fandom/UESP curated pass",
+      "notes": "Ingredient expansion"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX01CD6F",
+      "name": "Boar Tusk",
+      "editor_id": "BoarTusk",
+      "source": "Fandom/UESP curated pass",
+      "notes": "Ingredient expansion"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX01CD6E",
+      "name": "Burnt Spriggan Wood",
+      "editor_id": "BurntSprigganWood",
+      "source": "Fandom/UESP curated pass",
+      "notes": "Ingredient expansion"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX0183B7",
+      "name": "Chaurus Hunter Antennae",
+      "editor_id": "ChaurusHunterAntennae",
+      "source": "Fandom/UESP curated pass",
+      "notes": "Ingredient expansion"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX01FF75",
+      "name": "Emperor Parasol Moss",
+      "editor_id": "EmperorParasolMoss",
+      "source": "Fandom/UESP curated pass",
+      "notes": "Ingredient expansion"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX03CD8E",
+      "name": "Felsaad Tern Feathers",
+      "editor_id": "FelsaadTernFeathers",
+      "source": "Fandom/UESP curated pass",
+      "notes": "Ingredient expansion"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX00B097",
+      "name": "Gleamblossom",
+      "editor_id": "Gleamblossom",
+      "source": "Fandom/UESP curated pass",
+      "notes": "Ingredient expansion"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX00F1CC",
+      "name": "Hawk's Egg",
+      "editor_id": "HawkSEgg",
+      "source": "Fandom/UESP curated pass",
+      "notes": "Ingredient expansion"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX0185FB",
+      "name": "Poison Bloom",
+      "editor_id": "PoisonBloom",
+      "source": "Fandom/UESP curated pass",
+      "notes": "Ingredient expansion"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX003545",
+      "name": "Salmon Roe",
+      "editor_id": "SalmonRoe",
+      "source": "Fandom/UESP curated pass",
+      "notes": "Ingredient expansion"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX017E97",
+      "name": "Scathecraw",
+      "editor_id": "Scathecraw",
+      "source": "Fandom/UESP curated pass",
+      "notes": "Ingredient expansion"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX017008",
+      "name": "Trama Root",
+      "editor_id": "TramaRoot",
+      "source": "Fandom/UESP curated pass",
+      "notes": "Ingredient expansion"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX027663",
+      "name": "Treasure Room Key",
+      "editor_id": "TreasureRoomKey",
+      "source": "Fandom: Console Commands (Skyrim)/Keys",
+      "notes": "Deep linked-page seed pass: Keys"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX027664",
+      "name": "Whiterun Jail Key",
+      "editor_id": "WhiterunJailKey",
+      "source": "Fandom: Console Commands (Skyrim)/Keys",
+      "notes": "Deep linked-page seed pass: Keys"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX0012CA",
+      "name": "Space Core",
+      "editor_id": "SpaceCore",
+      "source": "Fandom: Console Commands (Skyrim)/Miscellaneous_Items",
+      "notes": "Deep linked-page seed pass: Miscellaneous Items"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX020DCF",
+      "name": "Skull",
+      "editor_id": "Skull",
+      "source": "Fandom: Console Commands (Skyrim)/Miscellaneous_Items",
+      "notes": "Deep linked-page seed pass: Miscellaneous Items"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX000801",
+      "name": "Flawed Varla Stone",
+      "editor_id": "FlawedVarlaStone",
+      "source": "Fandom: Console Commands (Skyrim)/Miscellaneous_Items",
+      "notes": "Deep linked-page seed pass: Miscellaneous Items"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX183E61",
+      "name": "Sheogorath-Shaped Amber",
+      "editor_id": "SheogorathShapedAmber",
+      "source": "Fandom: Console Commands (Skyrim)/Miscellaneous_Items",
+      "notes": "Deep linked-page seed pass: Miscellaneous Items"
+    },
+    {
+      "file": "skyrim_ids_sample.csv",
+      "form_id": "XX12DD3A",
+      "name": "Bliss Bug in a Jar",
+      "editor_id": "BlissBugInAJar",
+      "source": "Fandom: Console Commands (Skyrim)/Miscellaneous_Items",
+      "notes": "Deep linked-page seed pass: Miscellaneous Items"
+    }
+  ]
+}

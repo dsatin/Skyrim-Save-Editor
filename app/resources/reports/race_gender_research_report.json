@@ -1,0 +1,49 @@
+{
+  "title": "Race/Gender research pass",
+  "uploaded_saves_checked": [
+    "Save6_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000119_20260609055939_1_1(1).ess",
+    "Save10_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000131_20260609061250_1_1(1).ess",
+    "Save4_4DE9A13B_0_7361766520746573742070632023303030303030303030303031_Tamriel_000028_20260608001915_1_1(1).ess"
+  ],
+  "findings": [
+    "All three uploaded race-test saves read as BretonRace and Male in the save header.",
+    "All three contain BretonRace compact RefIDs in Player ChangeForm 400014 as a consecutive 3-entry cluster.",
+    "All three contain BretonRace compact RefIDs in Live Player ChangeForm 400007 as a consecutive 2-entry cluster.",
+    "A test copy patched from BretonRace to KhajiitRace reopened in the editor and detected KhajiitRace in Player 400014 and Live 400007.",
+    "Header race text did not change to KhajiitRace when the fixed header string slot was too short; this appears to be display/load-screen metadata, not the only in-game race source.",
+    "Sex/gender is currently only confirmed in the save header. No female paired save was available to map the live in-game gender/body flag."
+  ],
+  "current_offsets_observed": {
+    "Save6_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000119_20260609055939_1_1(1).ess": {
+      "header_race": "BretonRace",
+      "header_sex": "Male",
+      "mapping": [
+        "Header Race: BretonRace",
+        "Detected Race: Breton (BretonRace, 00013741, 41 37 41)",
+        "Player ChangeForm 400014: BretonRace at 0x7077, 0x707A, 0x707D",
+        "Live ChangeForm 400007: BretonRace at 0x90, 0x93"
+      ]
+    },
+    "Save10_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000131_20260609061250_1_1(1).ess": {
+      "header_race": "BretonRace",
+      "header_sex": "Male",
+      "mapping": [
+        "Header Race: BretonRace",
+        "Detected Race: Breton (BretonRace, 00013741, 41 37 41)",
+        "Player ChangeForm 400014: BretonRace at 0x73CE, 0x73D1, 0x73D4",
+        "Live ChangeForm 400007: BretonRace at 0x90, 0x93"
+      ]
+    },
+    "Save4_4DE9A13B_0_7361766520746573742070632023303030303030303030303031_Tamriel_000028_20260608001915_1_1(1).ess": {
+      "header_race": "BretonRace",
+      "header_sex": "Male",
+      "mapping": [
+        "Header Race: BretonRace",
+        "Detected Race: Breton (BretonRace, 00013741, 41 37 41)",
+        "Player ChangeForm 400014: BretonRace at 0x6EE5, 0x6EE8, 0x6EEB",
+        "Live ChangeForm 400007: BretonRace at 0x7D, 0x80"
+      ]
+    }
+  },
+  "recommendation": "Keep race editing labeled experimental and avoid claiming gender changes in-game until a male/female paired diff is mapped."
+}

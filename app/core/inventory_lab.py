@@ -17,7 +17,7 @@ from app.core.skyrim_ess import (
 from app.core.player_payload import load_player_data, rebuild_save_with_player_data
 
 PLAYER_REFID_HEX = "400014"
-MAX_SAFE_INVENTORY_COUNT = 999_999_999
+MAX_SAFE_INVENTORY_COUNT = 99_999_999
 
 
 def validate_inventory_amount(amount: int) -> int:
@@ -100,6 +100,37 @@ def _load_reference_known_names() -> dict[str, str]:
 REFERENCE_KNOWN_NAMES = _load_reference_known_names()
 KNOWN_NAMES.update({fid: name for fid, name in REFERENCE_KNOWN_NAMES.items() if fid not in KNOWN_NAMES})
 KNOWN_FORM_IDS = set(KNOWN_NAMES) | set(REFERENCE_KNOWN_NAMES)
+
+INVENTORY_CATEGORIES = {
+    "currency", "arrows", "books", "keys", "misc", "jewelry", "clothing",
+    "alchemy", "light armor", "heavy armor", "blades", "ingredients", "food",
+    "poisons", "staves", "spell tomes", "blunts", "crafting", "beverages",
+    "bows", "gems", "soul gems", "ores and ingots", "building materials", "scrolls",
+}
+
+def _load_reference_categories() -> dict[str, str]:
+    out: dict[str, str] = {}
+    try:
+        csv_path = Path(__file__).resolve().parents[1] / "resources" / "database" / "skyrim_ids_sample.csv"
+        if not csv_path.exists():
+            return out
+        with csv_path.open("r", encoding="utf-8", newline="") as f:
+            for row in csv.DictReader(f):
+                form_id = (row.get("FormID") or row.get("form_id") or "").strip().upper()
+                category = (row.get("Category") or row.get("category") or "").strip()
+                if not form_id or form_id.startswith(("XX", "FE")) or not category:
+                    continue
+                if len(form_id) <= 8 and all(ch in "0123456789ABCDEF" for ch in form_id):
+                    out[form_id.zfill(8)[-8:]] = category
+    except Exception:
+        return out
+    return out
+
+REFERENCE_CATEGORIES = _load_reference_categories()
+
+def _is_inventory_database_record(form_id: str) -> bool:
+    category = (REFERENCE_CATEGORIES.get((form_id or "").strip().upper().zfill(8)[-8:], "") or "").casefold()
+    return not category or category in INVENTORY_CATEGORIES
 
 
 @dataclass(slots=True)
@@ -221,6 +252,12 @@ def read_player_inventory(path: str | Path) -> PlayerInventoryBlock:
         if warning:
             warning += " "
         warning += "Merged simple rows found at the end of the full inventory list."
+
+    # Stable inventory mode: do not merge loose full-player scan rows into the
+    # editable inventory table.  Those rows were useful for database research,
+    # but they can be stale/extra-data-adjacent candidates and made Count edits
+    # look saveable when they were not part of the active inventory list.  Keep
+    # unknown/database research separate from the editable inventory grid.
     if not candidates:
         raise EssParseError("Could not identify a player inventory candidate block in the player change form.")
 
@@ -233,13 +270,27 @@ def read_player_inventory(path: str | Path) -> PlayerInventoryBlock:
         ref_type, ref_value = decode_refid(ref)
         form_id = _form_id_from_ref(ref_type, ref_value, form_id_array)
         displayed = abs(raw_count) if raw_count < 0 else raw_count
+        # If the scanner found a concrete count field and payload offset, let the
+        # UI edit it.  The previous build disabled every loose full-scan row,
+        # which made normal-looking inventory entries such as starting clothes
+        # appear permanently locked.  Loose rows are still labeled clearly, but
+        # nonzero count-backed rows can be edited because the save writer only
+        # touches this fixed-size i32 count field.
+        is_loose = str(cand.get("confidence", "")).startswith("loose-")
         editable = ref_type in (0, 1) and (raw_count != 0 or form_id in KNOWN_FORM_IDS or ref_type == 0)
+        if raw_count == 0 and is_loose and form_id not in KNOWN_FORM_IDS:
+            editable = False
         if raw_count == 0:
-            note = "dormant zero-count row; New Count > 0 re-adds this existing row without inserting bytes"
+            note = "dormant zero-count row; Count > 0 re-adds this existing row without inserting bytes"
         elif extra:
             note = "count field found; has extra-data flags, save-copy edits only"
         else:
             note = "count field found; save-copy edits only"
+        if is_loose:
+            if editable:
+                note = "loose full-scan candidate with mapped count field; editable count, test on backup"
+            else:
+                note = "loose full-scan candidate; shown so items are not hidden, but direct count editing is disabled until mapped"
         if ctx.compressed:
             note += "; player ChangeForm is zlib-compressed and will be recompressed on save"
         virtual = ctx.local_to_virtual(off)
@@ -432,7 +483,11 @@ def _find_common_inventory_candidates(player_data: bytes) -> list[dict]:
                 continue
             raw_count = struct.unpack_from("<i", player_data, off + 3)[0]
             extra = player_data[off + 7]
-            if abs(raw_count) > MAX_SAFE_INVENTORY_COUNT:
+            # Gold/Lockpick are allowed to be found even when an older build wrote
+            # an over-cap value such as 999,999,999.  The UI/writer still clamps
+            # new edits to MAX_SAFE_INVENTORY_COUNT, but if we skip the row here
+            # the Common tab cannot repair bad/overflowed gold.
+            if abs(raw_count) > 2_147_483_647:
                 continue
             # Common rows in real saves can carry non-zero flag/extra bytes
             # such as 0x1C or 0x40.  Because the RefID is exact and the count is
@@ -449,6 +504,48 @@ def _find_common_inventory_candidates(player_data: bytes) -> list[dict]:
                 "confidence": "direct-common",
             })
     return sorted(out, key=lambda c: c["offset"])
+
+
+def _find_loose_inventory_candidates(player_data: bytes, current: list[dict], form_id_array: list[int] | None = None) -> list[dict]:
+    """Conservative full-player scan for inventory-like rows the main cluster missed.
+
+    This is intentionally display-first and write-safe.  It only accepts rows that
+    resolve to a known database ID or a save FormIDArray/plugin ID, skips bytes
+    overlapping the trusted inventory cluster, and marks the result with a loose
+    confidence tag so the UI can keep it read-only.
+    """
+    form_id_array = form_id_array or []
+    occupied: set[int] = set()
+    for c in current:
+        start = int(c.get("offset", 0))
+        for pos in range(start - 7, start + 8):
+            occupied.add(pos)
+    out: list[dict] = []
+    max_scan = max(0, len(player_data) - 8)
+    for off in range(0, max_scan):
+        if off in occupied:
+            continue
+        c = _candidate_at(player_data, off, form_id_array)
+        if not c:
+            continue
+        form_id = str(c.get("form_id", ""))
+        is_plugin = c.get("confidence") == "formid-array"
+        is_known = bool(c.get("known"))
+        # Unknown FormIDArray/plugin byte patterns are extremely noisy in a full
+        # player-data scan, so keep them only when the trusted inventory cluster
+        # already found them.  The broad loose pass is for known inventory records
+        # that the cluster picker missed.
+        if not is_known:
+            continue
+        if not _is_inventory_database_record(form_id):
+            continue
+        if int(c.get("raw_count", 0)) == 0:
+            continue
+        c = dict(c)
+        c["confidence"] = "loose-full-scan-known"
+        c["score"] = int(c.get("score", 0)) - 25
+        out.append(c)
+    return _collapse_overlaps(sorted(out, key=lambda c: c["offset"]))
 
 
 def _find_inventory_tail_candidates(player_data: bytes, current: list[dict], form_id_array: list[int] | None = None) -> list[dict]:
@@ -492,20 +589,32 @@ def _candidate_at(player_data: bytes, off: int, form_id_array: list[int] | None 
         return None
     ref = player_data[off:off + 3]
     ref_type, ref_value = decode_refid(ref)
-    # Keep the production inventory scanner on safe simple/default rows only.
-    # Type-0 FormIDArray rows need a real list walker because zero-heavy player
-    # data can otherwise create false inventory clusters. The database UI still
-    # resolves XX placeholders to the loaded save's plugin bytes for add/search.
-    if ref_type != 1 or ref_value <= 0 or ref_value > 0x3FFFFF:
+    form_id_array = form_id_array or []
+
+    # Default/base-game rows use compact RefID type 1. DLC and plugin inventory
+    # rows commonly use type 0, where the value indexes the save FormIDArray.
+    # A previous cleanup accidentally kept only type-1 rows, which made unresolved
+    # DLC/mod inventory items disappear entirely instead of showing as Unknown.
+    # Keep type-0 rows when the index resolves cleanly and the surrounding count
+    # shape looks like the simple inventory rows we already edit.
+    if ref_type == 1:
+        if ref_value <= 0 or ref_value > 0x3FFFFF:
+            return None
+    elif ref_type == 0:
+        if ref_value < 0 or ref_value >= len(form_id_array):
+            return None
+    else:
         return None
+
     raw_count = struct.unpack_from("<i", player_data, off + 3)[0]
     extra = player_data[off + 7]
     form_id = _form_id_from_ref(ref_type, ref_value, form_id_array)
     known = form_id in KNOWN_FORM_IDS
+    is_plugin_row = ref_type == 0 and form_id and not form_id.startswith("ARRAY[")
 
     if extra > 0x10:
         return None
-    if raw_count == 0 and not known:
+    if raw_count == 0 and not (known or is_plugin_row):
         return None
     if known:
         # Gold/lockpicks and other known items can legitimately be edited to high
@@ -515,12 +624,16 @@ def _candidate_at(player_data: bytes, off: int, form_id_array: list[int] | None 
             return None
     else:
         # Unknown high-count byte patterns inside animation strings create many false positives.
+        # Plugin/FormIDArray rows are real save references, but still keep a sane
+        # cap so random bytes do not become inventory rows.
         if abs(raw_count) > 500:
             return None
 
     score = 0
     if known:
         score += 50
+    if is_plugin_row:
+        score += 30
     if form_id in ("0000000F", "0000000A"):
         score += 50
     if abs(raw_count) <= 100:
@@ -536,7 +649,7 @@ def _candidate_at(player_data: bytes, off: int, form_id_array: list[int] | None 
         "extra": extra,
         "known": known,
         "score": score,
-        "confidence": "mapped" if known else "candidate",
+        "confidence": "mapped" if known else ("formid-array" if is_plugin_row else "candidate"),
     }
 
 def _collapse_overlaps(candidates: list[dict]) -> list[dict]:

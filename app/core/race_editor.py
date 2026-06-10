@@ -40,6 +40,19 @@ SKYRIM_RACES: tuple[SkyrimRaceOption, ...] = (
     SkyrimRaceOption("Orc / Orsimer", "OrcRace", "00013747"),
     SkyrimRaceOption("Redguard", "RedguardRace", "00013748"),
     SkyrimRaceOption("Wood Elf / Bosmer", "WoodElfRace", "00013749"),
+    # Vampire race variants are separate RACE records.  They matter for research
+    # because player.setrace <race>racevampire can make the in-game race differ
+    # from the save header race text.  FormIDs are vanilla Skyrim race records.
+    SkyrimRaceOption("Nord Vampire", "NordRaceVampire", "00088794"),
+    SkyrimRaceOption("Argonian Vampire", "ArgonianRaceVampire", "0008883A"),
+    SkyrimRaceOption("Breton Vampire", "BretonRaceVampire", "0008883C"),
+    SkyrimRaceOption("Dark Elf Vampire", "DarkElfRaceVampire", "0008883D"),
+    SkyrimRaceOption("High Elf Vampire", "HighElfRaceVampire", "00088840"),
+    SkyrimRaceOption("Imperial Vampire", "ImperialRaceVampire", "00088844"),
+    SkyrimRaceOption("Khajiit Vampire", "KhajiitRaceVampire", "00088845"),
+    SkyrimRaceOption("Redguard Vampire", "RedguardRaceVampire", "00088846"),
+    SkyrimRaceOption("Wood Elf Vampire", "WoodElfRaceVampire", "00088884"),
+    SkyrimRaceOption("Orc Vampire", "OrcRaceVampire", "000A82B9"),
 )
 
 RACE_BY_EDITOR_ID: dict[str, SkyrimRaceOption] = {r.editor_id.casefold(): r for r in SKYRIM_RACES}
@@ -78,7 +91,7 @@ class RaceMapping:
     def summary(self) -> str:
         lines = [f"Header Race: {self.header_race_text or '(blank)'}"]
         if self.active_race:
-            lines.append(f"Detected Race: {self.active_race.display} ({self.active_race.editor_id}, {self.active_race.form_id}, {self.active_race.encoded_hex})")
+            lines.append(f"Mapped Race Ref: {self.active_race.display} ({self.active_race.editor_id}, {self.active_race.form_id}, {self.active_race.encoded_hex})")
         if self.player_hit:
             lines.append(
                 f"Player ChangeForm {self.player_hit.refid_hex}: {self.player_hit.current_race.editor_id} at {self.player_hit.offset_text}"
@@ -144,7 +157,25 @@ def _find_race_pair(data: bytes, *, record_name: str, refid_hex: str, compressed
         second = by_offset.get(off + 3)
         if second:
             offsets = cluster_for(off)
-            pairs.append(RacePairHit(record_name, refid_hex, offsets, race, second, compressed, virtual_base))
+            cluster_races = [by_offset[o] for o in offsets if o in by_offset]
+            display_current = race
+            display_original = second
+            # showracemenu can leave the previous race in the same cluster.
+            # In known tests, a Nord conversion may look like:
+            #   Player 400014: BretonRace / NordRace / NordRace
+            #   Live   400007: NordRace / BretonRace
+            # The old detector returned the first player race (Breton), which made
+            # a real Nord save look stale/incorrect.  If the save header names a
+            # playable race and that race appears anywhere in the mapped cluster,
+            # prefer it as the active display race while preserving all offsets
+            # for research output.
+            if preferred and any(r.editor_id == preferred.editor_id for r in cluster_races):
+                display_current = preferred
+                for r in cluster_races:
+                    if r.editor_id != preferred.editor_id:
+                        display_original = r
+                        break
+            pairs.append(RacePairHit(record_name, refid_hex, offsets, display_current, display_original, compressed, virtual_base))
     if pairs:
         if preferred:
             for pair in pairs:
@@ -205,6 +236,12 @@ def read_skyrim_race_mapping(source: str | Path) -> RaceMapping:
 
 
 def patch_header_race_text(source: str | Path, target: str | Path, race: SkyrimRaceOption) -> EssDocument:
+    """Patch the save-menu/header race text when it fits the existing slot.
+
+    The ESS payload uses internal location tables, so resizing the header string
+    would shift the compressed payload and invalidate those offsets.  Keep this
+    fixed-width and let the caller still patch the actual player race records.
+    """
     source = Path(source)
     target = Path(target)
     doc = read_ess(source)
@@ -213,14 +250,14 @@ def patch_header_race_text(source: str | Path, target: str | Path, race: SkyrimR
     encoded = race.editor_id.encode("utf-8")
     if len(encoded) > h.player_race_capacity:
         raise ValueError(
-            f"Race text {race.editor_id!r} is {len(encoded)} bytes but this save header has only {h.player_race_capacity} bytes."
+            f"Race text {race.editor_id!r} is {len(encoded)} bytes but this save header has only {h.player_race_capacity} bytes. "
+            "The actual player race records can still be synced, but this fixed header label cannot be expanded safely."
         )
     struct.pack_into("<H", raw, h.player_race_offset, h.player_race_capacity)
     raw[h.player_race_offset + 2:h.player_race_offset + 2 + h.player_race_capacity] = encoded.ljust(h.player_race_capacity, b"\x00")
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_bytes(raw)
     return read_ess(target)
-
 
 def _patch_offsets(data: bytearray, offsets: Iterable[int], race: SkyrimRaceOption) -> None:
     encoded = race.encoded
@@ -230,13 +267,31 @@ def _patch_offsets(data: bytearray, offsets: Iterable[int], race: SkyrimRaceOpti
         data[off:off + 3] = encoded
 
 
-def patch_skyrim_player_race(source: str | Path, target: str | Path, race_id: str, *, patch_header: bool = True) -> RaceMapping:
+def _patch_all_known_race_refs(data: bytearray, race: SkyrimRaceOption) -> int:
+    """Replace every vanilla playable/vampire race RefID in a player record.
+
+    showracemenu saves can keep a mixed race cluster such as Breton/Nord/Nord.
+    Patching only the first pair can leave stale body/appearance race refs behind
+    and produces hybrid results (for example a Nord body with a Khajiit tail).
+    This intentionally operates only on the player-owned records that callers
+    pass in, not on the entire save file.
+    """
+    target = race.encoded
+    offsets = sorted({off for off, _r in _find_known_race_offsets(bytes(data))})
+    for off in offsets:
+        if 0 <= off <= len(data) - 3:
+            data[off:off + 3] = target
+    return len(offsets)
+
+
+def patch_skyrim_player_race(source: str | Path, target: str | Path, race_id: str, *, patch_header: bool = True, full_sync: bool = True) -> RaceMapping:
     """Patch the mapped player race references.
 
-    The tested saves store the current/original race as a consecutive 3-byte
-    RefID pair in Player ChangeForm 400014, and some saves also mirror it in
-    Live Player ChangeForm 400007.  This writes both entries when found, then
-    optionally syncs the header race text.
+    The tested saves store race refs in Player ChangeForm 400014 and usually in
+    Live Player ChangeForm 400007. showracemenu can leave stale old-race refs in
+    those same records, so full_sync updates every known playable/vampire race
+    RefID found inside those player records.  Header race text is also synced
+    when its fixed slot can hold the new editor ID.
     """
     source = Path(source)
     target = Path(target)
@@ -254,9 +309,13 @@ def patch_skyrim_player_race(source: str | Path, target: str | Path, race_id: st
     if mapping.player_hit:
         ctx = load_player_data(work)
         data = bytearray(ctx.player_data)
-        _patch_offsets(data, mapping.player_hit.offsets, race)
+        if full_sync:
+            changed_count = _patch_all_known_race_refs(data, race)
+            wrote_any_record = changed_count > 0
+        else:
+            _patch_offsets(data, mapping.player_hit.offsets, race)
+            wrote_any_record = True
         rebuild_save_with_player_data(work, work, bytes(data))
-        wrote_any_record = True
 
     # Re-read after the player ChangeForm rebuild, then patch the optional 400007 mirror.
     try:
@@ -272,9 +331,13 @@ def patch_skyrim_player_race(source: str | Path, target: str | Path, race_id: st
         )
         if live_hit:
             data = bytearray(live_ctx.record_data)
-            _patch_offsets(data, live_hit.offsets, race)
+            if full_sync:
+                changed_count = _patch_all_known_race_refs(data, race)
+                wrote_any_record = wrote_any_record or changed_count > 0
+            else:
+                _patch_offsets(data, live_hit.offsets, race)
+                wrote_any_record = True
             _rebuild_save_with_live_record(live_ctx, work, bytes(data))
-            wrote_any_record = True
     except Exception:
         # 400007 race refs are not present in some early saves; 400014 is the main target.
         pass

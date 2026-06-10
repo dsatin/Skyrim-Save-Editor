@@ -1,0 +1,812 @@
+{
+  "scanned_saves": 18,
+  "per_save": [
+    {
+      "save": "PAWEL(3).ess",
+      "inventory_rows": 137,
+      "unknown_rows": 17
+    },
+    {
+      "save": "SAVEDATA(14).DAT",
+      "inventory_rows": 81,
+      "unknown_rows": 2
+    },
+    {
+      "save": "SAVEDATA(15).DAT",
+      "inventory_rows": 125,
+      "unknown_rows": 2
+    },
+    {
+      "save": "SAVEDATA(16).DAT",
+      "inventory_rows": 81,
+      "unknown_rows": 2
+    },
+    {
+      "save": "Save10_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000131_20260609061250_1_1(1).ess",
+      "inventory_rows": 168,
+      "unknown_rows": 9
+    },
+    {
+      "save": "Save10_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000131_20260609061250_1_1(2).ess",
+      "inventory_rows": 168,
+      "unknown_rows": 9
+    },
+    {
+      "save": "Save10_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000131_20260609061250_1_1.ess",
+      "inventory_rows": 168,
+      "unknown_rows": 9
+    },
+    {
+      "save": "Save1_1BEF8739_0_7361766520746573742070632023303030303030303030303130_WhiterunWorld_000142_20260609233000_1_1(1).ess",
+      "inventory_rows": 29,
+      "unknown_rows": 0
+    },
+    {
+      "save": "Save1_1BEF8739_0_7361766520746573742070632023303030303030303030303130_WhiterunWorld_000142_20260609233000_1_1.ess",
+      "inventory_rows": 29,
+      "unknown_rows": 0
+    },
+    {
+      "save": "Save3_60A8F9C3_1_417A6172656E_WhiterunWorld_040522_20211027194427_115_1(3).ess",
+      "inventory_rows": 214,
+      "unknown_rows": 1
+    },
+    {
+      "save": "Save47_14EF1DEC_1_5261676E6172_ccEEJSSE004Interior01_041825_20240818182420_252_1(3).ess",
+      "inventory_rows": 192,
+      "unknown_rows": 30
+    },
+    {
+      "save": "Save4_4DE9A13B_0_7361766520746573742070632023303030303030303030303031_Tamriel_000028_20260608001915_1_1(1).ess",
+      "inventory_rows": 28,
+      "unknown_rows": 0
+    },
+    {
+      "save": "Save5_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000109_20260609054956_1_1.ess",
+      "inventory_rows": 54,
+      "unknown_rows": 9
+    },
+    {
+      "save": "Save6_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000119_20260609055939_1_1(1).ess",
+      "inventory_rows": 54,
+      "unknown_rows": 9
+    },
+    {
+      "save": "Save6_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000119_20260609055939_1_1.ess",
+      "inventory_rows": 54,
+      "unknown_rows": 9
+    },
+    {
+      "save": "Save7_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000120_20260609060115_1_1.ess",
+      "inventory_rows": 55,
+      "unknown_rows": 9
+    },
+    {
+      "save": "Save8_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunWorld_000123_20260609060445_1_1.ess",
+      "inventory_rows": 55,
+      "unknown_rows": 9
+    },
+    {
+      "save": "Save9_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunWorld_000129_20260609061055_1_1.ess",
+      "inventory_rows": 57,
+      "unknown_rows": 8
+    }
+  ],
+  "unique_unknowns": 55,
+  "total_unknown_rows": 134,
+  "unknowns": [
+    {
+      "form_id": "0100314A",
+      "seen_count": 27,
+      "total_quantity": 2646,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Update.esm | 0100314A | Full FormID with load-order byte",
+      "sample_saves": [
+        "Save10_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000131_20260609061250_1_1(1).ess",
+        "Save10_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000131_20260609061250_1_1(2).ess",
+        "Save10_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000131_20260609061250_1_1.ess",
+        "Save5_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000109_20260609054956_1_1.ess",
+        "Save6_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000119_20260609055939_1_1(1).ess",
+        "Save6_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000119_20260609055939_1_1.ess",
+        "Save7_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000120_20260609060115_1_1.ess",
+        "Save8_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunWorld_000123_20260609060445_1_1.ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; save-copy edits only"
+    },
+    {
+      "form_id": "01000811",
+      "seen_count": 9,
+      "total_quantity": 9,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Update.esm | 01000811 | Full FormID with load-order byte",
+      "sample_saves": [
+        "Save10_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000131_20260609061250_1_1(1).ess",
+        "Save10_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000131_20260609061250_1_1(2).ess",
+        "Save10_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000131_20260609061250_1_1.ess",
+        "Save5_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000109_20260609054956_1_1.ess",
+        "Save6_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000119_20260609055939_1_1(1).ess",
+        "Save6_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000119_20260609055939_1_1.ess",
+        "Save7_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000120_20260609060115_1_1.ess",
+        "Save8_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunWorld_000123_20260609060445_1_1.ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; save-copy edits only"
+    },
+    {
+      "form_id": "020071D2",
+      "seen_count": 9,
+      "total_quantity": 0,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dawnguard.esm | 020071D2 | Full FormID with load-order byte",
+      "sample_saves": [
+        "Save10_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000131_20260609061250_1_1(1).ess",
+        "Save10_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000131_20260609061250_1_1(2).ess",
+        "Save10_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000131_20260609061250_1_1.ess",
+        "Save5_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000109_20260609054956_1_1.ess",
+        "Save6_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000119_20260609055939_1_1(1).ess",
+        "Save6_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000119_20260609055939_1_1.ess",
+        "Save7_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000120_20260609060115_1_1.ess",
+        "Save8_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunWorld_000123_20260609060445_1_1.ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "dormant zero-count row; Count > 0 re-adds this existing row without inserting bytes"
+    },
+    {
+      "form_id": "04018B0F",
+      "seen_count": 9,
+      "total_quantity": 243,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dragonborn.esm | 04018B0F | Full FormID with load-order byte",
+      "sample_saves": [
+        "Save10_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000131_20260609061250_1_1(1).ess",
+        "Save10_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000131_20260609061250_1_1(2).ess",
+        "Save10_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000131_20260609061250_1_1.ess",
+        "Save5_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000109_20260609054956_1_1.ess",
+        "Save6_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000119_20260609055939_1_1(1).ess",
+        "Save6_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000119_20260609055939_1_1.ess",
+        "Save7_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000120_20260609060115_1_1.ess",
+        "Save8_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunWorld_000123_20260609060445_1_1.ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; save-copy edits only"
+    },
+    {
+      "form_id": "04033BB2",
+      "seen_count": 9,
+      "total_quantity": 18,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dragonborn.esm | 04033BB2 | Full FormID with load-order byte",
+      "sample_saves": [
+        "Save10_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000131_20260609061250_1_1(1).ess",
+        "Save10_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000131_20260609061250_1_1(2).ess",
+        "Save10_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000131_20260609061250_1_1.ess",
+        "Save5_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000109_20260609054956_1_1.ess",
+        "Save6_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000119_20260609055939_1_1(1).ess",
+        "Save6_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000119_20260609055939_1_1.ess",
+        "Save7_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000120_20260609060115_1_1.ess",
+        "Save8_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunWorld_000123_20260609060445_1_1.ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; save-copy edits only"
+    },
+    {
+      "form_id": "04037D41",
+      "seen_count": 9,
+      "total_quantity": 108,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dragonborn.esm | 04037D41 | Full FormID with load-order byte",
+      "sample_saves": [
+        "Save10_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000131_20260609061250_1_1(1).ess",
+        "Save10_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000131_20260609061250_1_1(2).ess",
+        "Save10_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000131_20260609061250_1_1.ess",
+        "Save5_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000109_20260609054956_1_1.ess",
+        "Save6_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000119_20260609055939_1_1(1).ess",
+        "Save6_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000119_20260609055939_1_1.ess",
+        "Save7_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000120_20260609060115_1_1.ess",
+        "Save8_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunWorld_000123_20260609060445_1_1.ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; save-copy edits only"
+    },
+    {
+      "form_id": "0200A2A9",
+      "seen_count": 8,
+      "total_quantity": 24,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dawnguard.esm | 0200A2A9 | Full FormID with load-order byte",
+      "sample_saves": [
+        "Save10_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000131_20260609061250_1_1(1).ess",
+        "Save10_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000131_20260609061250_1_1(2).ess",
+        "Save10_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000131_20260609061250_1_1.ess",
+        "Save5_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000109_20260609054956_1_1.ess",
+        "Save6_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000119_20260609055939_1_1(1).ess",
+        "Save6_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000119_20260609055939_1_1.ess",
+        "Save7_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunDragonsreach_000120_20260609060115_1_1.ess",
+        "Save8_4DE9A13B_0_7361766520746573742070632023303030303030303030303032_WhiterunWorld_000123_20260609060445_1_1.ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; save-copy edits only"
+    },
+    {
+      "form_id": "020090FA",
+      "seen_count": 3,
+      "total_quantity": 0,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "dawnguard.esm | 020090FA | Full FormID with load-order byte",
+      "sample_saves": [
+        "SAVEDATA(14).DAT",
+        "SAVEDATA(15).DAT",
+        "SAVEDATA(16).DAT"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "dormant zero-count row; Count > 0 re-adds this existing row without inserting bytes"
+    },
+    {
+      "form_id": "0401899F",
+      "seen_count": 3,
+      "total_quantity": 3,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "dragonborn.esm | 0401899F | Full FormID with load-order byte",
+      "sample_saves": [
+        "SAVEDATA(14).DAT",
+        "SAVEDATA(15).DAT",
+        "SAVEDATA(16).DAT"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; has extra-data flags, save-copy edits only"
+    },
+    {
+      "form_id": "010009DE",
+      "seen_count": 2,
+      "total_quantity": 56,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Update.esm | 010009DE | Full FormID with load-order byte",
+      "sample_saves": [
+        "Save47_14EF1DEC_1_5261676E6172_ccEEJSSE004Interior01_041825_20240818182420_252_1(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; has extra-data flags, save-copy edits only"
+    },
+    {
+      "form_id": "FE01E82C",
+      "seen_count": 2,
+      "total_quantity": 53,
+      "category_guess": "Light plugin / ESL",
+      "plugin_hint": "FE01E82C | Light plugin / ESL compact ID | Light-plugin save references need extra care; this build identifies them but does not rewrite them yet.",
+      "sample_saves": [
+        "Save47_14EF1DEC_1_5261676E6172_ccEEJSSE004Interior01_041825_20240818182420_252_1(3).ess"
+      ],
+      "reason": "FE compact FormID; needs light plugin mapping",
+      "note": "count field found; save-copy edits only"
+    },
+    {
+      "form_id": "01003111",
+      "seen_count": 1,
+      "total_quantity": 2,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Update.esm | 01003111 | Full FormID with load-order byte",
+      "sample_saves": [
+        "Save47_14EF1DEC_1_5261676E6172_ccEEJSSE004Interior01_041825_20240818182420_252_1(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; has extra-data flags, save-copy edits only"
+    },
+    {
+      "form_id": "02003FA6",
+      "seen_count": 1,
+      "total_quantity": 74,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dawnguard.esm | 02003FA6 | Full FormID with load-order byte",
+      "sample_saves": [
+        "Save47_14EF1DEC_1_5261676E6172_ccEEJSSE004Interior01_041825_20240818182420_252_1(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; save-copy edits only"
+    },
+    {
+      "form_id": "0200C0EF",
+      "seen_count": 1,
+      "total_quantity": 43,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dawnguard.esm | 0200C0EF | Full FormID with load-order byte",
+      "sample_saves": [
+        "Save47_14EF1DEC_1_5261676E6172_ccEEJSSE004Interior01_041825_20240818182420_252_1(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; save-copy edits only"
+    },
+    {
+      "form_id": "0200E8EE",
+      "seen_count": 1,
+      "total_quantity": 371,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dawnguard.esm | 0200E8EE | Full FormID with load-order byte",
+      "sample_saves": [
+        "PAWEL(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; save-copy edits only; player ChangeForm is zlib-compressed and will be recompressed on save"
+    },
+    {
+      "form_id": "02014029",
+      "seen_count": 1,
+      "total_quantity": 64,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dawnguard.esm | 02014029 | Full FormID with load-order byte",
+      "sample_saves": [
+        "Save47_14EF1DEC_1_5261676E6172_ccEEJSSE004Interior01_041825_20240818182420_252_1(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; save-copy edits only"
+    },
+    {
+      "form_id": "0201958C",
+      "seen_count": 1,
+      "total_quantity": 1,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dawnguard.esm | 0201958C | Full FormID with load-order byte",
+      "sample_saves": [
+        "PAWEL(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; has extra-data flags, save-copy edits only; player ChangeForm is zlib-compressed and will be recompressed on save"
+    },
+    {
+      "form_id": "0301786A",
+      "seen_count": 1,
+      "total_quantity": 1,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dragonborn.esm | 0301786A | Full FormID with load-order byte",
+      "sample_saves": [
+        "PAWEL(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; save-copy edits only; player ChangeForm is zlib-compressed and will be recompressed on save"
+    },
+    {
+      "form_id": "0301ED08",
+      "seen_count": 1,
+      "total_quantity": 353,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dragonborn.esm | 0301ED08 | Full FormID with load-order byte",
+      "sample_saves": [
+        "PAWEL(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; save-copy edits only; player ChangeForm is zlib-compressed and will be recompressed on save"
+    },
+    {
+      "form_id": "03020EB2",
+      "seen_count": 1,
+      "total_quantity": 499,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dragonborn.esm | 03020EB2 | Full FormID with load-order byte",
+      "sample_saves": [
+        "PAWEL(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; save-copy edits only; player ChangeForm is zlib-compressed and will be recompressed on save"
+    },
+    {
+      "form_id": "03020FF4",
+      "seen_count": 1,
+      "total_quantity": 1,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dragonborn.esm | 03020FF4 | Full FormID with load-order byte",
+      "sample_saves": [
+        "PAWEL(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; has extra-data flags, save-copy edits only; player ChangeForm is zlib-compressed and will be recompressed on save"
+    },
+    {
+      "form_id": "03024F09",
+      "seen_count": 1,
+      "total_quantity": 2,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dragonborn.esm | 03024F09 | Full FormID with load-order byte",
+      "sample_saves": [
+        "PAWEL(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; save-copy edits only; player ChangeForm is zlib-compressed and will be recompressed on save"
+    },
+    {
+      "form_id": "0302623A",
+      "seen_count": 1,
+      "total_quantity": 1,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dragonborn.esm | 0302623A | Full FormID with load-order byte",
+      "sample_saves": [
+        "PAWEL(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; has extra-data flags, save-copy edits only; player ChangeForm is zlib-compressed and will be recompressed on save"
+    },
+    {
+      "form_id": "030269D5",
+      "seen_count": 1,
+      "total_quantity": 311,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dragonborn.esm | 030269D5 | Full FormID with load-order byte",
+      "sample_saves": [
+        "PAWEL(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; save-copy edits only; player ChangeForm is zlib-compressed and will be recompressed on save"
+    },
+    {
+      "form_id": "030285D1",
+      "seen_count": 1,
+      "total_quantity": 2,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dragonborn.esm | 030285D1 | Full FormID with load-order byte",
+      "sample_saves": [
+        "PAWEL(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; save-copy edits only; player ChangeForm is zlib-compressed and will be recompressed on save"
+    },
+    {
+      "form_id": "0302B946",
+      "seen_count": 1,
+      "total_quantity": 3,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dragonborn.esm | 0302B946 | Full FormID with load-order byte",
+      "sample_saves": [
+        "PAWEL(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; has extra-data flags, save-copy edits only; player ChangeForm is zlib-compressed and will be recompressed on save"
+    },
+    {
+      "form_id": "03033154",
+      "seen_count": 1,
+      "total_quantity": 1,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dragonborn.esm | 03033154 | Full FormID with load-order byte",
+      "sample_saves": [
+        "PAWEL(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; has extra-data flags, save-copy edits only; player ChangeForm is zlib-compressed and will be recompressed on save"
+    },
+    {
+      "form_id": "030346BA",
+      "seen_count": 1,
+      "total_quantity": 1,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dragonborn.esm | 030346BA | Full FormID with load-order byte",
+      "sample_saves": [
+        "PAWEL(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; save-copy edits only; player ChangeForm is zlib-compressed and will be recompressed on save"
+    },
+    {
+      "form_id": "030395D0",
+      "seen_count": 1,
+      "total_quantity": 1,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dragonborn.esm | 030395D0 | Full FormID with load-order byte",
+      "sample_saves": [
+        "PAWEL(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; save-copy edits only; player ChangeForm is zlib-compressed and will be recompressed on save"
+    },
+    {
+      "form_id": "0400951A",
+      "seen_count": 1,
+      "total_quantity": 1,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "HearthFires.esm | 0400951A | Full FormID with load-order byte",
+      "sample_saves": [
+        "PAWEL(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; save-copy edits only; player ChangeForm is zlib-compressed and will be recompressed on save"
+    },
+    {
+      "form_id": "0400AF77",
+      "seen_count": 1,
+      "total_quantity": 4,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "HearthFires.esm | 0400AF77 | Full FormID with load-order byte",
+      "sample_saves": [
+        "PAWEL(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; save-copy edits only; player ChangeForm is zlib-compressed and will be recompressed on save"
+    },
+    {
+      "form_id": "0400EE72",
+      "seen_count": 1,
+      "total_quantity": 500,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dragonborn.esm | 0400EE72 | Full FormID with load-order byte",
+      "sample_saves": [
+        "Save3_60A8F9C3_1_417A6172656E_WhiterunWorld_040522_20211027194427_115_1(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; save-copy edits only"
+    },
+    {
+      "form_id": "040151A3",
+      "seen_count": 1,
+      "total_quantity": 1,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "HearthFires.esm | 040151A3 | Full FormID with load-order byte",
+      "sample_saves": [
+        "PAWEL(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; has extra-data flags, save-copy edits only; player ChangeForm is zlib-compressed and will be recompressed on save"
+    },
+    {
+      "form_id": "0401A486",
+      "seen_count": 1,
+      "total_quantity": 5,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dragonborn.esm | 0401A486 | Full FormID with load-order byte",
+      "sample_saves": [
+        "Save47_14EF1DEC_1_5261676E6172_ccEEJSSE004Interior01_041825_20240818182420_252_1(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; save-copy edits only"
+    },
+    {
+      "form_id": "0401D4D0",
+      "seen_count": 1,
+      "total_quantity": 1,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dragonborn.esm | 0401D4D0 | Full FormID with load-order byte",
+      "sample_saves": [
+        "Save47_14EF1DEC_1_5261676E6172_ccEEJSSE004Interior01_041825_20240818182420_252_1(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; has extra-data flags, save-copy edits only"
+    },
+    {
+      "form_id": "0401FAF9",
+      "seen_count": 1,
+      "total_quantity": 1,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dragonborn.esm | 0401FAF9 | Full FormID with load-order byte",
+      "sample_saves": [
+        "Save47_14EF1DEC_1_5261676E6172_ccEEJSSE004Interior01_041825_20240818182420_252_1(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; has extra-data flags, save-copy edits only"
+    },
+    {
+      "form_id": "04025935",
+      "seen_count": 1,
+      "total_quantity": 18,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dragonborn.esm | 04025935 | Full FormID with load-order byte",
+      "sample_saves": [
+        "Save47_14EF1DEC_1_5261676E6172_ccEEJSSE004Interior01_041825_20240818182420_252_1(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; save-copy edits only"
+    },
+    {
+      "form_id": "0402710E",
+      "seen_count": 1,
+      "total_quantity": 2,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dragonborn.esm | 0402710E | Full FormID with load-order byte",
+      "sample_saves": [
+        "Save47_14EF1DEC_1_5261676E6172_ccEEJSSE004Interior01_041825_20240818182420_252_1(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; save-copy edits only"
+    },
+    {
+      "form_id": "040275B8",
+      "seen_count": 1,
+      "total_quantity": 1,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dragonborn.esm | 040275B8 | Full FormID with load-order byte",
+      "sample_saves": [
+        "Save47_14EF1DEC_1_5261676E6172_ccEEJSSE004Interior01_041825_20240818182420_252_1(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; has extra-data flags, save-copy edits only"
+    },
+    {
+      "form_id": "04027AF4",
+      "seen_count": 1,
+      "total_quantity": 1,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dragonborn.esm | 04027AF4 | Full FormID with load-order byte",
+      "sample_saves": [
+        "Save47_14EF1DEC_1_5261676E6172_ccEEJSSE004Interior01_041825_20240818182420_252_1(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; has extra-data flags, save-copy edits only"
+    },
+    {
+      "form_id": "04028C96",
+      "seen_count": 1,
+      "total_quantity": 1,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dragonborn.esm | 04028C96 | Full FormID with load-order byte",
+      "sample_saves": [
+        "Save47_14EF1DEC_1_5261676E6172_ccEEJSSE004Interior01_041825_20240818182420_252_1(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; save-copy edits only"
+    },
+    {
+      "form_id": "040321B2",
+      "seen_count": 1,
+      "total_quantity": 1,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dragonborn.esm | 040321B2 | Full FormID with load-order byte",
+      "sample_saves": [
+        "Save47_14EF1DEC_1_5261676E6172_ccEEJSSE004Interior01_041825_20240818182420_252_1(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; has extra-data flags, save-copy edits only"
+    },
+    {
+      "form_id": "04034B50",
+      "seen_count": 1,
+      "total_quantity": 1,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dragonborn.esm | 04034B50 | Full FormID with load-order byte",
+      "sample_saves": [
+        "Save47_14EF1DEC_1_5261676E6172_ccEEJSSE004Interior01_041825_20240818182420_252_1(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; save-copy edits only"
+    },
+    {
+      "form_id": "0403D2D0",
+      "seen_count": 1,
+      "total_quantity": 1,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "Dragonborn.esm | 0403D2D0 | Full FormID with load-order byte",
+      "sample_saves": [
+        "Save47_14EF1DEC_1_5261676E6172_ccEEJSSE004Interior01_041825_20240818182420_252_1(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; has extra-data flags, save-copy edits only"
+    },
+    {
+      "form_id": "09011643",
+      "seen_count": 1,
+      "total_quantity": 1,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "ccbgssse016-umbra.esm | 09011643 | Full FormID with load-order byte",
+      "sample_saves": [
+        "Save47_14EF1DEC_1_5261676E6172_ccEEJSSE004Interior01_041825_20240818182420_252_1(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; save-copy edits only"
+    },
+    {
+      "form_id": "0B00099B",
+      "seen_count": 1,
+      "total_quantity": 1,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "ccbgssse067-daedinv.esm | 0B00099B | Full FormID with load-order byte",
+      "sample_saves": [
+        "Save47_14EF1DEC_1_5261676E6172_ccEEJSSE004Interior01_041825_20240818182420_252_1(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; has extra-data flags, save-copy edits only"
+    },
+    {
+      "form_id": "0C000873",
+      "seen_count": 1,
+      "total_quantity": 81,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "ccbgssse025-advdsgs.esm | 0C000873 | Full FormID with load-order byte",
+      "sample_saves": [
+        "Save47_14EF1DEC_1_5261676E6172_ccEEJSSE004Interior01_041825_20240818182420_252_1(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; has extra-data flags, save-copy edits only"
+    },
+    {
+      "form_id": "0C000878",
+      "seen_count": 1,
+      "total_quantity": 50,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "ccbgssse025-advdsgs.esm | 0C000878 | Full FormID with load-order byte",
+      "sample_saves": [
+        "Save47_14EF1DEC_1_5261676E6172_ccEEJSSE004Interior01_041825_20240818182420_252_1(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; has extra-data flags, save-copy edits only"
+    },
+    {
+      "form_id": "0E0017A7",
+      "seen_count": 1,
+      "total_quantity": 1,
+      "category_guess": "Plugin / DLC",
+      "plugin_hint": "ccafdsse001-dwesanctuary.esm | 0E0017A7 | Full FormID with load-order byte",
+      "sample_saves": [
+        "Save47_14EF1DEC_1_5261676E6172_ccEEJSSE004Interior01_041825_20240818182420_252_1(3).ess"
+      ],
+      "reason": "non-zero load-order byte; likely DLC or modded item",
+      "note": "count field found; has extra-data flags, save-copy edits only"
+    },
+    {
+      "form_id": "FE000803",
+      "seen_count": 1,
+      "total_quantity": 5,
+      "category_guess": "Light plugin / ESL",
+      "plugin_hint": "FE000803 | Light plugin / ESL compact ID | Light-plugin save references need extra care; this build identifies them but does not rewrite them yet.",
+      "sample_saves": [
+        "Save47_14EF1DEC_1_5261676E6172_ccEEJSSE004Interior01_041825_20240818182420_252_1(3).ess"
+      ],
+      "reason": "FE compact FormID; needs light plugin mapping",
+      "note": "count field found; save-copy edits only"
+    },
+    {
+      "form_id": "FE013D79",
+      "seen_count": 1,
+      "total_quantity": 1,
+      "category_guess": "Light plugin / ESL",
+      "plugin_hint": "FE013D79 | Light plugin / ESL compact ID | Light-plugin save references need extra care; this build identifies them but does not rewrite them yet.",
+      "sample_saves": [
+        "Save47_14EF1DEC_1_5261676E6172_ccEEJSSE004Interior01_041825_20240818182420_252_1(3).ess"
+      ],
+      "reason": "FE compact FormID; needs light plugin mapping",
+      "note": "count field found; has extra-data flags, save-copy edits only"
+    },
+    {
+      "form_id": "FE01FEF9",
+      "seen_count": 1,
+      "total_quantity": 1,
+      "category_guess": "Light plugin / ESL",
+      "plugin_hint": "FE01FEF9 | Light plugin / ESL compact ID | Light-plugin save references need extra care; this build identifies them but does not rewrite them yet.",
+      "sample_saves": [
+        "Save47_14EF1DEC_1_5261676E6172_ccEEJSSE004Interior01_041825_20240818182420_252_1(3).ess"
+      ],
+      "reason": "FE compact FormID; needs light plugin mapping",
+      "note": "count field found; has extra-data flags, save-copy edits only"
+    },
+    {
+      "form_id": "FE02B81B",
+      "seen_count": 1,
+      "total_quantity": 1,
+      "category_guess": "Light plugin / ESL",
+      "plugin_hint": "FE02B81B | Light plugin / ESL compact ID | Light-plugin save references need extra care; this build identifies them but does not rewrite them yet.",
+      "sample_saves": [
+        "Save47_14EF1DEC_1_5261676E6172_ccEEJSSE004Interior01_041825_20240818182420_252_1(3).ess"
+      ],
+      "reason": "FE compact FormID; needs light plugin mapping",
+      "note": "count field found; has extra-data flags, save-copy edits only"
+    },
+    {
+      "form_id": "FE03BD93",
+      "seen_count": 1,
+      "total_quantity": 1,
+      "category_guess": "Light plugin / ESL",
+      "plugin_hint": "FE03BD93 | Light plugin / ESL compact ID | Light-plugin save references need extra care; this build identifies them but does not rewrite them yet.",
+      "sample_saves": [
+        "Save47_14EF1DEC_1_5261676E6172_ccEEJSSE004Interior01_041825_20240818182420_252_1(3).ess"
+      ],
+      "reason": "FE compact FormID; needs light plugin mapping",
+      "note": "count field found; has extra-data flags, save-copy edits only"
+    },
+    {
+      "form_id": "FE03EFF6",
+      "seen_count": 1,
+      "total_quantity": 1,
+      "category_guess": "Light plugin / ESL",
+      "plugin_hint": "FE03EFF6 | Light plugin / ESL compact ID | Light-plugin save references need extra care; this build identifies them but does not rewrite them yet.",
+      "sample_saves": [
+        "Save47_14EF1DEC_1_5261676E6172_ccEEJSSE004Interior01_041825_20240818182420_252_1(3).ess"
+      ],
+      "reason": "FE compact FormID; needs light plugin mapping",
+      "note": "count field found; has extra-data flags, save-copy edits only"
+    }
+  ]
+}

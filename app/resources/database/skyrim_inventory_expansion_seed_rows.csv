@@ -1,0 +1,27 @@
+Category,EditorID,FormID,Name,Value,Source,Notes
+Soul Gems,SoulGemPetty,0002E4E2,Petty Soul Gem (Empty),,Skyrim.esm,Curated inventory expansion; soul gem IDs cross-checked against public console ID references
+Soul Gems,SoulGemPettyFilled,0002E4E3,Petty Soul Gem (Filled),,Skyrim.esm,Curated inventory expansion; soul gem IDs cross-checked against public console ID references
+Soul Gems,SoulGemLesser,0002E4E4,Lesser Soul Gem (Empty),,Skyrim.esm,Curated inventory expansion; soul gem IDs cross-checked against public console ID references
+Soul Gems,SoulGemLesserFilled,0002E4E5,Lesser Soul Gem (Filled),,Skyrim.esm,Curated inventory expansion; soul gem IDs cross-checked against public console ID references
+Soul Gems,SoulGemCommon,0002E4E6,Common Soul Gem (Empty),,Skyrim.esm,Curated inventory expansion; soul gem IDs cross-checked against public console ID references
+Soul Gems,SoulGemCommonFilled,0002E4F3,Common Soul Gem (Filled),,Skyrim.esm,Curated inventory expansion; soul gem IDs cross-checked against public console ID references
+Soul Gems,SoulGemGreater,0002E4F4,Greater Soul Gem (Empty),,Skyrim.esm,Curated inventory expansion; soul gem IDs cross-checked against public console ID references
+Soul Gems,SoulGemGreaterFilled,0002E4FB,Greater Soul Gem (Filled),,Skyrim.esm,Curated inventory expansion; soul gem IDs cross-checked against public console ID references
+Soul Gems,SoulGemGrand,0002E4FC,Grand Soul Gem (Empty),,Skyrim.esm,Curated inventory expansion; soul gem IDs cross-checked against public console ID references
+Soul Gems,SoulGemGrandFilled,0002E4FF,Grand Soul Gem (Filled),,Skyrim.esm,Curated inventory expansion; soul gem IDs cross-checked against public console ID references
+Soul Gems,SoulGemBlack,0002E500,Black Soul Gem (Empty),,Skyrim.esm,Curated inventory expansion; soul gem IDs cross-checked against public console ID references
+Soul Gems,SoulGemBlackFilled,0002E504,Black Soul Gem (Filled),,Skyrim.esm,Curated inventory expansion; soul gem IDs cross-checked against public console ID references
+Soul Gems,DA01SoulGemAzurasStar,00063B27,Azura's Star,,Skyrim.esm,Curated inventory expansion
+Soul Gems,DA01SoulGemBlackStar,00063B29,The Black Star,,Skyrim.esm,Curated inventory expansion
+Soul Gems,TG06GemSoulGem,00043E26,Wylandriah's Soul Gem,,Skyrim.esm,Curated inventory expansion
+Soul Gems,MS12SoulGem,00094E40,Treated Soul Gem,,Skyrim.esm,Curated inventory expansion
+Blunts,EnchIronBattleaxeShock01,000896C6,Iron Battleaxe of Sparks,,Skyrim.esm,Curated from unknown-inventory research save; enchanted weapon
+Bows,EnchEbonyBowFrost06,000BF40B,Ebony Bow of Winter,,Skyrim.esm,Curated from unknown-inventory research save; enchanted weapon
+Blades,EnchEbonySwordAbsorbH06,0001D520,Ebony Sword of the Vampire,,Skyrim.esm,Curated from unknown-inventory research save; enchanted weapon
+Blunts,EnchDwarvenBattleaxeFrost03,000ACBA5,Dwarven Battleaxe of Freezing,,Skyrim.esm,Curated from unknown-inventory research save; enchanted weapon
+Heavy Armor,EnchArmorEbonyHelmetWaterbreathing,000CF88C,Ebony Helmet of Waterbreathing,,Skyrim.esm,Curated from unknown-inventory research save; enchanted apparel
+Heavy Armor,EnchArmorEbonyShieldResistFire04,000CF891,Ebony Shield of Major Fire Resist,,Skyrim.esm,Curated from unknown-inventory research save; enchanted apparel
+Heavy Armor,EnchArmorEbonyCuirassHealthRate05,000FE2EB,Ebony Armor of Regeneration,,Skyrim.esm,Curated from unknown-inventory research save; enchanted apparel
+Clothing,ClothesThalmorRobesHooded,0010C698,Hooded Thalmor Robes,,Skyrim.esm,Curated from unknown-inventory research save
+Heavy Armor,EnchArmorEbonyBootsResistFrost04,000CF82C,Ebony Boots of Frost Suppression,,Skyrim.esm,Curated from unknown-inventory research save; enchanted apparel
+Heavy Armor,EnchArmorEbonyGauntletsOneHanded05,000CF867,Ebony Gauntlets of Extreme Wielding,,Skyrim.esm,Curated from unknown-inventory research save; enchanted apparel

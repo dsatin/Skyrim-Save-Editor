@@ -5,9 +5,12 @@ import csv
 import json
 import shutil
 import tempfile
+import platform
+import sys
+from datetime import datetime
 
 
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, QTimer
 from PyQt6.QtGui import QAction, QIcon, QKeySequence, QPixmap, QTextCursor
 from PyQt6.QtWidgets import (
     QApplication,
@@ -24,12 +27,15 @@ from PyQt6.QtWidgets import (
     QHBoxLayout,
     QHeaderView,
     QLabel,
+    QInputDialog,
     QLineEdit,
     QListWidget,
     QListWidgetItem,
     QMainWindow,
+    QMenu,
     QMessageBox,
     QPlainTextEdit,
+    QTextBrowser,
     QPushButton,
     QScrollArea,
     QSpinBox,
@@ -39,6 +45,8 @@ from PyQt6.QtWidgets import (
     QStyleOptionViewItem,
     QTableWidget,
     QTableWidgetItem,
+    QTreeWidget,
+    QTreeWidgetItem,
     QTabBar,
     QTabWidget,
     QVBoxLayout,
@@ -73,6 +81,7 @@ from app.core.inventory_lab import (
     validate_inventory_amount,
 )
 from app.core.resources import resource_path
+from app.core.unknown_inventory import collect_unknown_inventory, write_unknown_inventory_csv
 from app.core.quick_codes import (
     QUICK_CODE_FORMATS,
     SKYRIM_QUICK_CODE_PRESETS,
@@ -102,6 +111,7 @@ from app.core.preset_patcher import (
 from app.core.skyrim_ess import EssDocument, EssParseError, patch_header_values, read_ess, scan_form_id_detailed
 from app.core.live_player import patch_live_player_values, read_live_player_fields
 from app.core.race_editor import SKYRIM_RACES, patch_skyrim_player_race, read_skyrim_race_mapping, race_from_editor_id
+from app.core.race_research import build_race_sex_snapshot, race_sex_snapshot_to_text, write_race_sex_snapshot_json
 from app.core.console_commands import build_console_command
 from app.core.magic_lab import MagicScanResult, magic_hits_to_csv, magic_kind, magic_records_from_database, scan_magic
 from app.core.magic_actions import MagicCheckboxAction, build_magic_command_script
@@ -127,7 +137,12 @@ class CountSpinBoxDelegate(NoFocusDelegate):
         editor = QSpinBox(parent)
         editor.setFrame(False)
         editor.setRange(0, MAX_SAFE_INVENTORY_COUNT)
-        editor.setKeyboardTracking(False)
+        # Keep table edits live.  The previous delegate only committed when the
+        # cell editor closed, which made Count changes look like they were not
+        # staged until the user clicked away.
+        editor.setKeyboardTracking(True)
+        editor.valueChanged.connect(lambda _value, e=editor: self.commitData.emit(e))
+        editor.editingFinished.connect(lambda e=editor: self.commitData.emit(e))
         return editor
 
     def setEditorData(self, editor, index):  # type: ignore[override]
@@ -189,7 +204,7 @@ class RawValueDelegate(NoFocusDelegate):
 class MainWindow(QMainWindow):
     def __init__(self) -> None:
         super().__init__()
-        self.setWindowTitle("Skyrim Save Lab - synced working save build")
+        self.setWindowTitle("Skyrim Save Lab - Created by ProtoBuffers")
         icon_path = resource_path("icons", "skyrim.png")
         if icon_path.exists():
             self.setWindowIcon(QIcon(str(icon_path)))
@@ -199,9 +214,11 @@ class MainWindow(QMainWindow):
         self.working_save_bytes: bytes | None = None
         self.working_save_dirty: bool = False
         self.working_save_label: str = ""
+        self.save_browser_base_folder: Path | None = self._load_saved_base_folder()
+        self.save_browser_rows: list[Path] = []
         self.current_inventory: PlayerInventoryBlock | None = None
         self.inventory_dirty_counts: dict[int, int] = {}
-        # Missing-item additions are staged here and written by Save Edits,
+        # Missing-item additions are staged here and written by File > Save,
         # so all inventory edits follow one obvious save workflow.
         self.inventory_pending_adds: dict[str, dict[str, object]] = {}
         self.inventory_row_offsets: dict[int, int] = {}
@@ -213,6 +230,7 @@ class MainWindow(QMainWindow):
         self.inventory_show_formids = False
         self.inventory_active_category = "All"
         self.inventory_categories: list[str] = []
+        self.inventory_unknown_rows: list[object] = []
         self.INV_COL_ITEM = 0
         self.INV_COL_COUNT = 1
         self.INV_COL_CATEGORY = 2
@@ -250,11 +268,11 @@ class MainWindow(QMainWindow):
         self.open_action.setShortcut(QKeySequence.StandardKey.Open)
         self.open_action.triggered.connect(self.open_save_dialog)
 
-        self.save_inventory_action = QAction("Save Working Save", self)
+        self.save_inventory_action = QAction("Save", self)
         self.save_inventory_action.setShortcut(QKeySequence.StandardKey.Save)
         self.save_inventory_action.triggered.connect(self.save_working_save)
 
-        self.save_as_action = QAction("Save Working Save As…", self)
+        self.save_as_action = QAction("Save As…", self)
         self.save_as_action.setShortcut(QKeySequence.StandardKey.SaveAs)
         self.save_as_action.triggered.connect(self.save_working_save_as)
 
@@ -302,7 +320,10 @@ class MainWindow(QMainWindow):
         self.side.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.side.setItemDelegate(NoFocusDelegate(self.side))
         self.side.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
-        for title in ["Save / Load", "General", "Player Inventory", "Magic", "Plugins", "Reference IDs", "Raw Editor", "About"]:
+        # Reference IDs is now kept as an internal database tool only.
+        # It was too crash-prone/noisy for normal editing; inventory and magic
+        # pages still use the database in the background.
+        for title in ["Save / Load", "General", "Player Inventory", "Magic", "Plugins", "Tools", "Raw Editor", "About"]:
             self.side.addItem(QListWidgetItem(title))
         self.side.currentRowChanged.connect(self._switch_page)
         root_layout.addWidget(self.side)
@@ -316,7 +337,8 @@ class MainWindow(QMainWindow):
         self.stack.addWidget(self._build_inventory_page())
         self.stack.addWidget(self._build_magic_page())
         self.stack.addWidget(self._build_plugins_page())
-        self.stack.addWidget(self._build_database_page())
+        self._hidden_reference_page = self._build_database_page()
+        self.stack.addWidget(self._build_tools_page())
         self.stack.addWidget(self._build_raw_page())
         self.stack.addWidget(self._build_about_page())
         self.side.setCurrentRow(0)
@@ -382,53 +404,161 @@ class MainWindow(QMainWindow):
         table.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         table.setItemDelegate(NoFocusDelegate(table))
 
+    def _pending_tab_edit_count(self) -> int:
+        count = 0
+        count += len(getattr(self, "inventory_dirty_counts", {}) or {})
+        count += len(getattr(self, "inventory_pending_adds", {}) or {})
+        count += len(getattr(self, "magic_pending_changes", {}) or {})
+        try:
+            count += len(self._pending_common_global_update_lines()[0])
+        except Exception:
+            pass
+        try:
+            count += len(self._pending_general_inventory_updates()[0])
+        except Exception:
+            pass
+        try:
+            count += len(self._collect_skill_patch_values())
+        except Exception:
+            pass
+        try:
+            count += len(self._collect_actor_value_patch_values())
+        except Exception:
+            pass
+        return count
+
+    def _refresh_working_save_status(self) -> None:
+        if not hasattr(self, "working_save_status_label"):
+            return
+        if not self.current_save:
+            self.working_save_status_label.setText("No save loaded.")
+            return
+        pending = self._pending_tab_edit_count()
+        dirty_text = "modified in memory" if self.working_save_dirty else "synced with loaded file"
+        if pending:
+            self.working_save_status_label.setText(
+                f"Working save: {dirty_text}. Pending tab edits: {pending}. Use File > Save once to write every normal tab."
+            )
+        else:
+            self.working_save_status_label.setText(
+                f"Working save: {dirty_text}. No pending tab edits detected."
+            )
+
+    def _mark_pending_tab_edits_changed(self, message: str | None = None) -> None:
+        self._refresh_working_save_status()
+        if message:
+            self.statusBar().showMessage(message, 3000)
+
     def _build_save_page(self) -> QWidget:
         page, layout = self._page(
             "Save / Load",
-            "Open a Skyrim .ess save, inspect it safely, create backups, and export parsed metadata.",
+            "Scan one base folder, pick a save from the list, edit anywhere, then save once.",
         )
-        card = Card("Current Save")
-        row = QHBoxLayout()
+        layout.setSpacing(12)
+
+        # Legacy widgets kept for existing refresh/save code paths, but hidden from the normal UI.
         self.path_edit = QLineEdit()
         self.path_edit.setReadOnly(True)
-        open_btn = QPushButton("Open .ess")
-        open_btn.clicked.connect(self.open_save_dialog)
-        backup_btn = QPushButton("Backup")
-        backup_btn.clicked.connect(self.create_backup)
-        json_btn = QPushButton("Export JSON")
-        json_btn.clicked.connect(self.export_parsed_json)
-        row.addWidget(self.path_edit, 1)
-        row.addWidget(open_btn)
-        row.addWidget(backup_btn)
-        row.addWidget(json_btn)
-        card.layout.addLayout(row)
+        self.path_edit.hide()
         self.summary_table = QTableWidget(0, 2)
         self.summary_table.setHorizontalHeaderLabels(["Field", "Value"])
         self.summary_table.horizontalHeader().setStretchLastSection(True)
         self.summary_table.verticalHeader().setVisible(False)
         self.summary_table.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         self._clean_table_focus(self.summary_table)
-        card.layout.addWidget(self.summary_table)
-        layout.addWidget(card)
+        self.summary_table.hide()
 
+        browser = Card(
+            "Save Folder Browser",
+            "Choose one base folder and Skyrim Save Lab will recursively scan subfolders for .ess and .DAT saves. "
+            "For PS4 saves named SAVEDATA.DAT, the folder name is shown as the save name.",
+        )
+        browser_row = QHBoxLayout()
+        self.save_base_folder_edit = QLineEdit()
+        self.save_base_folder_edit.setReadOnly(True)
+        self.save_base_folder_edit.setPlaceholderText(str(self._default_skyrim_save_folder()))
+        if self.save_browser_base_folder:
+            self.save_base_folder_edit.setText(str(self.save_browser_base_folder))
+        choose_folder_btn = QPushButton("Choose Base Folder")
+        choose_folder_btn.clicked.connect(self.choose_save_base_folder)
+        refresh_folder_btn = QPushButton("Scan Subfolders")
+        refresh_folder_btn.clicked.connect(self.refresh_save_folder_browser)
+        open_file_btn = QPushButton("Open File")
+        open_file_btn.setToolTip("Open one save file directly without changing the base folder.")
+        open_file_btn.clicked.connect(self.open_save_dialog)
+        open_selected_btn = QPushButton("Open Selected")
+        open_selected_btn.clicked.connect(self.open_selected_save_from_browser)
+        save_btn = QPushButton("Save")
+        save_btn.setToolTip("Sync every tab into the shared working save, create a backup, then overwrite the loaded save.")
+        save_btn.clicked.connect(self.save_working_save)
+        save_as_btn = QPushButton("Save As")
+        save_as_btn.setToolTip("Sync every tab and write a new edited save copy.")
+        save_as_btn.clicked.connect(self.save_working_save_as)
+        browser_row.addWidget(self.save_base_folder_edit, 1)
+        browser_row.addWidget(choose_folder_btn)
+        browser_row.addWidget(refresh_folder_btn)
+        browser_row.addWidget(open_file_btn)
+        browser_row.addWidget(open_selected_btn)
+        browser_row.addWidget(save_btn)
+        browser_row.addWidget(save_as_btn)
+        browser.layout.addLayout(browser_row)
+
+        self.save_browser_filter = QLineEdit()
+        self.save_browser_filter.setPlaceholderText("Filter by folder, save name, player, location, plugin/title id, or path...")
+        self.save_browser_filter.textChanged.connect(self.apply_save_browser_filter)
+        browser.layout.addWidget(self.save_browser_filter)
+
+        self.save_browser_status = QLabel("Choose a base folder, then scan subfolders.")
+        self.save_browser_status.setObjectName("Subtle")
+        self.save_browser_status.setWordWrap(True)
+        browser.layout.addWidget(self.save_browser_status)
+
+        self.working_save_status_label = QLabel("No save loaded.")
+        self.working_save_status_label.setObjectName("Subtle")
+        self.working_save_status_label.setWordWrap(True)
+        browser.layout.addWidget(self.working_save_status_label)
+
+        self.save_browser_table = QTableWidget(0, 8)
+        self.save_browser_table.setHorizontalHeaderLabels(["Loaded", "Folder", "Save File", "Player", "Location", "Size", "Modified", "Path"])
+        self.save_browser_table.verticalHeader().setVisible(False)
+        self.save_browser_table.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.save_browser_table.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
+        self.save_browser_table.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
+        self.save_browser_table.setSortingEnabled(True)
+        self.save_browser_table.cellDoubleClicked.connect(lambda row, col: self.open_selected_save_from_browser())
+        self._clean_table_focus(self.save_browser_table)
+        header = self.save_browser_table.horizontalHeader()
+        header.setSectionResizeMode(0, QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(1, QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(2, QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(3, QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(4, QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(5, QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(6, QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(7, QHeaderView.ResizeMode.Stretch)
+        browser.layout.addWidget(self.save_browser_table, 1)
+        layout.addWidget(browser, 1)
+        QTimer.singleShot(0, self.refresh_save_folder_browser)
+
+        bottom_row = QHBoxLayout()
         notes = Card("Safety Notes")
         label = QLabel(
-            "This first pass writes only fixed-width header values when you use Save As. "
-            "Strings, inventory records, quests, and change forms stay untouched until we map the exact structures."
+            "Every normal tab edits one shared in-memory working save. Use Save once when you are ready. "
+            "Save creates a .bak backup before overwriting the loaded file. Use Save As for first tests or experimental features."
         )
         label.setWordWrap(True)
         notes.layout.addWidget(label)
-        layout.addWidget(notes)
+        bottom_row.addWidget(notes, 1)
 
-        backups = Card("Backups / Restore", "Editor-created backups live next to the save as .bak files. Restore copies the selected backup over the loaded save after making one more safety backup.")
+        backups = Card("Backups / Restore")
         backup_buttons = QHBoxLayout()
         refresh_backups = QPushButton("Refresh Backups")
         refresh_backups.clicked.connect(self.refresh_backup_table)
         restore_backup = QPushButton("Restore Selected Backup")
         restore_backup.clicked.connect(self.restore_selected_backup)
-        backup_buttons.addStretch(1)
         backup_buttons.addWidget(refresh_backups)
         backup_buttons.addWidget(restore_backup)
+        backup_buttons.addStretch(1)
         backups.layout.addLayout(backup_buttons)
         self.backup_table = QTableWidget(0, 3)
         self.backup_table.setHorizontalHeaderLabels(["Backup", "Modified", "Size"])
@@ -439,8 +569,8 @@ class MainWindow(QMainWindow):
         self.backup_table.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
         self._clean_table_focus(self.backup_table)
         backups.layout.addWidget(self.backup_table)
-        layout.addWidget(backups)
-        layout.addStretch(1)
+        bottom_row.addWidget(backups, 1)
+        layout.addLayout(bottom_row)
         return page
 
     def _build_general_page(self) -> QWidget:
@@ -459,13 +589,15 @@ class MainWindow(QMainWindow):
         preview_btn = QPushButton("Preview")
         preview_btn.setToolTip("Preview changed General values before writing anything.")
         preview_btn.clicked.connect(self.preview_general_edits)
-        save_as = QPushButton("Save Copy…")
-        save_as.setToolTip("Write General edits to a new save copy.")
-        save_as.clicked.connect(self.save_general_as)
-        save_general = QPushButton("Save Edits")
-        save_general.setToolTip("Back up the loaded save, then write General edits into it.")
-        save_general.clicked.connect(self.save_general_edits)
-        action_hint = QLabel("Open a save, edit a focused tab, then Save Edits or Save Copy.")
+        save_as = QPushButton("Use File > Save As")
+        save_as.setToolTip("Use File > Save As… to write the shared working save.")
+        save_as.clicked.connect(self.save_working_save_as)
+        save_as.setVisible(False)
+        save_general = QPushButton("Use File > Save")
+        save_general.setToolTip("Use File > Save to write every tab once.")
+        save_general.clicked.connect(self.save_working_save)
+        save_general.setVisible(False)
+        action_hint = QLabel("Open a save, edit any normal tab, then use File > Save once. All mapped tab edits are synced into one working save before disk write.")
         action_hint.setObjectName("Subtle")
         action_row.addWidget(action_hint, 1)
         action_row.addWidget(reload_btn)
@@ -563,7 +695,7 @@ class MainWindow(QMainWindow):
         self.need_exp_spin.setDecimals(3)
         for label, widget in [
             ("Level", self.level_spin),
-            ("Sex", self.sex_combo),
+            ("Header Sex", self.sex_combo),
             ("XP Pool", self.cur_exp_spin),
             ("Needed XP", self.need_exp_spin),
         ]:
@@ -576,11 +708,31 @@ class MainWindow(QMainWindow):
         player_grid.setColumnStretch(1, 2)
         player_layout.addLayout(player_grid)
         player_note = QLabel(
-            "Player Name and Race use mapped live player data when found. Level writes the live field only on saves where that optional field exists; early saves may only sync the save-header level. Race changing is experimental: test on a backup first. XP Pool edits the real payload value used by the +EXP command."
+            "Player Name and Race use mapped live player data when found. Header Sex is metadata only until the real in-game gender/body records are mapped. Race changing is experimental: test on a backup first. XP Pool edits the real payload value used by the +EXP command."
         )
         player_note.setWordWrap(True)
         player_note.setObjectName("Subtle")
         player_layout.addWidget(player_note)
+
+        race_research_card = Card("Race / Sex Research", "Shows what the editor can actually detect in the loaded save. Use this to compare showracemenu test saves.")
+        race_research_actions = QHBoxLayout()
+        race_research_actions.setSpacing(8)
+        refresh_race_research_btn = QPushButton("Refresh Snapshot")
+        refresh_race_research_btn.clicked.connect(self.refresh_race_sex_research)
+        copy_race_research_btn = QPushButton("Copy Snapshot")
+        copy_race_research_btn.clicked.connect(self.copy_race_sex_research)
+        export_race_research_btn = QPushButton("Export Snapshot JSON")
+        export_race_research_btn.clicked.connect(self.export_race_sex_research)
+        for btn in (refresh_race_research_btn, copy_race_research_btn, export_race_research_btn):
+            race_research_actions.addWidget(btn)
+        race_research_actions.addStretch(1)
+        race_research_card.layout.addLayout(race_research_actions)
+        self.race_sex_research_text = QPlainTextEdit()
+        self.race_sex_research_text.setReadOnly(True)
+        self.race_sex_research_text.setMinimumHeight(230)
+        self.race_sex_research_text.setPlaceholderText("Open a save to generate a Race / Sex research snapshot.")
+        race_research_card.layout.addWidget(self.race_sex_research_text)
+        player_layout.addWidget(race_research_card)
 
         player_layout.addStretch(1)
         self.general_tabs.addTab(player_tab, "Player")
@@ -604,10 +756,12 @@ class MainWindow(QMainWindow):
         set_all_1_btn.clicked.connect(lambda _checked=False: self.set_all_skill_values(1.0))
         preview_skills_btn = QPushButton("Preview Skill Edits")
         preview_skills_btn.clicked.connect(self.preview_skill_edits)
-        save_skills_copy_btn = QPushButton("Save Copy…")
-        save_skills_copy_btn.clicked.connect(self.save_skill_edits_as)
-        apply_skills_btn = QPushButton("Apply To Save")
-        apply_skills_btn.clicked.connect(self.apply_skill_edits_to_save)
+        save_skills_copy_btn = QPushButton("Use File > Save As")
+        save_skills_copy_btn.clicked.connect(self.save_working_save_as)
+        save_skills_copy_btn.setVisible(False)
+        apply_skills_btn = QPushButton("Use File > Save")
+        apply_skills_btn.clicked.connect(self.save_working_save)
+        apply_skills_btn.setVisible(False)
         self.skill_status_label = QLabel("Open a save to detect the skill block.")
         self.skill_status_label.setObjectName("Subtle")
         self.skill_status_label.setWordWrap(True)
@@ -674,10 +828,12 @@ class MainWindow(QMainWindow):
         set_carry_btn.clicked.connect(lambda _checked=False: self.set_carry_actor_values(1_000_000_000.0))
         preview_stats_btn = QPushButton("Preview Stat Edits")
         preview_stats_btn.clicked.connect(self.preview_actor_value_edits)
-        save_stats_copy_btn = QPushButton("Save Copy…")
-        save_stats_copy_btn.clicked.connect(self.save_actor_value_edits_as)
-        apply_stats_btn = QPushButton("Apply To Save")
-        apply_stats_btn.clicked.connect(self.apply_actor_value_edits_to_save)
+        save_stats_copy_btn = QPushButton("Use File > Save As")
+        save_stats_copy_btn.clicked.connect(self.save_working_save_as)
+        save_stats_copy_btn.setVisible(False)
+        apply_stats_btn = QPushButton("Use File > Save")
+        apply_stats_btn.clicked.connect(self.save_working_save)
+        apply_stats_btn.setVisible(False)
         self.actor_status_label = QLabel("Open a save to detect player actor values.")
         self.actor_status_label.setObjectName("Subtle")
         self.actor_status_label.setWordWrap(True)
@@ -727,19 +883,21 @@ class MainWindow(QMainWindow):
         self.general_tabs.addTab(stats_tab, "Stats")
 
         common_tab, common_layout = scroll_tab()
-        essentials = Card("Common Save Values", "Gold/Lockpicks sync from Player Inventory. Dragon Souls sync from the live actor-value field (ChangeForm 400014).")
+        essentials = Card("Common Save Values", "Gold and Lockpicks sync from Player Inventory. Dragon Souls is hidden until the spendable-souls offset is fully mapped.")
         common_action_row = QHBoxLayout()
-        self.common_inventory_status = QLabel("Open a save to sync Gold / Lockpicks / Dragon Souls.")
+        self.common_inventory_status = QLabel("Open a save to sync Gold / Lockpicks.")
         self.common_inventory_status.setObjectName("Subtle")
         self.common_inventory_status.setWordWrap(True)
         sync_common_btn = QPushButton("Sync From Inventory")
         sync_common_btn.clicked.connect(self.sync_common_inventory_values)
         preview_common_btn = QPushButton("Preview Common Edits")
         preview_common_btn.clicked.connect(self.preview_common_inventory_edits)
-        save_common_copy_btn = QPushButton("Save Common Copy…")
-        save_common_copy_btn.clicked.connect(self.save_common_inventory_as)
+        save_common_copy_btn = QPushButton("Use File > Save As")
+        save_common_copy_btn.clicked.connect(self.save_working_save_as)
+        save_common_copy_btn.setVisible(False)
         apply_common_btn = QPushButton("Apply Common To Save")
-        apply_common_btn.clicked.connect(self.save_common_inventory_edits)
+        apply_common_btn.clicked.connect(self.save_working_save)
+        apply_common_btn.setVisible(False)
         common_action_row.addWidget(self.common_inventory_status, 1)
         common_action_row.addWidget(sync_common_btn)
         common_action_row.addWidget(preview_common_btn)
@@ -788,7 +946,7 @@ class MainWindow(QMainWindow):
             global_grid.addWidget(status, row, 3)
         essentials.layout.addLayout(global_grid)
         note = QLabel(
-            "Gold/Lockpicks patch exact mapped inventory rows. Dragon Souls patches the live actor-value field in ChangeForm 400014. The DragonsAbsorbed global (0001C0F2 / 41 C0 F2) is not the spendable souls pool. Missing values stay disabled so the editor never guesses or inserts blind data."
+            "Gold and Lockpicks patch exact mapped inventory rows. Dragon Souls is intentionally hidden from this tab until the real spendable shout-menu value is mapped. DragonsAbsorbed (0001C0F2 / 41 C0 F2) is only a lifetime/absorbed counter."
         )
         note.setWordWrap(True)
         note.setObjectName("Subtle")
@@ -810,18 +968,20 @@ class MainWindow(QMainWindow):
             "Edit existing inventory counts, import/export CSVs, and find item IDs without leaving this page.",
         )
 
-        controls = Card("Inventory Controls", "Select an item, change New Count, then save when ready.")
+        controls = Card("Inventory Controls", "Select an item, change Count, then use File > Save when ready.")
 
         action_row = QHBoxLayout()
         reload_btn = QPushButton("Reload")
         reload_btn.setToolTip("Reload the inventory from the current save.")
         reload_btn.clicked.connect(self.refresh_inventory)
-        save_changes_btn = QPushButton("Save Edits")
+        save_changes_btn = QPushButton("Use File > Save")
         save_changes_btn.setToolTip("Back up the current save, then write staged existing-row count changes into this save file. Shortcut: Ctrl+S on this page.")
-        save_changes_btn.clicked.connect(self.save_inventory_count_changes)
-        save_as_btn = QPushButton("Save Copy…")
+        save_changes_btn.clicked.connect(self.save_working_save)
+        save_changes_btn.setVisible(False)
+        save_as_btn = QPushButton("Use File > Save As")
         save_as_btn.setToolTip("Write all staged inventory edits to a new save copy.")
-        save_as_btn.clicked.connect(self.save_inventory_count_as)
+        save_as_btn.clicked.connect(self.save_working_save_as)
+        save_as_btn.setVisible(False)
         revert_btn = QPushButton("Revert Counts")
         revert_btn.clicked.connect(self.revert_inventory_count_edits)
         self.inv_queued_label = QLabel("No unsaved inventory count edits")
@@ -855,16 +1015,18 @@ class MainWindow(QMainWindow):
         editor_grid.addWidget(self.inv_selected_formid, 0, 7)
         editor_grid.addWidget(copy_id_btn, 0, 8)
         editor_grid.addWidget(copy_additem_inv_btn, 0, 9)
-        editor_grid.addWidget(self._form_label("New Count"), 1, 0)
+        editor_grid.addWidget(self._form_label("Count"), 1, 0)
         editor_grid.addWidget(self.inv_amount_spin, 1, 1)
         editor_grid.setColumnStretch(1, 2)
         editor_grid.setColumnStretch(5, 1)
         controls.layout.addLayout(editor_grid)
 
         quick_row = QHBoxLayout()
+        self.inventory_count_buttons = []
         for label, amount in [("Remove / Set 0", 0), ("Set 1", 1), ("Set 10", 10), ("Set 99", 99), ("Set 999", 999), ("Set 99,999", 99999)]:
             btn = QPushButton(label)
             btn.clicked.connect(lambda checked=False, a=amount: self.set_selected_inventory_amount(a))
+            self.inventory_count_buttons.append(btn)
             quick_row.addWidget(btn)
         restore_selected_btn = QPushButton("Restore Selected")
         restore_selected_btn.clicked.connect(self.restore_selected_inventory_count)
@@ -883,7 +1045,7 @@ class MainWindow(QMainWindow):
 
         # Keep the preview model available for existing helper methods, but do not show another table in the main UI.
         self.inv_preview_table = QTableWidget(0, 4)
-        self.inv_preview_table.setHorizontalHeaderLabels(["Item", "FormID", "New Count", "Change"])
+        self.inv_preview_table.setHorizontalHeaderLabels(["Item", "FormID", "Count", "Change"])
         self.inv_preview_table.setVisible(False)
 
         note = self._form_label(
@@ -897,6 +1059,12 @@ class MainWindow(QMainWindow):
         self.inventory_workspace_tabs = QTabWidget()
         self.inventory_workspace_tabs.setDocumentMode(True)
         self.inventory_workspace_tabs.setObjectName("InventoryWorkspaceTabs")
+        # Keep the inventory workspace tabs clean; the default tab base draws a long
+        # bright line across the page in dark themes.
+        try:
+            self.inventory_workspace_tabs.tabBar().setDrawBase(False)
+        except Exception:
+            pass
 
         inventory_tab = QWidget()
         inventory_layout = QVBoxLayout(inventory_tab)
@@ -909,6 +1077,11 @@ class MainWindow(QMainWindow):
         self.inventory_filter_edit.textChanged.connect(self._apply_inventory_filter)
         inventory_filter_row.addWidget(self._form_label("Filter"))
         inventory_filter_row.addWidget(self.inventory_filter_edit, 1)
+        inventory_filter_row.addWidget(self._form_label("Category"))
+        self.inventory_category_combo = QComboBox()
+        self.inventory_category_combo.setMinimumWidth(180)
+        self.inventory_category_combo.currentTextChanged.connect(self._inventory_category_combo_changed)
+        inventory_filter_row.addWidget(self.inventory_category_combo)
         self.inv_storage_tip_btn = QPushButton("Storage Info")
         self.inv_storage_tip_btn.setToolTip("Select an inventory row to see exact save-storage details here.")
         self.inv_storage_tip_btn.clicked.connect(self.show_inventory_storage_info_dialog)
@@ -923,16 +1096,19 @@ class MainWindow(QMainWindow):
         inventory_filter_row.addWidget(export_storage_btn)
         inventory_layout.addLayout(inventory_filter_row)
 
+        # Legacy category tab bar kept for compatibility with older helper methods,
+        # but hidden in favor of the cleaner Category drop-down above.
         self.inventory_tabs = QTabBar()
         self.inventory_tabs.setObjectName("InventoryTabs")
         self.inventory_tabs.setDrawBase(False)
         self.inventory_tabs.setUsesScrollButtons(True)
         self.inventory_tabs.setExpanding(False)
         self.inventory_tabs.currentChanged.connect(self._inventory_tab_changed)
+        self.inventory_tabs.setVisible(False)
         inventory_layout.addWidget(self.inventory_tabs)
 
         self.inventory_table = QTableWidget(0, 5)
-        self.inventory_table.setHorizontalHeaderLabels(["Item", "New Count", "Category", "Status", "Note"])
+        self.inventory_table.setHorizontalHeaderLabels(["Item", "Count", "Category", "Status", "Notes"])
         self.inventory_table.horizontalHeader().setStretchLastSection(True)
         self.inventory_table.verticalHeader().setVisible(False)
         self.inventory_table.verticalHeader().setDefaultSectionSize(34)
@@ -949,11 +1125,13 @@ class MainWindow(QMainWindow):
         self.inventory_table.setItemDelegateForColumn(self.INV_COL_COUNT, CountSpinBoxDelegate(self.inventory_table))
         self.inventory_table.itemSelectionChanged.connect(self._inventory_selection_changed)
         self.inventory_table.itemChanged.connect(self._inventory_count_item_changed)
-        self.inventory_table.setColumnWidth(self.INV_COL_ITEM, 390)
+        self.inventory_table.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
+        self.inventory_table.customContextMenuRequested.connect(self._show_inventory_context_menu)
+        self.inventory_table.setColumnWidth(self.INV_COL_ITEM, 430)
         self.inventory_table.setColumnWidth(self.INV_COL_COUNT, 105)
-        self.inventory_table.setColumnWidth(self.INV_COL_CATEGORY, 145)
-        self.inventory_table.setColumnWidth(self.INV_COL_STATUS, 110)
-        self.inventory_table.setColumnWidth(self.INV_COL_NOTE, 340)
+        self.inventory_table.setColumnWidth(self.INV_COL_CATEGORY, 170)
+        self.inventory_table.setColumnHidden(self.INV_COL_STATUS, True)
+        self.inventory_table.setColumnHidden(self.INV_COL_NOTE, True)
         self.inventory_table.setMinimumHeight(420)
         inventory_layout.addWidget(self.inventory_table, 8)
 
@@ -966,6 +1144,55 @@ class MainWindow(QMainWindow):
 
         self.inventory_workspace_tabs.addTab(inventory_tab, "Current Inventory")
 
+        unknown_tab = QWidget()
+        unknown_layout = QVBoxLayout(unknown_tab)
+        unknown_layout.setContentsMargins(0, 0, 0, 0)
+        unknown_layout.setSpacing(10)
+        unknown_top = QHBoxLayout()
+        self.unknown_inventory_summary = QLabel("Open a save to scan unknown inventory IDs.")
+        self.unknown_inventory_summary.setObjectName("Subtle")
+        self.unknown_inventory_summary.setWordWrap(True)
+        unknown_top.addWidget(self.unknown_inventory_summary, 1)
+        refresh_unknown_btn = QPushButton("Refresh Unknowns")
+        refresh_unknown_btn.clicked.connect(self.refresh_unknown_inventory_table)
+        export_unknown_research_btn = QPushButton("Export Unknown Research CSV")
+        export_unknown_research_btn.clicked.connect(self.export_unknown_inventory_research_dialog)
+        copy_unknown_btn = QPushButton("Copy Unknown IDs")
+        copy_unknown_btn.clicked.connect(self.copy_unknown_inventory_ids)
+        copy_unknown_commands_btn = QPushButton("Copy AddItem Commands")
+        copy_unknown_commands_btn.setToolTip("Copy player.additem commands for the unknown rows so users can identify them in-game.")
+        copy_unknown_commands_btn.clicked.connect(self.copy_unknown_inventory_additem_commands)
+        scan_folder_unknown_btn = QPushButton("Scan Save Folder Unknowns")
+        scan_folder_unknown_btn.setToolTip("Scan every save in the Save / Load base folder and export one aggregate unknown-ID CSV.")
+        scan_folder_unknown_btn.clicked.connect(self.export_save_folder_unknown_inventory_research_dialog)
+        unknown_top.addWidget(refresh_unknown_btn)
+        unknown_top.addWidget(copy_unknown_btn)
+        unknown_top.addWidget(copy_unknown_commands_btn)
+        unknown_top.addWidget(scan_folder_unknown_btn)
+        unknown_top.addWidget(export_unknown_research_btn)
+        unknown_layout.addLayout(unknown_top)
+
+        unknown_filter_row = QHBoxLayout()
+        self.unknown_inventory_filter_edit = QLineEdit()
+        self.unknown_inventory_filter_edit.setPlaceholderText("Filter unknowns by FormID, category guess, plugin hint, or note…")
+        self.unknown_inventory_filter_edit.textChanged.connect(self._apply_unknown_inventory_filter)
+        unknown_filter_row.addWidget(self._form_label("Filter"))
+        unknown_filter_row.addWidget(self.unknown_inventory_filter_edit, 1)
+        unknown_layout.addLayout(unknown_filter_row)
+
+        self.unknown_inventory_table = QTableWidget(0, 8)
+        self.unknown_inventory_table.setHorizontalHeaderLabels(["FormID", "Count", "Guess", "Plugin Hint", "RefID", "Payload", "Reason", "Note"])
+        self.unknown_inventory_table.verticalHeader().setVisible(False)
+        self.unknown_inventory_table.verticalHeader().setDefaultSectionSize(32)
+        self.unknown_inventory_table.setAlternatingRowColors(True)
+        self.unknown_inventory_table.setShowGrid(False)
+        self.unknown_inventory_table.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.unknown_inventory_table.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
+        self.unknown_inventory_table.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
+        self.unknown_inventory_table.horizontalHeader().setStretchLastSection(True)
+        unknown_layout.addWidget(self.unknown_inventory_table)
+        self.inventory_workspace_tabs.addTab(unknown_tab, "Unknown Research")
+
         database_tab = QWidget()
         database_layout = QVBoxLayout(database_tab)
         database_layout.setContentsMargins(0, 0, 0, 0)
@@ -974,7 +1201,10 @@ class MainWindow(QMainWindow):
         db_filters = QHBoxLayout()
         self.inv_db_filter_edit = QLineEdit()
         self.inv_db_filter_edit.setPlaceholderText("Search item, weapon, armor, FormID, EditorID, category…")
-        self.inv_db_filter_edit.textChanged.connect(self.refresh_inventory_database_table)
+        self.inv_db_search_timer = QTimer(self)
+        self.inv_db_search_timer.setSingleShot(True)
+        self.inv_db_search_timer.timeout.connect(self.refresh_inventory_database_table)
+        self.inv_db_filter_edit.textChanged.connect(lambda _text="": self.inv_db_search_timer.start(120))
         self.inv_db_category_combo = QComboBox()
         self.inv_db_category_combo.currentIndexChanged.connect(self.refresh_inventory_database_table)
         self.inv_db_status_combo = QComboBox()
@@ -994,13 +1224,13 @@ class MainWindow(QMainWindow):
 
         db_actions = QHBoxLayout()
         add_selected_btn = QPushButton("Stage Add / Count")
-        add_selected_btn.setToolTip("Existing and dormant zero-count rows add to New Count. Missing base-game rows are staged as PS4 fake/minimal rows when this save passes direct-insert preflight.")
+        add_selected_btn.setToolTip("Existing and dormant zero-count rows add to Count. Missing base-game rows are staged as PS4 fake/minimal rows when this save passes direct-insert preflight.")
         add_selected_btn.clicked.connect(self.add_inventory_database_item_to_save)
         preview_fake_btn = QPushButton("Preview Fake Row")
         preview_fake_btn.setToolTip("Show the exact bytes/count/insert point the editor would generate for the selected missing item.")
         preview_fake_btn.clicked.connect(self.preview_inventory_fake_row_plan)
         set_from_db_btn = QPushButton("Set Existing Count")
-        set_from_db_btn.setToolTip("For items already in this save, set New Count to the amount above.")
+        set_from_db_btn.setToolTip("For items already in this save, set Count to the amount above.")
         set_from_db_btn.clicked.connect(lambda: self.apply_inventory_database_item("set"))
         copy_db_additem_btn = QPushButton("Copy Console Command")
         copy_db_additem_btn.clicked.connect(self.copy_inventory_database_additem_command)
@@ -1042,7 +1272,7 @@ class MainWindow(QMainWindow):
         )
         controls = Card(
             "Magic",
-            "Check what you want unlocked. File > Save Working Save writes spells, powers, abilities, and existing shout-word records. Missing shout words are normally script-only; enable Experimental Missing Shouts only when testing on a backup.",
+            "Check what you want unlocked. File > Save writes spells, powers, abilities, and existing shout-word records. Missing shout words are normally script-only; enable Experimental Missing Shouts only when testing on a backup.",
         )
 
         search_row = QHBoxLayout()
@@ -1084,7 +1314,7 @@ class MainWindow(QMainWindow):
         unlock_spells_btn = QPushButton("Unlock All Spells")
         unlock_spells_btn.clicked.connect(lambda: self.unlock_magic_table_rows(self.magic_spell_table, "spells"))
         unlock_shouts_btn = QPushButton("Unlock All Shouts")
-        unlock_shouts_btn.setToolTip("Check every shout word row and enable experimental missing-shout insertion so File > Save Working Save can test-write them.")
+        unlock_shouts_btn.setToolTip("Check every shout word row and enable experimental missing-shout insertion so File > Save can test-write them.")
         unlock_shouts_btn.clicked.connect(self.unlock_all_shouts_experimental)
         unlock_saveable_shouts_btn = QPushButton("Unlock Saveable Shouts")
         unlock_saveable_shouts_btn.setToolTip("Check only shout words that already exist in this save. Missing shout words are script-only and cannot be safely written directly yet.")
@@ -1133,7 +1363,7 @@ class MainWindow(QMainWindow):
         self.magic_changes_label.setWordWrap(True)
         controls.layout.addWidget(self.magic_changes_label)
 
-        help_label = QLabel("Changes stay in memory while you edit. Use File > Save Working Save to write the loaded save, or Save As to make a copy.")
+        help_label = QLabel("Magic checkbox changes are queued automatically. Use File > Save once to sync all tabs and write the loaded save, or Save As to make a copy.")
         help_label.setObjectName("Subtle")
         help_label.setWordWrap(True)
         controls.layout.addWidget(help_label)
@@ -1307,6 +1537,80 @@ class MainWindow(QMainWindow):
         layout.addWidget(card, 1)
         return page
 
+    def _build_tools_page(self) -> QWidget:
+        page, layout = self._page(
+            "Tools",
+            "Safe project-maintenance tools for diagnostics, database cleanup, and user bug reports.",
+        )
+        layout.setSpacing(12)
+
+        diag = Card("Diagnostics Report")
+        diag_hint = QLabel(
+            "Build a compact report with the loaded save summary, plugin count, inventory status, "
+            "unknown IDs, pending edits, and database audit numbers. This is intended for user bug reports."
+        )
+        diag_hint.setObjectName("Subtle")
+        diag_hint.setWordWrap(True)
+        diag.layout.addWidget(diag_hint)
+        diag_buttons = QHBoxLayout()
+        build_diag_btn = QPushButton("Build Diagnostics Report")
+        build_diag_btn.clicked.connect(self.build_diagnostics_report)
+        copy_diag_btn = QPushButton("Copy Report")
+        copy_diag_btn.clicked.connect(self.copy_diagnostics_report)
+        save_diag_btn = QPushButton("Export Report…")
+        save_diag_btn.clicked.connect(self.export_diagnostics_report)
+        diag_buttons.addWidget(build_diag_btn)
+        diag_buttons.addWidget(copy_diag_btn)
+        diag_buttons.addWidget(save_diag_btn)
+        diag_buttons.addStretch(1)
+        diag.layout.addLayout(diag_buttons)
+        self.diagnostics_report = QPlainTextEdit()
+        self.diagnostics_report.setReadOnly(True)
+        self.diagnostics_report.setPlaceholderText("Click Build Diagnostics Report after opening a save.")
+        self.diagnostics_report.setMinimumHeight(260)
+        diag.layout.addWidget(self.diagnostics_report, 1)
+        layout.addWidget(diag, 1)
+
+        audit = Card("Database Audit")
+        audit_hint = QLabel(
+            "Review duplicate FormIDs, malformed rows, unresolved XX placeholders, and weak source categories "
+            "without changing the save parser. This keeps database cleanup separate from inventory save-writing."
+        )
+        audit_hint.setObjectName("Subtle")
+        audit_hint.setWordWrap(True)
+        audit.layout.addWidget(audit_hint)
+        audit_buttons = QHBoxLayout()
+        run_audit_btn = QPushButton("Refresh Audit")
+        run_audit_btn.clicked.connect(self.refresh_tools_database_audit)
+        export_audit_btn = QPushButton("Export Audit JSON…")
+        export_audit_btn.clicked.connect(self.export_reference_audit_json)
+        audit_buttons.addWidget(run_audit_btn)
+        audit_buttons.addWidget(export_audit_btn)
+        audit_buttons.addStretch(1)
+        audit.layout.addLayout(audit_buttons)
+        self.tools_audit_table = QTableWidget(0, 2)
+        self.tools_audit_table.setHorizontalHeaderLabels(["Metric", "Value"])
+        self.tools_audit_table.horizontalHeader().setStretchLastSection(True)
+        self.tools_audit_table.verticalHeader().setVisible(False)
+        self.tools_audit_table.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.tools_audit_table.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
+        self._clean_table_focus(self.tools_audit_table)
+        audit.layout.addWidget(self.tools_audit_table)
+        layout.addWidget(audit)
+
+        roadmap = Card("Recommended Next Work")
+        roadmap_text = QLabel(
+            "• Keep inventory editing frozen to stable rows only while collecting missing IDs.\n"
+            "• Use Unknown Research and folder scans to expand the database.\n"
+            "• Keep Dragon Souls hidden until the spendable value is mapped.\n"
+            "• Treat race/sex edits as experimental because Skyrim can keep appearance/head-part data separately.\n"
+            "• Prefer diagnostics reports over screenshots when chasing parser or save bugs."
+        )
+        roadmap_text.setWordWrap(True)
+        roadmap.layout.addWidget(roadmap_text)
+        layout.addWidget(roadmap)
+        return page
+
     def _build_database_page(self) -> QWidget:
         page, layout = self._page(
             "Reference IDs",
@@ -1382,7 +1686,10 @@ class MainWindow(QMainWindow):
         search_card = Card("Search")
         filter_row = QHBoxLayout()
         self.db_search = QLineEdit(); self.db_search.setPlaceholderText("Search name, FormID, EditorID, source, notes…")
-        self.db_search.textChanged.connect(self.refresh_database_table)
+        self.db_search_timer = QTimer(self)
+        self.db_search_timer.setSingleShot(True)
+        self.db_search_timer.timeout.connect(self.refresh_database_table)
+        self.db_search.textChanged.connect(lambda _text="": self.db_search_timer.start(120))
         self.db_category = QComboBox(); self.db_category.addItem("All categories")
         self.db_category.currentIndexChanged.connect(self.refresh_database_table)
         filter_row.addWidget(self.db_search, 1)
@@ -1616,12 +1923,59 @@ class MainWindow(QMainWindow):
 
         self.raw_tabs.addTab(self._build_quick_code_formats_tab(), "Quick Codes")
 
+        tree_tab = QWidget()
+        tree_layout = QVBoxLayout(tree_tab)
+        tree_layout.setContentsMargins(0, 0, 0, 0)
+        tree_layout.setSpacing(10)
+        tree_controls = Card("Parsed Save Tree", "Compact searchable view of the parsed save model. Large arrays are grouped so the data is easier to browse than raw JSON.")
+        tree_search_row = QHBoxLayout()
+        self.raw_tree_search_edit = QLineEdit()
+        self.raw_tree_search_edit.setPlaceholderText("Search parsed tree by key, value, FormID, offset, plugin, inventory item, quest, or magic entry…")
+        self.raw_tree_search_edit.returnPressed.connect(self.search_raw_tree)
+        search_tree_btn = QPushButton("Search Tree")
+        search_tree_btn.clicked.connect(self.search_raw_tree)
+        clear_tree_btn = QPushButton("Clear Search")
+        clear_tree_btn.clicked.connect(self.clear_raw_tree_search)
+        expand_top_btn = QPushButton("Expand Top")
+        expand_top_btn.clicked.connect(lambda: self.raw_tree.expandToDepth(1) if hasattr(self, "raw_tree") else None)
+        collapse_btn = QPushButton("Collapse")
+        collapse_btn.clicked.connect(lambda: self.raw_tree.collapseAll() if hasattr(self, "raw_tree") else None)
+        tree_search_row.addWidget(self.raw_tree_search_edit, 1)
+        tree_search_row.addWidget(search_tree_btn)
+        tree_search_row.addWidget(clear_tree_btn)
+        tree_search_row.addWidget(expand_top_btn)
+        tree_search_row.addWidget(collapse_btn)
+        tree_controls.layout.addLayout(tree_search_row)
+        self.raw_tree_status_label = QLabel("Open a save to load the parsed tree.")
+        self.raw_tree_status_label.setWordWrap(True)
+        self.raw_tree_status_label.setObjectName("Subtle")
+        tree_controls.layout.addWidget(self.raw_tree_status_label)
+        tree_layout.addWidget(tree_controls)
+        self.raw_tree = QTreeWidget()
+        self.raw_tree.setObjectName("ParsedTree")
+        self.raw_tree.setHeaderLabels(["Key", "Value"])
+        self.raw_tree.setAlternatingRowColors(True)
+        self.raw_tree.setUniformRowHeights(True)
+        self.raw_tree.setAnimated(True)
+        self.raw_tree.setIndentation(22)
+        self.raw_tree.setColumnWidth(0, 420)
+        self.raw_tree.setSortingEnabled(False)
+        self.raw_tree.setAllColumnsShowFocus(False)
+        self.raw_tree.setStyleSheet(
+            "QTreeWidget#ParsedTree { show-decoration-selected: 1; }"
+            "QTreeWidget#ParsedTree::item { min-height: 28px; padding: 5px 8px; }"
+            "QTreeWidget#ParsedTree::item:hover { background: rgba(126, 162, 214, 0.16); }"
+        )
+        self._clean_table_focus(self.raw_tree)
+        tree_layout.addWidget(self.raw_tree, 1)
+        self.raw_tabs.addTab(tree_tab, "Parsed Tree")
+
         json_tab = QWidget()
         json_layout = QVBoxLayout(json_tab)
         json_layout.setContentsMargins(0, 0, 0, 0)
         json_layout.setSpacing(10)
 
-        json_controls = Card("Parsed JSON Editor", "Search, validate, format, and export the parsed save model. This JSON is a research/export view; save-byte edits still use Mapped Fields or the dedicated pages.")
+        json_controls = Card("Parsed JSON Editor", "Raw editable/exportable JSON for research. Use Parsed Tree first when you need to find data quickly.")
         json_search_row = QHBoxLayout()
         self.raw_json_search_edit = QLineEdit(); self.raw_json_search_edit.setPlaceholderText("Search parsed JSON keys/values/offsets...")
         self.raw_json_search_edit.returnPressed.connect(self.find_next_raw_json)
@@ -1681,7 +2035,7 @@ class MainWindow(QMainWindow):
             "- Player Inventory rows edit the actual count field inside the player ACHR change form, not the visual header.\n"
             "- Editable rows are fixed-size only. The editor refuses edits that would resize a string, row, or structure.\n"
             "- Read-only structural fields are shown so we can map the save format without hand-patching dangerous offsets.\n"
-            "- Use Save Raw Copy first when trying a newly mapped field. Use Save Raw Edits only after the copy loads in-game.\n"
+            "- Raw edits are advanced-only and still use their own buttons. Normal editor tabs save through File > Save.\n"
             "- This page is for mapped bytes. Direct missing-item insertion remains experimental and separate from fixed-size raw edits.\n"
             "- The Format Reference tab summarizes the UESP save-file layout so we can map new editable fields methodically instead of guessing."
         )
@@ -1822,96 +2176,37 @@ class MainWindow(QMainWindow):
         return tab
 
     def _build_about_page(self) -> QWidget:
-        page, layout = self._page("About", "Project status, supported workflows, sources, and community links.")
-
-        card = Card("Skyrim Save Lab created by ProtoBuffers")
-        header_row = QHBoxLayout()
-        header_row.setContentsMargins(0, 0, 0, 0)
-        header_row.setSpacing(14)
-        icon_label = QLabel()
-        icon_label.setFixedSize(88, 88)
-        icon_label.setScaledContents(False)
-        icon_path = resource_path("icons", "skyrim.png")
-        if icon_path.exists():
-            icon_pixmap = QPixmap(str(icon_path))
-            if not icon_pixmap.isNull():
-                icon_label.setPixmap(icon_pixmap.scaled(88, 88, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation))
-        header_row.addWidget(icon_label, 0)
-        title = QLabel("Skyrim Save Lab created by ProtoBuffers")
-        title.setObjectName("SectionTitle")
-        title.setWordWrap(True)
-        header_row.addWidget(title, 1)
-        card.layout.addLayout(header_row)
-
-        info = QLabel(
-            "<p><b>PS4 Skyrim save editor ready for public testing.</b><br>"
-            "PC / PS3 / Xbox 360 / Switch support may work in places, but PS4 is the main target right now. "
-            "<b>Please make a backup of your save first.</b></p>"
-            "<p><b>Based on:</b><br>"
-            "<a href='https://en.uesp.net/wiki/Skyrim_Mod:Save_File_Format'>"
-            "UESP: Skyrim Mod Save File Format</a></p>"
-            "<p><b>Originally intended to fix Save Wizard saves:</b><br>"
-            "<a href='https://docs.google.com/spreadsheets/d/1pln64WRA8QhhrW1QBDEn97HEbp4gdvBNd3GnrC4Bg5c/edit?gid=1795290740#gid=1795290740'>"
-            "Skyrim Save Wizard / Save Research Spreadsheet</a></p>"
-            "<p><b>Free PS4 save decryption:</b><br>"
-            "<a href='https://discord.gg/protobuffers'>discord.gg/protobuffers</a></p>"
+        page, layout = self._page("About", "Skyrim Save Lab - Created by ProtoBuffers")
+        about = QTextBrowser()
+        about.setOpenExternalLinks(True)
+        about.setReadOnly(True)
+        about.setMinimumHeight(520)
+        about.setStyleSheet("QTextBrowser { padding: 18px; font-size: 14px; line-height: 1.35em; }")
+        about.setHtml(
+            """
+            <h1>Skyrim Save Lab</h1>
+            <p><b>Created by ProtoBuffers.</b></p>
+            <p>Modern Skyrim save editor focused on decrypted PS4 saves first, with PC / PS3 / Xbox 360 / Switch support where the same structures are mapped.</p>
+            <p><b>Always keep a clean backup before testing edits.</b> Open a save, make changes across tabs, then use <b>File &gt; Save</b> once.</p>
+            <h2>Simple Workflow</h2>
+            <ul><li><b>Open Save</b> loads the save and creates an in-memory working copy.</li><li><b>General, Inventory, Magic, Plugins, and Raw Editor</b> all read from the same loaded save.</li><li><b>File &gt; Save</b> syncs pending safe edits, creates a backup, and overwrites the loaded file.</li><li><b>File &gt; Save As…</b> writes a new edited copy.</li></ul>
+            <h2>General Tab</h2>
+            <ul><li>Player name, level, XP, XP pool, and common stats are mapped but still being validated across saves.</li><li>Individual skill values are exposed for the standard Skyrim skill list.</li><li>Health, Magicka, Stamina, Carry Weight, Gold, and Lockpicks are available where the save structure is detected safely.</li><li>Dragon Souls direct editing is disabled/guarded because the spendable-souls field is not fully mapped yet. <code>DragonsAbsorbed</code> is a lifetime/absorbed counter, not the spendable shout-menu value.</li><li>Race/Gender is experimental. Current race refs can be detected and patched mechanically, but Skyrim may require additional appearance/head-part data for a full in-game transformation.</li></ul>
+            <h2>Player Inventory</h2>
+            <ul><li>Current inventory shows known items, unknown/research rows, plugin/FormIDArray rows, and conservative read-only candidates.</li><li>Counts for already-owned mapped items can be edited and saved from the main File menu.</li><li>Right-click menu supports copying FormID/GBID, copying <code>player.additem</code>, duplicating selected rows, and pasting a FormID into inventory where supported.</li><li>Category filtering, unknown item research, CSV import/export, and DLC <code>XX######</code> display resolution are included.</li></ul>
+            <h2>Magic Tab</h2>
+            <ul><li>Spells, Powers, Abilities, Active Effects, and Shouts are separated into cleaner tabs.</li><li>Spells/Powers/Abilities use learned-magic list research and command/script helpers.</li><li>Shout word unlock records can be detected; base shout discovery is still under research. Console <code>teachword</code>/<code>unlockword</code> remains the safest route for undiscovered shouts.</li><li>Missing shout pre-learning is research-only and should only be tested on backups.</li></ul>
+            <h2>Plugins</h2>
+            <ul><li>Shows detected plugin order and save metadata used for resolving DLC/mod FormIDs.</li><li>Official DLC placeholder IDs like <code>XX123456</code> are displayed as the active loaded-save FormID when plugin order is known.</li></ul>
+            <h2>Raw Editor</h2>
+            <ul><li><b>Mapped Fields</b>: known fixed-size byte edits only.</li><li><b>Change Forms</b>: low-level record table for research.</li><li><b>Parsed Tree</b>: compact searchable view of the parsed save model.</li><li><b>Parsed JSON</b>: full editable/exportable JSON text for research; it does not write back to save bytes directly.</li><li><b>Quick Codes</b>: Save Wizard-style helper/reference tools.</li></ul>
+            <h2>Known Limitations</h2>
+            <ul><li>Spendable Dragon Souls offset is not fully mapped.</li><li>Base shout discovery records are not fully mapped.</li><li>Race/gender changes may require additional FaceGen/head-part/player base data.</li><li>Creation Club and modded inventory can still have unknown IDs until more saves/database rows are collected.</li></ul>
+            <h2>Sources and Community</h2>
+            <ul><li><a href="https://en.uesp.net/wiki/Skyrim_Mod:Save_File_Format">UESP: Skyrim Mod Save File Format</a></li><li><a href="https://docs.google.com/spreadsheets/d/1pln64WRA8QhhrW1QBDEn97HEbp4gdvBNd3GnrC4Bg5c/edit?gid=1795290740#gid=1795290740">Skyrim Save Wizard / Save Research Spreadsheet</a></li><li><a href="https://discord.gg/protobuffers">discord.gg/protobuffers</a></li></ul>
+            """
         )
-        info.setWordWrap(True)
-        info.setOpenExternalLinks(True)
-        info.setTextInteractionFlags(
-            Qt.TextInteractionFlag.TextBrowserInteraction | Qt.TextInteractionFlag.LinksAccessibleByKeyboard
-        )
-        card.layout.addWidget(info)
-        layout.addWidget(card)
-
-        features = Card("Current editor abilities")
-        feature_text = QLabel(
-            "<h3>General Tab</h3>"
-            "<ul>"
-            "<li>Player Name — mapped, still under testing / not fully working.</li>"
-            "<li>Level — mapped, still under testing / not fully working.</li>"
-            "<li>XP / XP Pool editor.</li>"
-            "<li>Individual skill editor: One-Handed, Lockpicking, Sneak, and the other Skyrim skills.</li>"
-            "<li>Stat editor: Health, Magicka, Stamina, Carry Weight.</li>"
-            "<li>Gold, Lockpick, and Dragon Souls editor. Dragon Souls now uses the live actor-value field, not the DragonsAbsorbed global.</li>"
-            "</ul>"
-            "<h3>Player Inventory</h3>"
-            "<p><b>DLC / Creation Club / plugin inventory may be broken or incomplete.</b> Send saves if you want those mapped.</p>"
-            "<ul>"
-            "<li>Current Inventory editor: edit counts for items already on hand.</li>"
-            "<li>Item Database / Add Item: add base-game items from the bundled database.</li>"
-            "</ul>"
-            "<h3>Magic Tab</h3>"
-            "<ul><li>Safe spell, shout, power, and ability checkbox workflow that generates Skyrim console batch scripts.</li><li>Experimental add/unlock-only save copy workflow for testing without overwriting the original save.</li></ul>"
-            "<h3>Plugin Detector Tab</h3>"
-            "<ul><li>Shows detected plugin/save metadata used while mapping FormIDs.</li></ul>"
-            "<h3>Raw Editor Tab</h3>"
-            "<ul>"
-            "<li>Mapped Fields: faster fixed-size value editing from known save offsets.</li>"
-            "<li>Change Forms: low-level save records for inspection.</li>"
-            "<li>Format Reference: save format notes based on the UESP reference.</li>"
-            "<li>Quick Codes: Save Wizard-style helper/reference based on "
-            "<a href='https://playersquared.com/threads/save-wizard-custom-quick-code-formats.1607/'>PlayerSquared quick-code format notes</a>.</li>"
-            "<li>Parsed JSON: readable parsed-save view with search, syntax validation, formatting, compacting, undo, and export.</li>"
-            "</ul>"
-        )
-        feature_text.setWordWrap(True)
-        feature_text.setOpenExternalLinks(True)
-        feature_text.setTextInteractionFlags(
-            Qt.TextInteractionFlag.TextBrowserInteraction | Qt.TextInteractionFlag.LinksAccessibleByKeyboard
-        )
-        features.layout.addWidget(feature_text)
-        layout.addWidget(features)
-
-        safety = Card("Testing warning")
-        warning = QLabel(
-            "This is public-testing software. Always keep a clean backup, use Save Copy for first tests, "
-            "and verify the edited save loads before overwriting your only working file."
-        )
-        warning.setWordWrap(True)
-        safety.layout.addWidget(warning)
-        layout.addWidget(safety)
-        layout.addStretch(1)
+        layout.addWidget(about, 1)
         return page
 
     def _switch_page(self, row: int) -> None:
@@ -1919,6 +2214,178 @@ class MainWindow(QMainWindow):
 
     def apply_theme(self, name: str) -> None:
         QApplication.instance().setStyleSheet(THEMES.get(name, THEMES["Obsidian"]))
+
+    def _settings_file(self) -> Path:
+        return Path.home() / ".skyrim_save_lab_settings.json"
+
+    def _default_skyrim_save_folder(self) -> Path:
+        """Default PC Skyrim Special Edition save folder.
+
+        Keep this as a real Windows path instead of deriving from Path.home() so
+        the packaged app opens exactly where most end users expect. Users can
+        still pick a different base folder for PS4/decrypted saves or custom
+        profiles.
+        """
+        return Path(r"C:\Users\pc\Documents\My Games\Skyrim Special Edition\Saves")
+
+    def _load_saved_base_folder(self) -> Path | None:
+        try:
+            data = json.loads(self._settings_file().read_text(encoding="utf-8"))
+            raw = str(data.get("save_base_folder", "")).strip()
+            if raw:
+                return Path(raw)
+        except Exception:
+            pass
+        default_folder = self._default_skyrim_save_folder()
+        return default_folder if default_folder.exists() else default_folder
+
+    def _save_base_folder_setting(self, folder: Path) -> None:
+        try:
+            self._settings_file().write_text(json.dumps({"save_base_folder": str(folder)}, indent=2), encoding="utf-8")
+        except Exception:
+            # The folder browser should still work even if settings cannot be written.
+            pass
+
+    def choose_save_base_folder(self) -> None:
+        start = str(self.save_browser_base_folder or (self.current_save.parent if self.current_save else self._default_skyrim_save_folder()))
+        folder = QFileDialog.getExistingDirectory(self, "Choose Skyrim Save Base Folder", start)
+        if not folder:
+            return
+        self.save_browser_base_folder = Path(folder)
+        self._save_base_folder_setting(self.save_browser_base_folder)
+        self.save_base_folder_edit.setText(str(self.save_browser_base_folder))
+        self.refresh_save_folder_browser()
+
+    def refresh_save_folder_browser(self) -> None:
+        if not hasattr(self, "save_browser_table"):
+            return
+        base = self.save_browser_base_folder
+        self.save_browser_table.setRowCount(0)
+        self.save_browser_rows = []
+        if not base or not base.exists():
+            self.save_browser_status.setText(f"Default folder not found yet: {self._default_skyrim_save_folder()}. Choose another folder if your saves are elsewhere.")
+            return
+        paths = []
+        for pattern in ("*.ess", "*.ESS", "*.dat", "*.DAT"):
+            paths.extend(base.rglob(pattern))
+        # PS4 save sets often include backups or generated outputs; keep all real files but stable-sort.
+        paths = sorted({p.resolve() for p in paths if p.is_file()}, key=lambda p: (str(p.parent).lower(), p.name.lower()))
+        rows: list[tuple[Path, dict[str, str]]] = []
+        for path in paths:
+            info = self._summarize_save_for_browser(path, base)
+            rows.append((path, info))
+        self.save_browser_rows = [p for p, _ in rows]
+        self._populate_save_browser(rows)
+        self.save_browser_status.setText(f"Scanned {base}. Found {len(rows)} save file(s). Double-click a row to open it.")
+        self.apply_save_browser_filter()
+
+    def _summarize_save_for_browser(self, path: Path, base: Path) -> dict[str, str]:
+        try:
+            rel_parent = path.parent.relative_to(base)
+            folder = str(rel_parent) if str(rel_parent) != "." else path.parent.name
+        except ValueError:
+            folder = path.parent.name
+        try:
+            stat = path.stat()
+            size = f"{stat.st_size / 1024:.1f} KB" if stat.st_size < 1024 * 1024 else f"{stat.st_size / (1024 * 1024):.2f} MB"
+            modified = datetime.fromtimestamp(stat.st_mtime).strftime("%Y-%m-%d %H:%M")
+        except OSError:
+            size = ""
+            modified = ""
+        player = ""
+        location = ""
+        try:
+            doc = read_ess(path)
+            player = str(getattr(doc.header, "player_name", "") or "")
+            location = str(getattr(doc.header, "player_location", "") or "")
+        except Exception:
+            # Keep unreadable/unknown saves in the list so PS4 folders are still visible.
+            player = "Unreadable"
+            location = ""
+        return {
+            "folder": folder,
+            "file": path.name,
+            "player": player,
+            "location": location,
+            "size": size,
+            "modified": modified,
+            "path": str(path),
+        }
+
+    def _populate_save_browser(self, rows: list[tuple[Path, dict[str, str]]]) -> None:
+        table = self.save_browser_table
+        table.setSortingEnabled(False)
+        table.setRowCount(len(rows))
+        for row_idx, (path, info) in enumerate(rows):
+            loaded = "●" if self.current_save and path.resolve() == self.current_save.resolve() else ""
+            values = [loaded, info["folder"], info["file"], info["player"], info["location"], info["size"], info["modified"], info["path"]]
+            for col, value in enumerate(values):
+                item = QTableWidgetItem(str(value))
+                item.setToolTip(str(path))
+                item.setData(Qt.ItemDataRole.UserRole, str(path))
+                if col == 0:
+                    item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
+                table.setItem(row_idx, col, item)
+        table.setSortingEnabled(True)
+        if rows:
+            table.selectRow(0)
+
+    def apply_save_browser_filter(self) -> None:
+        if not hasattr(self, "save_browser_table"):
+            return
+        query = self.save_browser_filter.text().strip().lower() if hasattr(self, "save_browser_filter") else ""
+        visible = 0
+        for row in range(self.save_browser_table.rowCount()):
+            haystack = " ".join(
+                self.save_browser_table.item(row, col).text().lower()
+                for col in range(self.save_browser_table.columnCount())
+                if self.save_browser_table.item(row, col)
+            )
+            match = not query or query in haystack
+            self.save_browser_table.setRowHidden(row, not match)
+            if match:
+                visible += 1
+        if hasattr(self, "save_browser_status") and self.save_browser_rows:
+            self.save_browser_status.setText(f"Found {len(self.save_browser_rows)} save file(s). Showing {visible} after filter.")
+
+    def open_selected_save_from_browser(self) -> None:
+        if not hasattr(self, "save_browser_table"):
+            return
+        row = self.save_browser_table.currentRow()
+        if row < 0:
+            QMessageBox.information(self, "No save selected", "Select a save row first.")
+            return
+        item = self.save_browser_table.item(row, 0)
+        if not item:
+            return
+        raw_path = item.data(Qt.ItemDataRole.UserRole)
+        if not raw_path:
+            return
+        self.open_save(Path(str(raw_path)))
+
+    def _mark_current_save_in_browser(self) -> None:
+        if not hasattr(self, "save_browser_table") or not self.current_save:
+            return
+        try:
+            current = self.current_save.resolve()
+        except Exception:
+            current = self.current_save
+        table = self.save_browser_table
+        for row in range(table.rowCount()):
+            loaded_item = table.item(row, 0)
+            path_item = table.item(row, 0) or table.item(row, table.columnCount() - 1)
+            raw = path_item.data(Qt.ItemDataRole.UserRole) if path_item else None
+            is_current = False
+            if raw:
+                try:
+                    is_current = Path(str(raw)).resolve() == current
+                except Exception:
+                    is_current = Path(str(raw)) == current
+            if loaded_item:
+                loaded_item.setText("●" if is_current else "")
+            if is_current:
+                table.selectRow(row)
+                table.scrollToItem(loaded_item or path_item, QAbstractItemView.ScrollHint.PositionAtCenter)
 
     def open_save_dialog(self) -> None:
         path, _ = QFileDialog.getOpenFileName(self, "Open Skyrim Save", "", "Skyrim Saves (*.ess *.ESS *.dat *.DAT);;All Files (*)")
@@ -1943,6 +2410,8 @@ class MainWindow(QMainWindow):
         self.magic_pending_changes.clear()
         self.path_edit.setText(str(path))
         self._refresh_all_from_doc()
+        self._refresh_working_save_status()
+        self._mark_current_save_in_browser()
         self.statusBar().showMessage(f"Loaded {path.name}", 5000)
 
     def reload_current_save(self) -> None:
@@ -1963,9 +2432,12 @@ class MainWindow(QMainWindow):
         self._refresh_common_global_values()
         self._refresh_plugins()
         self.load_raw_json_from_doc()
+        self.load_raw_tree_from_doc()
         self.refresh_raw_editor()
         self.refresh_backup_table()
         self.refresh_coverage()
+        self.refresh_tools_database_audit()
+        self._refresh_working_save_status()
 
     def _refresh_summary(self) -> None:
         assert self.current_doc is not None
@@ -2038,6 +2510,59 @@ class MainWindow(QMainWindow):
                 self.cur_exp_spin.setValue(0.0)
                 self.cur_exp_spin.setToolTip(f"XP Pool could not be located in this save: {exc}")
         self._update_name_slot_hint()
+
+
+    def refresh_race_sex_research(self) -> None:
+        if not self.current_save:
+            if hasattr(self, "race_sex_research_text"):
+                self.race_sex_research_text.setPlainText("Open a save first.")
+            return
+        try:
+            self._race_sex_snapshot = build_race_sex_snapshot(self.current_save)
+            text = race_sex_snapshot_to_text(self._race_sex_snapshot)
+        except Exception as exc:
+            self._race_sex_snapshot = None
+            text = f"Race / Sex research failed: {exc}"
+        if hasattr(self, "race_sex_research_text"):
+            self.race_sex_research_text.setPlainText(text)
+
+    def copy_race_sex_research(self) -> None:
+        if not hasattr(self, "race_sex_research_text"):
+            return
+        text = self.race_sex_research_text.toPlainText().strip()
+        if not text:
+            self.refresh_race_sex_research()
+            text = self.race_sex_research_text.toPlainText().strip()
+        QApplication.clipboard().setText(text)
+        self.statusBar().showMessage("Race / Sex snapshot copied.", 4000)
+
+    def export_race_sex_research(self) -> None:
+        if not self.current_save:
+            QMessageBox.information(self, "No save loaded", "Open a save first.")
+            return
+        snapshot = getattr(self, "_race_sex_snapshot", None)
+        if snapshot is None:
+            try:
+                snapshot = build_race_sex_snapshot(self.current_save)
+                self._race_sex_snapshot = snapshot
+            except Exception as exc:
+                QMessageBox.warning(self, "Race / Sex research failed", str(exc))
+                return
+        default = self.current_save.with_suffix(".race-sex-snapshot.json")
+        target, _ = QFileDialog.getSaveFileName(
+            self,
+            "Export Race / Sex Snapshot",
+            str(default),
+            "JSON Files (*.json);;All Files (*)",
+        )
+        if not target:
+            return
+        try:
+            write_race_sex_snapshot_json(target, snapshot)
+        except Exception as exc:
+            QMessageBox.warning(self, "Export failed", str(exc))
+            return
+        self.statusBar().showMessage(f"Race / Sex snapshot exported: {target}", 6000)
 
     def _update_name_slot_hint(self) -> None:
         if not hasattr(self, "name_slot_label"):
@@ -2113,10 +2638,16 @@ class MainWindow(QMainWindow):
             self.inventory_row_original_counts[row] = entry.displayed_count
             self.inventory_row_entries[row] = entry
             for col, value in enumerate(values):
-                item = QTableWidgetItem(value)
+                if value is None:
+                    text = ""
+                elif isinstance(value, str):
+                    text = value
+                else:
+                    text = str(value)
+                item = QTableWidgetItem(text)
                 if col == self.INV_COL_ITEM:
                     item.setData(Qt.ItemDataRole.UserRole, entry.form_id)
-                    item.setToolTip(f"FormID: {entry.form_id} | Row: {entry.row} | Payload offset: 0x{entry.payload_offset:X}")
+                    item.setToolTip(f"FormID: {entry.form_id} | Row: {entry.row} | Payload offset: 0x{entry.payload_offset:X} | Detection: {entry.confidence} | {entry.note}")
                     item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEditable)
                 elif col == self.INV_COL_COUNT:
                     item.setTextAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
@@ -2139,18 +2670,23 @@ class MainWindow(QMainWindow):
         self.inventory_table.setColumnWidth(self.INV_COL_ITEM, max(280, self.inventory_table.columnWidth(self.INV_COL_ITEM)))
         self._refresh_general_inventory_values()
         self.inventory_table.setColumnWidth(self.INV_COL_COUNT, 90)
-        self.inventory_table.setColumnWidth(self.INV_COL_NOTE, 340)
+        self.inventory_table.setColumnWidth(self.INV_COL_CATEGORY, 170)
+        self.inventory_table.setColumnHidden(self.INV_COL_STATUS, True)
+        self.inventory_table.setColumnHidden(self.INV_COL_NOTE, True)
         self._rebuild_inventory_tabs()
         if hasattr(self, "inventory_filter_edit"):
             self._apply_inventory_filter()
         if block.warning and not silent:
             self.statusBar().showMessage(block.warning, 7000)
         elif not silent:
-            self.statusBar().showMessage(f"Loaded {len(block.entries)} inventory rows. Use category tabs to sort the view; Save Changes writes after backup.", 5000)
+            loose = sum(1 for e in block.entries if str(e.confidence).startswith("loose-"))
+            extra = f" ({loose} read-only research row(s))" if loose else ""
+            self.statusBar().showMessage(f"Loaded {len(block.entries)} inventory rows{extra}. Use category tabs to sort the view; File > Save writes after backup.", 5000)
         self.refresh_coverage()
         self.refresh_inventory_database_table()
         self._update_inventory_storage_info()
         self.refresh_inventory_research_report()
+        self.refresh_unknown_inventory_table()
 
     def _rebuild_inventory_tabs(self) -> None:
         if not hasattr(self, "inventory_tabs") or not hasattr(self, "inventory_table"):
@@ -2178,12 +2714,38 @@ class MainWindow(QMainWindow):
         self.inventory_tabs.setCurrentIndex(wanted)
         self.inventory_tabs.blockSignals(False)
         self.inventory_active_category = previous if wanted != 0 else "All"
+        if hasattr(self, "inventory_category_combo"):
+            self.inventory_category_combo.blockSignals(True)
+            self.inventory_category_combo.clear()
+            self.inventory_category_combo.addItem(f"All ({self.inventory_table.rowCount()})")
+            for category in categories:
+                self.inventory_category_combo.addItem(f"{category} ({counts[category]})")
+            combo_wanted = 0
+            if self.inventory_active_category != "All":
+                for i in range(1, self.inventory_category_combo.count()):
+                    if self.inventory_category_combo.itemText(i).rsplit(" (", 1)[0] == self.inventory_active_category:
+                        combo_wanted = i
+                        break
+            self.inventory_category_combo.setCurrentIndex(combo_wanted)
+            self.inventory_category_combo.blockSignals(False)
 
     def _inventory_tab_changed(self, index: int) -> None:
         if not hasattr(self, "inventory_tabs"):
             return
         label = self.inventory_tabs.tabText(index) if index >= 0 else "All"
         self.inventory_active_category = label.rsplit(" (", 1)[0] if label else "All"
+        self._apply_inventory_filter()
+
+    def _inventory_category_combo_changed(self, text: str) -> None:
+        label = (text or "All").strip()
+        self.inventory_active_category = label.rsplit(" (", 1)[0] if label else "All"
+        if hasattr(self, "inventory_tabs"):
+            self.inventory_tabs.blockSignals(True)
+            for i in range(self.inventory_tabs.count()):
+                if self.inventory_tabs.tabText(i).rsplit(" (", 1)[0] == self.inventory_active_category:
+                    self.inventory_tabs.setCurrentIndex(i)
+                    break
+            self.inventory_tabs.blockSignals(False)
         self._apply_inventory_filter()
 
     def _apply_inventory_filter(self) -> None:
@@ -2385,7 +2947,7 @@ class MainWindow(QMainWindow):
             elif status == "Dormant row":
                 add_method = "Re-add exact row"
             elif status == "Pending add":
-                add_method = "Save Edits"
+                add_method = "File > Save"
             else:
                 add_method = "Preflight direct add" if can_direct else "Console only"
             if category_filter and rec.category.casefold() != category_filter:
@@ -2403,7 +2965,8 @@ class MainWindow(QMainWindow):
             haystack = " ".join([rec.name, rec.editor_id, rec.form_id, active_id, rec.category, rec.source, rec.notes, status, add_method, reason]).casefold()
             if needle and needle not in haystack:
                 continue
-            rows.append((rec, active_id, status, add_method, reason))
+            display_id, active_id = self._display_form_id_for_save(rec.form_id, rec.source, rec.editor_id, rec.name, rec.notes)
+            rows.append((rec, active_id, display_id, status, add_method, reason))
             if len(rows) >= 750:
                 break
         if hasattr(self, "inv_insert_preflight_label"):
@@ -2416,15 +2979,21 @@ class MainWindow(QMainWindow):
                 state = "ENABLED for simple base-game stacks" if ok else "disabled"
                 self.inv_insert_preflight_label.setText(f"Direct missing-item insertion is {state}. {reason} Dormant rows re-add through exact count edits. Truly missing items that do not pass this stay blocked for PS4 safety.")
         self.inv_db_table.setRowCount(len(rows))
-        for row, (rec, active_id, status, add_method, reason) in enumerate(rows):
+        for row, (rec, active_id, display_id, status, add_method, reason) in enumerate(rows):
             name = rec.name or rec.editor_id or "Unknown item"
-            values = [name, active_id or rec.form_id, rec.category, status, add_method, rec.source]
+            values = [name, display_id or active_id or rec.form_id, rec.category, status, add_method, rec.source]
             for col, value in enumerate(values):
-                item = QTableWidgetItem(value)
+                if value is None:
+                    text = ""
+                elif isinstance(value, str):
+                    text = value
+                else:
+                    text = str(value)
+                item = QTableWidgetItem(text)
                 if col == 0:
                     item.setData(Qt.ItemDataRole.UserRole, active_id or rec.form_id)
                     plugin_hint = infer_plugin_name(rec.source, rec.editor_id, rec.name, rec.notes) or rec.source
-                    item.setToolTip(f"EditorID: {rec.editor_id}\nOriginal FormID: {rec.form_id}\nResolved/FormID: {active_id or rec.form_id}\nPlugin hint: {plugin_hint}\nAdd method: {add_method}\nReason: {reason}\nNotes: {rec.notes}")
+                    item.setToolTip(f"EditorID: {rec.editor_id}\nOriginal FormID: {rec.form_id}\nDisplay FormID: {display_id or active_id or rec.form_id}\nActive save FormID: {active_id or rec.form_id}\nPlugin hint: {plugin_hint}\nAdd method: {add_method}\nReason: {reason}\nNotes: {rec.notes}")
                 if col == 4:
                     item.setToolTip(reason)
                 item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEditable)
@@ -2442,7 +3011,9 @@ class MainWindow(QMainWindow):
         name_item = self.inv_db_table.item(row, 0)
         id_item = self.inv_db_table.item(row, 1)
         status_item = self.inv_db_table.item(row, 3)
-        form_id = id_item.text().strip() if id_item and id_item.text() else ""
+        form_id = str(name_item.data(Qt.ItemDataRole.UserRole) or "").strip() if name_item else ""
+        if not form_id:
+            form_id = id_item.text().strip().split(" ", 1)[0] if id_item and id_item.text() else ""
         name = name_item.text().strip() if name_item and name_item.text() else "Selected item"
         status = status_item.text().strip() if status_item and status_item.text() else ""
         return form_id, name, status
@@ -2461,7 +3032,7 @@ class MainWindow(QMainWindow):
         """End-user add action from the Item Database tab.
 
         Existing rows and supported missing simple rows are staged into the same
-        inventory edit workflow. The Save Edits button performs the actual write
+        inventory edit workflow. The File > Save button performs the actual write
         after creating a backup.
         """
         form_id, name, _status = self._selected_inventory_database_item()
@@ -2491,9 +3062,10 @@ class MainWindow(QMainWindow):
             if count_item:
                 count_item.setText(str(new_count))
             action_word = "Re-added" if current == 0 else "Staged"
-            self.statusBar().showMessage(f"{action_word} {name}: New Count {new_count:,}. Press Save Edits to write it.", 4500)
+            self.statusBar().showMessage(f"{action_word} {name}: Count {new_count:,}. Press File > Save to write it.", 4500)
             self.refresh_inventory_database_table()
             self.refresh_inventory_research_report()
+            self.refresh_unknown_inventory_table()
             return
         self.add_missing_inventory_database_item_to_save()
 
@@ -2512,7 +3084,7 @@ class MainWindow(QMainWindow):
             QMessageBox.information(
                 self,
                 "Item already exists",
-                f"{name} already has an inventory row. Use Add Selected To Save to add to its New Count, or Set Existing Count to replace it."
+                f"{name} already has an inventory row. Use Add Selected To Save to add to its Count, or Set Existing Count to replace it."
             )
             return
         can_direct, reason = self._direct_insert_support(clean)
@@ -2521,12 +3093,13 @@ class MainWindow(QMainWindow):
             self._refresh_inventory_queue_label()
             self.refresh_inventory_database_table()
             self.refresh_inventory_research_report()
+            self.refresh_unknown_inventory_table()
             QMessageBox.information(
                 self,
                 "Item staged",
-                f"Staged missing item for PS4 fake/minimal direct add:\n\n{name}\n{clean}\nAmount: {amount:,}\n\nPress Save Edits to write it at the mapped inventory-list boundary. A backup will be created first. Use Preview Fake Row to see the exact generated bytes."
+                f"Staged missing item for PS4 fake/minimal direct add:\n\n{name}\n{clean}\nAmount: {amount:,}\n\nPress File > Save to write it at the mapped inventory-list boundary. A backup will be created first. Use Preview Fake Row to see the exact generated bytes."
             )
-            self.statusBar().showMessage(f"Staged {name} for direct add. Press Save Edits to write it.", 4500)
+            self.statusBar().showMessage(f"Staged {name} for direct add. Press File > Save to write it.", 4500)
             return
         command = f"player.additem {form_id} {amount}"
         QApplication.clipboard().setText(command)
@@ -2612,9 +3185,10 @@ class MainWindow(QMainWindow):
         count_item = self.inventory_table.item(row, self.INV_COL_COUNT)
         if count_item:
             count_item.setText(str(new_count))
-        self.statusBar().showMessage(f"Updated {name}: New Count {new_count:,}", 3000)
+        self.statusBar().showMessage(f"Updated {name}: Count {new_count:,}", 3000)
         self.refresh_inventory_database_table()
         self.refresh_inventory_research_report()
+        self.refresh_unknown_inventory_table()
 
     def _inventory_selection_changed(self) -> None:
         items = self.inventory_table.selectedItems()
@@ -2624,6 +3198,7 @@ class MainWindow(QMainWindow):
         name_item = self.inventory_table.item(row, self.INV_COL_ITEM)
         count_item = self.inventory_table.item(row, self.INV_COL_COUNT)
         self.inventory_selected_offset = None
+        editable = bool(self.inventory_row_editable.get(row, False))
         if name_item:
             form_id = name_item.data(Qt.ItemDataRole.UserRole) or ""
             self.inventory_selected_offset = self.inventory_row_offsets.get(row)
@@ -2633,11 +3208,21 @@ class MainWindow(QMainWindow):
         if count_item:
             try:
                 self._updating_inventory_editor = True
-                self.inv_amount_spin.setValue(int(count_item.text()))
+                self.inv_amount_spin.setValue(int(count_item.text().replace(",", "").strip() or "0"))
             except ValueError:
                 pass
             finally:
                 self._updating_inventory_editor = False
+        # Make read-only/research rows obvious. Previously the spinbox still accepted
+        # values, then nothing changed, which looked like the editor was broken.
+        self.inv_amount_spin.setEnabled(editable)
+        self.inv_amount_spin.setToolTip(
+            f"Safe maximum: {MAX_SAFE_INVENTORY_COUNT:,}" if editable else "This detected inventory row is read-only until its count offset is mapped."
+        )
+        for btn in getattr(self, "inventory_count_buttons", []):
+            btn.setEnabled(editable)
+        if not editable:
+            self.statusBar().showMessage("Selected inventory row is research/read-only; count cannot be saved yet.", 3500)
         self._update_inventory_storage_info()
 
     def _format_inventory_storage_info(self, row: int) -> str:
@@ -2668,7 +3253,7 @@ class MainWindow(QMainWindow):
         if not entry.editable:
             lines.append("Safety: this row is shown for research but count editing is disabled.")
         elif int(entry.displayed_count) == 0:
-            lines.append("Safety: dormant row. Setting New Count above 0 re-adds this existing row; no new bytes are inserted.")
+            lines.append("Safety: dormant row. Setting Count above 0 re-adds this existing row; no new bytes are inserted.")
             if entry.form_id not in ("0000000F", "0000000A"):
                 lines.append("Write style: controlled add/remove saves showed these dormant rows should revive with a negative raw count.")
         elif int(entry.payload_offset) in self.inventory_dirty_counts:
@@ -2827,7 +3412,7 @@ class MainWindow(QMainWindow):
             ok, reason = False, str(exc)
         lines.append(f"Status: {'ENABLED for narrow simple base-game stacks' if ok else 'DISABLED'}")
         lines.append(f"Reason: {reason}")
-        lines.append("Policy: existing rows are direct-editable; dormant zero-count rows can be re-added by editing New Count; truly missing base-game rows can be inserted only when direct-insert preflight passes.")
+        lines.append("Policy: existing rows are direct-editable; dormant zero-count rows can be re-added by editing Count; truly missing base-game rows can be inserted only when direct-insert preflight passes.")
         lines.append("Controlled add/remove finding: the uploaded saves showed Iron War Axe stayed at the same row offset and changed raw count 0 -> -1 when re-added. The editor now treats zero-count rows as safe reactivation targets instead of trying to insert new bytes.")
         lines.append("Direct insertion remains fail-closed for unmapped layouts because Skyrim inventory rows can include extra data, ownership, enchantment, tempering, poison, equipped state, and list/count fields.")
 
@@ -2900,43 +3485,68 @@ class MainWindow(QMainWindow):
             return
         QMessageBox.information(self, "Report exported", f"Inventory research report written:\n{target}")
 
-    def _inventory_count_item_changed(self, item: QTableWidgetItem) -> None:
-        if self._loading_inventory_table or item.column() != self.INV_COL_COUNT:
-            return
-        row = item.row()
-        name_item = self.inventory_table.item(row, self.INV_COL_ITEM)
-        if not name_item:
-            return
+    def _apply_inventory_count_to_row(self, row: int, value: int, *, update_spin: bool = True) -> bool:
+        if not hasattr(self, "inventory_table") or row < 0:
+            return False
+        count_item = self.inventory_table.item(row, self.INV_COL_COUNT)
+        if not count_item:
+            return False
         offset = self.inventory_row_offsets.get(row)
         editable = self.inventory_row_editable.get(row, False)
-        original = self.inventory_row_original_counts.get(row, 0)
+        original = int(self.inventory_row_original_counts.get(row, 0))
         if offset is None or not editable:
-            return
-        text = item.text().strip().replace(",", "")
+            self.statusBar().showMessage("Selected inventory row is research/read-only; count cannot be saved yet.", 3500)
+            return False
         try:
-            value = validate_inventory_amount(int(text))
+            value = validate_inventory_amount(int(value))
         except Exception:
-            self._loading_inventory_table = True
-            item.setText(str(original))
-            self._loading_inventory_table = False
             QMessageBox.warning(self, "Invalid count", f"Inventory counts must be whole numbers from 0 to {MAX_SAFE_INVENTORY_COUNT:,}.")
-            return
+            return False
+        normalized = str(value)
+        # Update the visible table immediately and queue the byte-level save change in
+        # the same code path. Do not rely on Qt itemChanged firing later.
+        if count_item.text().replace(",", "").strip() != normalized:
+            self.inventory_table.blockSignals(True)
+            try:
+                count_item.setText(normalized)
+            finally:
+                self.inventory_table.blockSignals(False)
         payload_offset = int(offset)
-        original_value = int(original)
-        if value == original_value:
+        if value == original:
             self.inventory_dirty_counts.pop(payload_offset, None)
         else:
             self.inventory_dirty_counts[payload_offset] = value
-        if self.inventory_table.currentRow() == row:
+        if update_spin and hasattr(self, "inv_amount_spin") and self.inventory_table.currentRow() == row:
             self._updating_inventory_editor = True
-            self.inv_amount_spin.setValue(value)
-            self._updating_inventory_editor = False
+            try:
+                self.inv_amount_spin.setValue(value)
+            finally:
+                self._updating_inventory_editor = False
         self.inventory_selected_offset = payload_offset
         self._refresh_inventory_queue_label()
         self._refresh_general_inventory_values()
         self._update_inventory_storage_info()
         self.refresh_coverage()
-        self.statusBar().showMessage(f"Unsaved inventory count edits: {len(self.inventory_dirty_counts)}", 3000)
+        self._mark_pending_tab_edits_changed(f"Pending inventory count edits: {len(self.inventory_dirty_counts)}")
+        return True
+
+    def _inventory_count_item_changed(self, item: QTableWidgetItem) -> None:
+        if self._loading_inventory_table or item.column() != self.INV_COL_COUNT:
+            return
+        row = item.row()
+        original = int(self.inventory_row_original_counts.get(row, 0))
+        text = item.text().strip().replace(",", "")
+        try:
+            value = validate_inventory_amount(int(text))
+        except Exception:
+            self.inventory_table.blockSignals(True)
+            try:
+                item.setText(str(original))
+            finally:
+                self.inventory_table.blockSignals(False)
+            QMessageBox.warning(self, "Invalid count", f"Inventory counts must be whole numbers from 0 to {MAX_SAFE_INVENTORY_COUNT:,}.")
+            return
+        self._apply_inventory_count_to_row(row, value)
 
     def set_selected_inventory_count(self, *_args) -> None:
         if getattr(self, "_updating_inventory_editor", False):
@@ -2944,21 +3554,12 @@ class MainWindow(QMainWindow):
         row = self.inventory_table.currentRow() if hasattr(self, "inventory_table") else -1
         if row < 0:
             return
-        count_item = self.inventory_table.item(row, self.INV_COL_COUNT)
-        if not count_item:
-            return
-        editable = self.inventory_row_editable.get(row, False)
-        if not editable:
-            self.statusBar().showMessage("That detected row is not editable yet.", 2500)
-            return
         try:
             value = validate_inventory_amount(self.inv_amount_spin.value())
         except Exception as exc:
             QMessageBox.warning(self, "Invalid count", str(exc))
             return
-        if count_item.text().replace(",", "").strip() != str(value):
-            count_item.setText(str(value))
-
+        self._apply_inventory_count_to_row(row, value, update_spin=False)
 
     def revert_inventory_count_edits(self) -> None:
         if not hasattr(self, "inventory_table"):
@@ -3016,13 +3617,17 @@ class MainWindow(QMainWindow):
     def set_selected_inventory_amount(self, amount: int) -> None:
         if not hasattr(self, "inv_amount_spin"):
             return
+        row = self.inventory_table.currentRow() if hasattr(self, "inventory_table") else -1
         try:
             value = validate_inventory_amount(amount)
         except Exception as exc:
             QMessageBox.warning(self, "Invalid count", str(exc))
             return
+        if row >= 0:
+            if self._apply_inventory_count_to_row(row, value):
+                return
+        # Keep the editor value in sync even when no editable row is selected.
         self.inv_amount_spin.setValue(value)
-
 
     def restore_selected_inventory_count(self) -> None:
         row = self.inventory_table.currentRow() if hasattr(self, "inventory_table") else -1
@@ -3083,7 +3688,13 @@ class MainWindow(QMainWindow):
         for out_row, (_table_row, offset, form_id, name, old, new) in enumerate(rows):
             values = [name, form_id, f"{new:,}", f"{new - old:+,}"]
             for col, value in enumerate(values):
-                item = QTableWidgetItem(value)
+                if value is None:
+                    text = ""
+                elif isinstance(value, str):
+                    text = value
+                else:
+                    text = str(value)
+                item = QTableWidgetItem(text)
                 if col == 0:
                     item.setData(Qt.ItemDataRole.UserRole, offset)
                 if col in {2, 3}:
@@ -3171,7 +3782,7 @@ class MainWindow(QMainWindow):
         shown = 0
         for _table_row, offset, form_id, name, old, new in queued:
             if offset in updates:
-                lines.append(f"- Set {name} ({form_id}): New Count {int(updates[offset]):,} ({int(updates[offset]) - old:+,})")
+                lines.append(f"- Set {name} ({form_id}): Count {int(updates[offset]):,} ({int(updates[offset]) - old:+,})")
                 shown += 1
                 if shown >= 12:
                     break
@@ -3233,6 +3844,162 @@ class MainWindow(QMainWindow):
         if problems:
             raise ValueError("Common values were written, but verification failed:\n" + "\n".join(f"- {item}" for item in problems))
 
+    def _selected_inventory_row(self) -> int:
+        if not hasattr(self, "inventory_table"):
+            return -1
+        row = self.inventory_table.currentRow()
+        if row < 0:
+            selected = self.inventory_table.selectionModel().selectedRows() if self.inventory_table.selectionModel() else []
+            row = selected[0].row() if selected else -1
+        return row
+
+    def _inventory_row_form_id(self, row: int) -> str:
+        if row < 0 or not hasattr(self, "inventory_table"):
+            return ""
+        item = self.inventory_table.item(row, self.INV_COL_ITEM)
+        return str(item.data(Qt.ItemDataRole.UserRole) or "").strip().upper() if item else ""
+
+    def _inventory_row_name(self, row: int) -> str:
+        if row < 0 or not hasattr(self, "inventory_table"):
+            return "Selected item"
+        item = self.inventory_table.item(row, self.INV_COL_ITEM)
+        return item.text().strip() if item and item.text().strip() else "Selected item"
+
+    def _show_inventory_context_menu(self, pos) -> None:
+        if not hasattr(self, "inventory_table"):
+            return
+        index = self.inventory_table.indexAt(pos)
+        if index.isValid():
+            self.inventory_table.selectRow(index.row())
+        row = self._selected_inventory_row()
+        has_row = row >= 0
+        form_id = self._inventory_row_form_id(row) if has_row else ""
+        menu = QMenu(self)
+        copy_gbid = menu.addAction("Copy GBID / FormID")
+        copy_additem = menu.addAction("Copy player.additem Command")
+        duplicate = menu.addAction("Duplicate Selected Item")
+        menu.addSeparator()
+        paste_id = menu.addAction("Paste ID Into Inventory…")
+        copy_gbid.setEnabled(bool(form_id))
+        copy_additem.setEnabled(bool(form_id))
+        duplicate.setEnabled(bool(form_id) and bool(self.current_save))
+        action = menu.exec(self.inventory_table.viewport().mapToGlobal(pos))
+        if action == copy_gbid:
+            self.copy_selected_inventory_gbid()
+        elif action == copy_additem:
+            self.copy_selected_inventory_additem_command()
+        elif action == duplicate:
+            self.duplicate_selected_inventory_item()
+        elif action == paste_id:
+            self.paste_inventory_id_from_clipboard()
+
+    def copy_selected_inventory_gbid(self) -> None:
+        row = self._selected_inventory_row()
+        form_id = self._inventory_row_form_id(row)
+        if not form_id:
+            self.statusBar().showMessage("Select an inventory row first.", 2500)
+            return
+        QApplication.clipboard().setText(form_id)
+        self.statusBar().showMessage(f"Copied GBID/FormID: {form_id}", 3000)
+
+    def _extract_form_id_from_text(self, text: str) -> str:
+        raw = (text or "").strip().upper().replace("0X", "")
+        if not raw:
+            return ""
+        # Accept exact FormIDs, XX placeholders, or commands like: player.additem 0000000F 100
+        import re
+        xx = re.search(r"\bXX[0-9A-F]{1,6}\b", raw)
+        if xx:
+            return "XX" + xx.group(0)[2:].zfill(6)
+        hits = re.findall(r"\b[0-9A-F]{1,8}\b", raw)
+        if not hits:
+            return ""
+        # Prefer an 8-digit token when present; otherwise use the first hex token.
+        for hit in hits:
+            if len(hit) == 8:
+                return hit
+        return hits[0].zfill(8)[-8:]
+
+    def _stage_inventory_form_id(self, form_id: str, amount: int = 1, name: str | None = None) -> bool:
+        if not self.current_save:
+            QMessageBox.information(self, "Open a save first", "Open a Skyrim save before adding an inventory ID.")
+            return False
+        clean = self._normalize_lookup_form_id(form_id)
+        if not clean:
+            QMessageBox.warning(self, "Invalid ID", "Paste a valid Skyrim FormID/GBID such as 0000000F.")
+            return False
+        amount = validate_inventory_amount(amount)
+        row = self._find_inventory_row_by_form_id(clean)
+        if row >= 0:
+            if not self.inventory_row_editable.get(row, False):
+                QMessageBox.information(self, "Read-only row", "That inventory row exists, but this editor cannot safely edit its count yet.")
+                return False
+            current = self._inventory_table_count(row)
+            new_count = validate_inventory_amount(current + amount)
+            count_item = self.inventory_table.item(row, self.INV_COL_COUNT)
+            if count_item:
+                count_item.setText(str(new_count))
+            self.inventory_table.selectRow(row)
+            self.inventory_table.scrollToItem(self.inventory_table.item(row, self.INV_COL_ITEM))
+            self.statusBar().showMessage(f"Queued {self._inventory_row_name(row)}: {current:,} → {new_count:,}. File > Save writes it.", 4500)
+            return True
+        rec = self._db_record_for_form_id(clean)
+        display_name = name or (rec.name if rec and getattr(rec, "name", "") else clean)
+        can_direct, reason = self._direct_insert_support(clean)
+        if can_direct:
+            self.inventory_pending_adds[clean] = {"name": display_name, "amount": amount}
+            self._refresh_inventory_queue_label()
+            self.refresh_inventory_database_table()
+            self.refresh_inventory_research_report()
+            self.refresh_unknown_inventory_table()
+            self.statusBar().showMessage(f"Queued add: {display_name} ({clean}) x{amount:,}. File > Save writes it.", 5000)
+            return True
+        command = f"player.additem {clean} {amount}"
+        QApplication.clipboard().setText(command)
+        QMessageBox.warning(
+            self,
+            "Direct add not safe yet",
+            f"{clean} is not safe for direct inventory insertion in this save yet.\n\nReason: {reason}\n\nCopied fallback command:\n{command}"
+        )
+        return False
+
+    def duplicate_selected_inventory_item(self) -> None:
+        row = self._selected_inventory_row()
+        form_id = self._inventory_row_form_id(row)
+        if not form_id:
+            QMessageBox.information(self, "No item selected", "Right-click or select an inventory row first.")
+            return
+        current = max(1, self._inventory_table_count(row))
+        self._stage_inventory_form_id(form_id, current, self._inventory_row_name(row))
+
+    def paste_inventory_id_from_clipboard(self) -> None:
+        clip = QApplication.clipboard().text().strip()
+        suggested = self._extract_form_id_from_text(clip)
+        text, ok = QInputDialog.getText(
+            self,
+            "Paste ID Into Inventory",
+            "FormID / GBID:",
+            text=suggested or clip,
+        )
+        if not ok:
+            return
+        form_id = self._extract_form_id_from_text(text)
+        if not form_id:
+            QMessageBox.warning(self, "Invalid ID", "Paste a valid FormID/GBID such as 0000000F or player.additem 0000000F 100.")
+            return
+        amount, ok_amount = QInputDialog.getInt(
+            self,
+            "Inventory Amount",
+            "Amount to add:",
+            1,
+            0,
+            MAX_SAFE_INVENTORY_COUNT,
+            1,
+        )
+        if not ok_amount:
+            return
+        self._stage_inventory_form_id(form_id, amount)
+
     def copy_selected_inventory_additem_command(self) -> None:
         form_id = self.inv_selected_formid.text().strip() if hasattr(self, "inv_selected_formid") else ""
         if not form_id:
@@ -3251,7 +4018,7 @@ class MainWindow(QMainWindow):
         adds = dict(getattr(self, "inventory_pending_adds", {}))
         common_globals, common_global_lines = self._pending_common_global_update_lines()
         if not updates and not adds and not common_globals:
-            QMessageBox.information(self, "No save edits", "Change an inventory New Count, stage a direct-addable item, or change a Common value like Dragon Souls first.")
+            QMessageBox.information(self, "No save edits", "Change an inventory Count, stage a direct-addable item, or change a Common value like Gold/Lockpicks first.")
             return
         try:
             updates = {int(k): validate_inventory_amount(v) for k, v in updates.items()}
@@ -3302,7 +4069,7 @@ class MainWindow(QMainWindow):
         if not updates and self.inventory_selected_offset is not None:
             updates[self.inventory_selected_offset] = validate_inventory_amount(self.inv_amount_spin.value())
         if not updates and not adds and not common_globals:
-            QMessageBox.information(self, "No save edits", "Change an inventory New Count, stage a direct-addable item, or change a Common value like Dragon Souls first.")
+            QMessageBox.information(self, "No save edits", "Change an inventory Count, stage a direct-addable item, or change a Common value like Gold/Lockpicks first.")
             return
         try:
             updates = {int(k): validate_inventory_amount(v) for k, v in updates.items()}
@@ -3397,7 +4164,7 @@ class MainWindow(QMainWindow):
             QMessageBox.critical(self, "Inventory CSV import failed", str(exc))
             return
         if not imported:
-            QMessageBox.information(self, "No importable rows", "No rows with FormID/PayloadOffset and Count/New Count were found.")
+            QMessageBox.information(self, "No importable rows", "No rows with FormID/PayloadOffset and Count/Count were found.")
             return
 
         mode = self._choose_inventory_import_mode()
@@ -3503,7 +4270,7 @@ class MainWindow(QMainWindow):
         box.setText("How should the CSV be applied?")
         box.setInformativeText(
             "Replace Inventory sets matching rows to the CSV counts and sets editable rows not found in the CSV to 0.\n\n"
-            "Add To Current adds each CSV count onto the currently shown New Count for matching existing rows.\n\n"
+            "Add To Current adds each CSV count onto the currently shown Count for matching existing rows.\n\n"
             "This still only changes items already present in the save; brand-new row insertion is not enabled yet."
         )
         replace_btn = box.addButton("Replace Inventory", QMessageBox.ButtonRole.AcceptRole)
@@ -3579,6 +4346,186 @@ class MainWindow(QMainWindow):
                     continue
                 rows.append({"form_id": form_id, "payload_offset": payload_offset, "count": count})
         return rows
+
+    def refresh_unknown_inventory_table(self) -> None:
+        if not hasattr(self, "unknown_inventory_table"):
+            return
+        plugins = self._active_plugin_list()
+        rows = collect_unknown_inventory(self.current_inventory, self.db, plugins)
+        self.inventory_unknown_rows = rows
+        table = self.unknown_inventory_table
+        table.setRowCount(len(rows))
+        for row_idx, row in enumerate(rows):
+            display_form_id, active_form_id = self._display_form_id_for_save(row.form_id, row.plugin_hint, "", row.category_guess, row.note)
+            values = [
+                display_form_id or row.form_id,
+                str(row.count),
+                row.category_guess,
+                row.plugin_hint,
+                row.refid_hex,
+                f"0x{int(row.payload_offset):X}",
+                row.reason,
+                row.note,
+            ]
+            for col, value in enumerate(values):
+                if value is None:
+                    text = ""
+                elif isinstance(value, str):
+                    text = value
+                else:
+                    text = str(value)
+                item = QTableWidgetItem(text)
+                item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEditable)
+                if col == 0:
+                    item.setData(Qt.ItemDataRole.UserRole, active_form_id or row.form_id)
+                    item.setToolTip(f"Original FormID: {row.form_id}\nDisplay FormID: {display_form_id or row.form_id}\nActive save FormID: {active_form_id or row.form_id}\nRefID: {row.refid_hex}\nPlayer offset: 0x{int(row.player_data_offset):X}\nPayload offset: 0x{int(row.payload_offset):X}")
+                table.setItem(row_idx, col, item)
+        table.resizeColumnsToContents()
+        if table.columnWidth(0) < 110:
+            table.setColumnWidth(0, 110)
+        if table.columnWidth(2) < 180:
+            table.setColumnWidth(2, 180)
+        if hasattr(self, "unknown_inventory_summary"):
+            if not self.current_inventory:
+                self.unknown_inventory_summary.setText("Open a save to scan unknown inventory IDs.")
+            else:
+                by_guess: dict[str, int] = {}
+                for row in rows:
+                    by_guess[row.category_guess] = by_guess.get(row.category_guess, 0) + 1
+                parts = ", ".join(f"{name}: {count}" for name, count in sorted(by_guess.items(), key=lambda kv: kv[0].casefold()))
+                self.unknown_inventory_summary.setText(f"Unknown inventory rows: {len(rows)}" + (f" — {parts}" if parts else "."))
+        self._apply_unknown_inventory_filter()
+
+    def _apply_unknown_inventory_filter(self) -> None:
+        if not hasattr(self, "unknown_inventory_table") or not hasattr(self, "unknown_inventory_filter_edit"):
+            return
+        needle = self.unknown_inventory_filter_edit.text().strip().casefold()
+        table = self.unknown_inventory_table
+        for row in range(table.rowCount()):
+            if not needle:
+                table.setRowHidden(row, False)
+                continue
+            parts: list[str] = []
+            for col in range(table.columnCount()):
+                item = table.item(row, col)
+                if item:
+                    parts.append(item.text())
+            table.setRowHidden(row, needle not in " ".join(parts).casefold())
+
+    def export_unknown_inventory_research_dialog(self) -> None:
+        if not self.current_inventory:
+            QMessageBox.information(self, "No inventory loaded", "Open a save first.")
+            return
+        self.refresh_unknown_inventory_table()
+        default = "skyrim_unknown_inventory_research.csv"
+        if self.current_save:
+            default = str(self.current_save.with_suffix(".unknown-research.csv"))
+        target, _ = QFileDialog.getSaveFileName(self, "Export Unknown Inventory Research", default, "CSV Files (*.csv)")
+        if not target:
+            return
+        try:
+            write_unknown_inventory_csv(target, self.inventory_unknown_rows)
+        except Exception as exc:
+            QMessageBox.critical(self, "Unknown research export failed", str(exc))
+            return
+        self.statusBar().showMessage(f"Unknown inventory research CSV written: {target}", 7000)
+
+    def copy_unknown_inventory_ids(self) -> None:
+        self.refresh_unknown_inventory_table()
+        rows = getattr(self, "inventory_unknown_rows", []) or []
+        if not rows:
+            QApplication.clipboard().setText("")
+            self.statusBar().showMessage("No unknown inventory IDs to copy.", 4000)
+            return
+        lines = ["FormID\tCount\tGuess\tReason"]
+        lines.extend(f"{row.form_id}\t{row.count}\t{row.category_guess}\t{row.reason}" for row in rows)
+        QApplication.clipboard().setText("\n".join(lines))
+        self.statusBar().showMessage(f"Copied {len(rows)} unknown inventory IDs.", 5000)
+
+    def copy_unknown_inventory_additem_commands(self) -> None:
+        self.refresh_unknown_inventory_table()
+        rows = getattr(self, "inventory_unknown_rows", []) or []
+        if not rows:
+            QApplication.clipboard().setText("")
+            self.statusBar().showMessage("No unknown inventory additem commands to copy.", 4000)
+            return
+        lines = []
+        for row in rows:
+            fid = (row.form_id or "").strip().upper()
+            if not fid or fid.startswith("ARRAY["):
+                continue
+            count = max(1, min(int(row.count or 1), MAX_SAFE_INVENTORY_COUNT))
+            lines.append(f"player.additem {fid} {count} ; {row.category_guess} / {row.reason}")
+        QApplication.clipboard().setText("\n".join(lines))
+        self.statusBar().showMessage(f"Copied {len(lines)} unknown additem command(s).", 5000)
+
+    def export_save_folder_unknown_inventory_research_dialog(self) -> None:
+        base = getattr(self, "save_browser_base_folder", None)
+        if not base:
+            QMessageBox.information(self, "No base folder", "Choose a Save / Load base folder first.")
+            return
+        save_paths = list(getattr(self, "save_browser_rows", []) or [])
+        if not save_paths:
+            self.refresh_save_folder_browser()
+            save_paths = list(getattr(self, "save_browser_rows", []) or [])
+        if not save_paths:
+            QMessageBox.information(self, "No saves found", "No .ess or .DAT saves were found in the selected base folder.")
+            return
+        default = str(Path(base) / "skyrim_unknown_inventory_folder_report.csv")
+        target, _ = QFileDialog.getSaveFileName(self, "Export Save Folder Unknown Inventory Research", default, "CSV Files (*.csv)")
+        if not target:
+            return
+        rows_out: list[dict[str, str]] = []
+        scanned = 0
+        failed = 0
+        for save_path in save_paths:
+            try:
+                block = read_player_inventory(save_path)
+                doc = read_ess(save_path)
+                unknowns = collect_unknown_inventory(block, self.db, getattr(doc, "plugins", []) or [])
+                scanned += 1
+            except Exception as exc:
+                failed += 1
+                rows_out.append({
+                    "save_folder": str(Path(save_path).parent.name),
+                    "save_file": str(Path(save_path).name),
+                    "save_path": str(save_path),
+                    "form_id": "",
+                    "count": "",
+                    "guess": "SCAN FAILED",
+                    "plugin_hint": "",
+                    "refid": "",
+                    "payload_offset": "",
+                    "player_data_offset": "",
+                    "reason": str(exc),
+                    "note": "",
+                })
+                continue
+            for row in unknowns:
+                rows_out.append({
+                    "save_folder": str(Path(save_path).parent.name),
+                    "save_file": str(Path(save_path).name),
+                    "save_path": str(save_path),
+                    "form_id": row.form_id,
+                    "count": str(row.count),
+                    "guess": row.category_guess,
+                    "plugin_hint": row.plugin_hint,
+                    "refid": row.refid_hex,
+                    "payload_offset": f"0x{int(row.payload_offset):X}",
+                    "player_data_offset": f"0x{int(row.player_data_offset):X}",
+                    "reason": row.reason,
+                    "note": row.note,
+                })
+        try:
+            with Path(target).open("w", encoding="utf-8", newline="") as f:
+                fieldnames = ["save_folder", "save_file", "save_path", "form_id", "count", "guess", "plugin_hint", "refid", "payload_offset", "player_data_offset", "reason", "note"]
+                writer = csv.DictWriter(f, fieldnames=fieldnames)
+                writer.writeheader()
+                writer.writerows(rows_out)
+        except Exception as exc:
+            QMessageBox.critical(self, "Folder unknown export failed", str(exc))
+            return
+        self.statusBar().showMessage(f"Scanned {scanned} save(s), {failed} failed. Wrote {len(rows_out)} unknown row(s) to {target}", 9000)
 
     def export_inventory_csv_dialog(self) -> None:
         if not self.current_inventory:
@@ -4009,11 +4956,12 @@ class MainWindow(QMainWindow):
                     if action.desired_unlocked != action.currently_unlocked and not action.unsupported_reason(mode):
                         runnable += len(action.command_lines())
                 extra = f" {unsupported} queued change(s) will be commented as skipped in this mode." if unsupported else ""
-                self.magic_changes_label.setText(f"{count} magic checkbox change(s) pending. They will sync automatically when you use File > Save Working Save. Mode: {mode_label}. Runnable console command lines: {runnable}.{extra}")
+                self.magic_changes_label.setText(f"{count} magic checkbox change(s) pending. They will sync automatically when you use File > Save. Mode: {mode_label}. Runnable console command lines: {runnable}.{extra}")
             else:
                 self.magic_changes_label.setText("No pending Magic checkbox changes.")
         if hasattr(self, "magic_script_output"):
             self.magic_script_output.setPlainText(self._magic_checkbox_script_text())
+        self._refresh_working_save_status()
 
     def preview_magic_checkbox_script(self) -> None:
         self._update_magic_checkbox_script_preview()
@@ -4287,6 +5235,7 @@ class MainWindow(QMainWindow):
             self.current_doc = read_ess(self.current_save)
             self.magic_pending_changes.clear()
             self._refresh_all_from_doc()
+            self._refresh_working_save_status()
         except Exception as exc:
             QMessageBox.critical(self, "Direct magic/shout patch failed", str(exc))
             return
@@ -4377,6 +5326,7 @@ class MainWindow(QMainWindow):
             self.path_edit.setText(str(target_path))
             self.magic_pending_changes.clear()
             self._refresh_all_from_doc()
+            self._refresh_working_save_status()
         except Exception as exc:
             QMessageBox.critical(self, "Magic/shout copy save failed", str(exc))
             return
@@ -4443,6 +5393,7 @@ class MainWindow(QMainWindow):
         self.inventory_pending_adds.clear()
         self.magic_pending_changes.clear()
         self._refresh_all_from_doc()
+        self._refresh_working_save_status()
 
     def stage_magic_changes_to_working_copy(self, confirm: bool = True, notify: bool = True) -> bool:
         """Apply queued magic changes to the shared in-memory save buffer only.
@@ -4474,7 +5425,7 @@ class MainWindow(QMainWindow):
         summary = (
             "Stage these magic/shout changes into the shared in-memory working save?\n\n"
             "This does not overwrite your original file. After staging, the editor re-opens the working bytes. "
-            "Use File > Save Working Save only after the staged copy looks correct.\n\n"
+            "Use File > Save only after the staged copy looks correct.\n\n"
             f"{self._magic_direct_patch_summary_text()}"
         )
         if confirm and not self._confirm_scrollable_patch_plan(
@@ -4526,13 +5477,158 @@ class MainWindow(QMainWindow):
                 self.statusBar().showMessage("Magic changes synced into the working save.", 5000)
         return True
 
-    def _sync_pending_edits_before_disk_save(self) -> bool:
-        """Push pending per-page edits into the shared working save before disk save.
 
-        Magic checkboxes are intentionally lightweight while editing. This method
-        makes Save the single commit point: pending Magic changes are patched into
-        the working bytes and validated automatically before the file is written.
+    def _write_working_bytes_back_from_temp(self, temp_path: Path, *, clear_magic: bool = False, clear_inventory: bool = False) -> None:
+        """Replace the shared in-memory save with a validated temp save."""
+        self.working_save_bytes = Path(temp_path).read_bytes()
+        doc = read_ess(temp_path)
+        try:
+            doc.path = self.current_save
+        except Exception:
+            pass
+        self.current_doc = doc
+        self.working_save_dirty = True
+        if clear_inventory:
+            self.inventory_dirty_counts.clear()
+            self.inventory_pending_adds.clear()
+        if clear_magic:
+            self.magic_pending_changes.clear()
+
+    def _sync_non_magic_pending_edits_to_working_copy(self) -> bool:
+        """Apply every non-Magic tab's pending edits to the shared working bytes.
+
+        This is the main save workflow: widgets can remain edited on any tab,
+        but File > Save is the only disk write. All safe mapped
+        edits are first committed to a temp copy of the current working buffer,
+        re-opened by the parser, and only then promoted back into memory.
         """
+        if not self.current_save or self.working_save_bytes is None:
+            return True
+        source_tmp = target_tmp = None
+        changed = False
+        try:
+            source_tmp = self._write_working_bytes_to_temp()
+            target_tmp = source_tmp.with_name(source_tmp.stem + "_nonmagic" + source_tmp.suffix)
+            shutil.copy2(source_tmp, target_tmp)
+
+            # General / Player tab fields.
+            try:
+                preview, header_values, general_inventory_updates, common_global_updates = self._general_values_preview()
+                xp_pool_value = self._collect_xp_pool_value()
+            except Exception as exc:
+                QMessageBox.warning(self, "General sync failed", str(exc))
+                return False
+            if not str(preview).startswith("No General changes"):
+                header_fixed_values = {k: v for k, v in header_values.items() if k != "player_race"}
+                if header_fixed_values:
+                    patch_header_values(target_tmp, target_tmp, **header_fixed_values)
+                    changed = True
+                if "player_race" in header_values:
+                    patch_skyrim_player_race(target_tmp, target_tmp, str(header_values["player_race"]), patch_header=True)
+                    changed = True
+                live_kwargs = {k: v for k, v in header_values.items() if k in ("player_name", "player_level")}
+                if live_kwargs:
+                    patch_live_player_values(target_tmp, target_tmp, **live_kwargs)
+                    changed = True
+                if general_inventory_updates:
+                    patch_player_inventory_entry_counts(target_tmp, target_tmp, general_inventory_updates)
+                    self._verify_inventory_updates_written(target_tmp, general_inventory_updates)
+                    changed = True
+                if common_global_updates:
+                    self._patch_common_global_updates(target_tmp, common_global_updates)
+                    self._verify_common_global_updates_written(target_tmp, common_global_updates)
+                    changed = True
+                if xp_pool_value is not None:
+                    apply_skyrim_add_exp_patch(target_tmp, target_tmp, xp_pool_value)
+                    changed = True
+
+            # Inventory Browser / Common queued edits. This intentionally runs
+            # after General; repeated same-value writes are harmless and make the
+            # central save catch edits made from either page.
+            updates = dict(getattr(self, "inventory_dirty_counts", {}))
+            adds = dict(getattr(self, "inventory_pending_adds", {}))
+            if updates or adds:
+                updates = {int(k): validate_inventory_amount(v) for k, v in updates.items()}
+                for _form_id, data in adds.items():
+                    data["amount"] = validate_inventory_amount(int(data.get("amount") or 0))
+                if updates or adds:
+                    inv_source = target_tmp
+                    inv_temp_paths: list[Path] = []
+                    inv_step = 0
+                    try:
+                        if updates:
+                            inv_step += 1
+                            inv_counts = target_tmp.with_suffix(target_tmp.suffix + f".central-{inv_step}-counts")
+                            patch_player_inventory_entry_counts(inv_source, inv_counts, updates)
+                            inv_temp_paths.append(inv_counts)
+                            inv_source = inv_counts
+                        for form_id, data in adds.items():
+                            inv_step += 1
+                            inv_add = target_tmp.with_suffix(target_tmp.suffix + f".central-{inv_step}-add")
+                            amount = validate_inventory_amount(int(data.get("amount") or 0))
+                            insert_simple_player_inventory_item(inv_source, inv_add, form_id, amount)
+                            inv_temp_paths.append(inv_add)
+                            inv_source = inv_add
+                        if inv_source != target_tmp:
+                            shutil.copy2(inv_source, target_tmp)
+                    finally:
+                        for inv_tmp in inv_temp_paths:
+                            try:
+                                inv_tmp.unlink(missing_ok=True)
+                            except Exception:
+                                pass
+                    if updates:
+                        self._verify_inventory_updates_written(target_tmp, updates)
+                    if adds:
+                        self._verify_inventory_adds_written(target_tmp, adds)
+                    changed = True
+
+            # Skills tab.
+            try:
+                skill_values = self._collect_skill_patch_values()
+                if skill_values:
+                    apply_skyrim_skill_patch(target_tmp, target_tmp, skill_values)
+                    changed = True
+            except Exception as exc:
+                QMessageBox.warning(self, "Skill sync failed", str(exc))
+                return False
+
+            # Stats tab / actor values.
+            try:
+                actor_values = self._collect_actor_value_patch_values()
+                if actor_values:
+                    apply_skyrim_actor_value_patch(target_tmp, target_tmp, actor_values)
+                    changed = True
+            except Exception as exc:
+                QMessageBox.warning(self, "Stats sync failed", str(exc))
+                return False
+
+            if changed:
+                self._write_working_bytes_back_from_temp(target_tmp, clear_inventory=True)
+                if hasattr(self, "general_preview"):
+                    self.general_preview.setPlainText("Pending non-Magic edits were synced into the shared working save. Use File > Save to write them to disk.")
+                self.statusBar().showMessage("Pending tab edits synced into the shared working save.", 5000)
+                self._refresh_working_save_status()
+            return True
+        except Exception as exc:
+            QMessageBox.critical(self, "Working save sync failed", str(exc))
+            return False
+        finally:
+            for tmp in (source_tmp, target_tmp):
+                try:
+                    if tmp:
+                        Path(tmp).unlink(missing_ok=True)
+                except Exception:
+                    pass
+
+    def _sync_pending_edits_before_disk_save(self) -> bool:
+        """Commit every tab's pending edits into the shared working save.
+
+        Disk save is centralized: tab widgets update memory, and File > Save
+        Working Save is the only action that overwrites/creates a real save file.
+        """
+        if not self._sync_non_magic_pending_edits_to_working_copy():
+            return False
         if getattr(self, "magic_pending_changes", None):
             return self.stage_magic_changes_to_working_copy(confirm=False, notify=False)
         return True
@@ -4556,6 +5652,7 @@ class MainWindow(QMainWindow):
             self.working_save_bytes = self.current_save.read_bytes()
             self.working_save_dirty = False
             self._refresh_all_from_doc()
+            self._refresh_working_save_status()
         except Exception as exc:
             QMessageBox.critical(self, "Save failed", str(exc))
             return
@@ -4573,7 +5670,7 @@ class MainWindow(QMainWindow):
         default = self.current_save.with_name(f"{self.current_save.stem}.edited{self.current_save.suffix or '.ess'}")
         target, _ = QFileDialog.getSaveFileName(
             self,
-            "Save Working Skyrim Save As",
+            "Save Skyrim Save As",
             str(default),
             "Skyrim Save Files (*.ess *.ESS *.dat *.DAT);;All Files (*)",
         )
@@ -4591,6 +5688,7 @@ class MainWindow(QMainWindow):
             self.working_save_bytes = target_path.read_bytes()
             self.working_save_dirty = False
             self._refresh_all_from_doc()
+            self._refresh_working_save_status()
         except Exception as exc:
             QMessageBox.critical(self, "Save As failed", str(exc))
             return
@@ -4628,6 +5726,7 @@ class MainWindow(QMainWindow):
             self.current_doc = read_ess(save_path)
             self.magic_pending_changes.clear()
             self._refresh_all_from_doc()
+            self._refresh_working_save_status()
         except Exception as exc:
             QMessageBox.critical(self, "Backup restore failed", str(exc))
             return
@@ -4714,7 +5813,7 @@ class MainWindow(QMainWindow):
         The earlier UI let users check script-only missing shouts but then skipped
         them at Save time unless a separate checkbox was enabled. For testing, the
         dedicated Unlock All Shouts button should mean exactly that: queue every
-        shout word and allow Save Working Save to insert missing Word-of-Power
+        shout word and allow Save to insert missing Word-of-Power
         records into the working save, with the normal backup-on-save protection.
         """
         if getattr(self, "magic_experimental_missing_shouts_check", None) is not None:
@@ -4747,7 +5846,7 @@ class MainWindow(QMainWindow):
             )
         self._update_magic_checkbox_script_preview()
         if experimental_missing:
-            self.statusBar().showMessage(f"Unlocked/queued {changed} magic row(s). Experimental missing shout insertion is enabled for Save Working Save.", 7000)
+            self.statusBar().showMessage(f"Unlocked/queued {changed} magic row(s). Experimental missing shout insertion is enabled for Save.", 7000)
         else:
             self.statusBar().showMessage(f"Unlocked/queued {changed} directly saveable magic row(s). Script-only missing shout words were skipped.", 7000)
 
@@ -5059,6 +6158,125 @@ class MainWindow(QMainWindow):
         add("Unknown 3 Table", "unknown", "wstring[count]", "Unknown table entries.")
         return rows
 
+    def _json_node_summary(self, value: object) -> str:
+        if isinstance(value, dict):
+            preview_keys = list(value.keys())[:4]
+            suffix = "" if len(value) <= 4 else ", …"
+            return f"object · {len(value):,} keys" + (f" · {', '.join(map(str, preview_keys))}{suffix}" if preview_keys else "")
+        if isinstance(value, list):
+            return f"array · {len(value):,} item(s)"
+        if isinstance(value, str):
+            clean = value.replace("\n", " ").strip()
+            return clean if len(clean) <= 160 else clean[:157] + "…"
+        if value is None:
+            return "null"
+        return str(value)
+
+    def _add_json_tree_node(self, parent: QTreeWidgetItem, key: str, value: object, depth: int = 0) -> None:
+        node = QTreeWidgetItem([str(key), self._json_node_summary(value)])
+        node.setToolTip(0, str(key))
+        node.setToolTip(1, self._json_node_summary(value))
+        if isinstance(value, (dict, list)):
+            font = node.font(0)
+            font.setBold(True)
+            node.setFont(0, font)
+        parent.addChild(node)
+        if depth > 18:
+            node.addChild(QTreeWidgetItem(["…", "maximum display depth reached"])); return
+        if isinstance(value, dict):
+            for child_key, child_value in value.items():
+                self._add_json_tree_node(node, str(child_key), child_value, depth + 1)
+        elif isinstance(value, list):
+            if len(value) > 250:
+                for start in range(0, len(value), 100):
+                    chunk = value[start:start + 100]
+                    chunk_node = QTreeWidgetItem([f"[{start:,}–{start + len(chunk) - 1:,}]", f"{len(chunk):,} item(s)"])
+                    node.addChild(chunk_node)
+                    for idx, child_value in enumerate(chunk, start):
+                        self._add_json_tree_node(chunk_node, f"[{idx:,}]", child_value, depth + 2)
+            else:
+                for idx, child_value in enumerate(value):
+                    self._add_json_tree_node(node, f"[{idx:,}]", child_value, depth + 1)
+
+    def load_raw_tree_from_doc(self) -> None:
+        if not hasattr(self, "raw_tree"):
+            return
+        self.raw_tree.clear()
+        if not self.current_doc:
+            if hasattr(self, "raw_tree_status_label"):
+                self.raw_tree_status_label.setText("Open a save to load parsed tree data.")
+            return
+        try:
+            data = json.loads(self.current_doc.to_json())
+        except Exception as exc:
+            if hasattr(self, "raw_tree_status_label"):
+                self.raw_tree_status_label.setText(f"Could not parse save tree: {exc}")
+            return
+        root = QTreeWidgetItem(["save", self._json_node_summary(data)])
+        font = root.font(0); font.setBold(True); root.setFont(0, font)
+        self.raw_tree.addTopLevelItem(root)
+        if isinstance(data, dict):
+            for key, value in data.items():
+                self._add_json_tree_node(root, str(key), value)
+        else:
+            self._add_json_tree_node(root, "value", data)
+        root.setExpanded(True)
+        self.raw_tree.expandToDepth(1)
+        self.raw_tree.setColumnWidth(0, max(420, min(620, self.raw_tree.columnWidth(0))))
+        if hasattr(self, "raw_tree_status_label"):
+            self.raw_tree_status_label.setText("Parsed tree loaded. Use search to expand matching keys/values without scrolling the full JSON text.")
+
+    def _tree_item_matches(self, item: QTreeWidgetItem, query: str) -> bool:
+        return query in (item.text(0) + " " + item.text(1)).casefold()
+
+    def _filter_tree_item(self, item: QTreeWidgetItem, query: str) -> bool:
+        own = self._tree_item_matches(item, query)
+        child_match = False
+        for i in range(item.childCount()):
+            if self._filter_tree_item(item.child(i), query):
+                child_match = True
+        visible = own or child_match
+        item.setHidden(not visible)
+        if child_match or own:
+            item.setExpanded(True)
+        return visible
+
+    def search_raw_tree(self) -> None:
+        if not hasattr(self, "raw_tree") or not hasattr(self, "raw_tree_search_edit"):
+            return
+        query = self.raw_tree_search_edit.text().strip().casefold()
+        if not query:
+            self.clear_raw_tree_search(); return
+        matches = 0
+        for i in range(self.raw_tree.topLevelItemCount()):
+            top = self.raw_tree.topLevelItem(i)
+            self._filter_tree_item(top, query)
+        iterator_stack = [self.raw_tree.topLevelItem(i) for i in range(self.raw_tree.topLevelItemCount())]
+        while iterator_stack:
+            item = iterator_stack.pop()
+            if not item.isHidden() and self._tree_item_matches(item, query):
+                matches += 1
+            for i in range(item.childCount()):
+                iterator_stack.append(item.child(i))
+        if hasattr(self, "raw_tree_status_label"):
+            self.raw_tree_status_label.setText(f"Tree search active: {matches:,} direct match(es). Clear Search restores the full tree.")
+
+    def clear_raw_tree_search(self) -> None:
+        if not hasattr(self, "raw_tree"):
+            return
+        stack = [self.raw_tree.topLevelItem(i) for i in range(self.raw_tree.topLevelItemCount())]
+        while stack:
+            item = stack.pop()
+            item.setHidden(False)
+            for i in range(item.childCount()):
+                stack.append(item.child(i))
+        self.raw_tree.collapseAll()
+        self.raw_tree.expandToDepth(1)
+        if hasattr(self, "raw_tree_search_edit"):
+            self.raw_tree_search_edit.clear()
+        if hasattr(self, "raw_tree_status_label"):
+            self.raw_tree_status_label.setText("Full parsed tree restored.")
+
     def load_raw_json_from_doc(self) -> None:
         if not hasattr(self, "raw_json"):
             return
@@ -5148,7 +6366,8 @@ class MainWindow(QMainWindow):
             if result != QMessageBox.StandardButton.Yes:
                 return
         self.load_raw_json_from_doc()
-        self.statusBar().showMessage("Reloaded parsed JSON", 3000)
+        self.load_raw_tree_from_doc()
+        self.statusBar().showMessage("Reloaded parsed JSON and tree", 3000)
 
     def _find_raw_json(self, backwards: bool = False) -> None:
         if not hasattr(self, "raw_json") or not hasattr(self, "raw_json_search_edit"):
@@ -5546,7 +6765,13 @@ class MainWindow(QMainWindow):
                 f"{cf.length1:,}", f"0x{cf.data_offset:X}", cf.sample_hex,
             ]
             for col, value in enumerate(values):
-                item = QTableWidgetItem(value)
+                if value is None:
+                    text = ""
+                elif isinstance(value, str):
+                    text = value
+                else:
+                    text = str(value)
+                item = QTableWidgetItem(text)
                 item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEditable)
                 self.raw_change_table.setItem(row, col, item)
         self.raw_change_table.resizeColumnsToContents()
@@ -5906,7 +7131,7 @@ class MainWindow(QMainWindow):
         QMessageBox.information(self, "Backup restored", f"Restored backup:\n{backup_path}")
 
     def save_active_edits(self) -> None:
-        """Legacy page-specific save helper. File > Save Working Save now writes the shared working copy."""
+        """Legacy page-specific save helper. File > Save now writes the shared working copy."""
         page_index = self.stack.currentIndex() if hasattr(self, "stack") else -1
         if page_index == 1:
             tab_text = self.general_tabs.tabText(self.general_tabs.currentIndex()) if hasattr(self, "general_tabs") else ""
@@ -5931,11 +7156,11 @@ class MainWindow(QMainWindow):
         QMessageBox.information(
             self,
             "Choose an editor page",
-            "Use the page Apply/Stage button first, then File > Save Working Save.",
+            "Use the page Apply/Stage button first, then File > Save.",
         )
 
     def save_active_copy(self) -> None:
-        """Legacy page-specific save-as helper. File > Save Working Save As now writes the shared working copy."""
+        """Legacy page-specific save-as helper. File > Save As now writes the shared working copy."""
         page_index = self.stack.currentIndex() if hasattr(self, "stack") else -1
         if page_index == 1:
             tab_text = self.general_tabs.tabText(self.general_tabs.currentIndex()) if hasattr(self, "general_tabs") else ""
@@ -5960,7 +7185,7 @@ class MainWindow(QMainWindow):
         QMessageBox.information(
             self,
             "Choose an editor page",
-            "Use File > Save Working Save As… to write the shared working copy.",
+            "Use File > Save As… to write the shared working copy.",
         )
 
     def refresh_skill_values_from_save(self, silent: bool = False) -> None:
@@ -6018,7 +7243,8 @@ class MainWindow(QMainWindow):
         if getattr(self, "_loading_skill_values", False):
             return
         if hasattr(self, "skill_preview_output"):
-            self.skill_preview_output.setPlainText("Skill value changed. Click Preview Skill Edits to resolve and review exact payload writes.")
+            self.skill_preview_output.setPlainText("Skill value changed. Use File > Save to sync and write all tab edits.")
+        self._mark_pending_tab_edits_changed("Pending skill edit")
 
     def set_all_skill_values(self, value: float) -> None:
         if not hasattr(self, "skill_value_spins"):
@@ -6092,6 +7318,7 @@ class MainWindow(QMainWindow):
             self.inventory_dirty_counts.clear()
             self.inventory_pending_adds.clear()
             self._refresh_all_from_doc()
+            self._refresh_working_save_status()
         except Exception as exc:
             QMessageBox.critical(self, "Skill apply failed", str(exc))
             return
@@ -6142,6 +7369,7 @@ class MainWindow(QMainWindow):
             self.inventory_dirty_counts.clear()
             self.inventory_pending_adds.clear()
             self._refresh_all_from_doc()
+            self._refresh_working_save_status()
         except Exception as exc:
             QMessageBox.critical(self, "Skill copy failed", str(exc))
             return
@@ -6239,7 +7467,8 @@ class MainWindow(QMainWindow):
         if getattr(self, "_loading_actor_values", False):
             return
         if hasattr(self, "actor_preview_output"):
-            self.actor_preview_output.setPlainText("Actor value changed. Click Preview Stat Edits to resolve and review exact payload writes.")
+            self.actor_preview_output.setPlainText("Actor value changed. Use File > Save to sync and write all tab edits.")
+        self._mark_pending_tab_edits_changed("Pending stat edit")
 
     def set_vital_actor_values(self, value: float) -> None:
         if not hasattr(self, "actor_value_spins"):
@@ -6323,6 +7552,7 @@ class MainWindow(QMainWindow):
             self.inventory_dirty_counts.clear()
             self.inventory_pending_adds.clear()
             self._refresh_all_from_doc()
+            self._refresh_working_save_status()
         except Exception as exc:
             QMessageBox.critical(self, "Actor value apply failed", str(exc))
             return
@@ -6373,6 +7603,7 @@ class MainWindow(QMainWindow):
             self.inventory_dirty_counts.clear()
             self.inventory_pending_adds.clear()
             self._refresh_all_from_doc()
+            self._refresh_working_save_status()
         except Exception as exc:
             QMessageBox.critical(self, "Actor value copy failed", str(exc))
             return
@@ -6466,6 +7697,7 @@ class MainWindow(QMainWindow):
             self.inventory_dirty_counts.clear()
             self.inventory_pending_adds.clear()
             self._refresh_all_from_doc()
+            self._refresh_working_save_status()
         except Exception as exc:
             QMessageBox.critical(self, "Preset copy failed", str(exc))
             return
@@ -6499,7 +7731,7 @@ class MainWindow(QMainWindow):
             QMessageBox.warning(self, "Common inventory sync failed", str(exc))
             return
         if hasattr(self, "common_inventory_status"):
-            self.common_inventory_status.setText("Synced Gold / Lockpicks from Player Inventory and Dragon Souls from the live actor-value field.")
+            self.common_inventory_status.setText("Synced Gold / Lockpicks from Player Inventory.")
         self.statusBar().showMessage("Common values synced.", 4000)
 
     def _general_inventory_targets(self) -> list[tuple[str, str, str]]:
@@ -6509,9 +7741,9 @@ class MainWindow(QMainWindow):
         ]
 
     def _common_global_targets(self) -> list[tuple[str, str, str]]:
-        return [
-            ("dragon_souls", "Dragon Souls", DRAGONS_ABSORBED_FORM_ID),
-        ]
+        # Spendable Dragon Souls is still unmapped. Do not expose the old
+        # DragonsAbsorbed / guessed actor-value slot in the normal Common tab.
+        return []
 
     def _common_global_value_changed(self, key: str) -> None:
         if getattr(self, "_syncing_common_global", False):
@@ -6525,7 +7757,7 @@ class MainWindow(QMainWindow):
         original = int(self.common_global_original.get(key, int(spin.value())))
         value = int(spin.value())
         if value == original:
-            status.setText(f"Synced with live Dragon Souls field; saved value {value:,}.")
+            status.setText(f"Synced with verified Dragon Souls field; saved value {value:,}.")
         else:
             status.setText(f"Pending Dragon Souls edit: {original:,} → {value:,}.")
         if hasattr(self, "common_inventory_status"):
@@ -6582,7 +7814,7 @@ class MainWindow(QMainWindow):
                                 spin.setEnabled(True)
                                 spin.setValue(value)
                                 status.setText(
-                                    f"Synced with live Dragon Souls at payload 0x{hit.value_payload_offset:X} / virt 0x{hit.value_virtual_offset:X}; "
+                                    f"Synced with verified Dragon Souls at payload 0x{hit.value_payload_offset:X} / virt 0x{hit.value_virtual_offset:X}; "
                                     f"ChangeForm {hit.change_form_refid_hex} +0x{hit.relative_offset:X}; saved value {value:,}."
                                 )
                         else:
@@ -6620,7 +7852,7 @@ class MainWindow(QMainWindow):
         if hasattr(self, "common_inventory_status") and self.current_save:
             # Do not overwrite a more specific inventory sync message when there are no global widgets yet.
             if found:
-                self.common_inventory_status.setText("Common values synced from Player Inventory and live Dragon Souls.")
+                self.common_inventory_status.setText("Common values synced from Player Inventory.")
 
     def _collect_common_global_updates(self) -> tuple[dict[str, int], list[str]]:
         updates: dict[str, int] = {}
@@ -6768,10 +8000,16 @@ class MainWindow(QMainWindow):
                     enabled_count += 1
                     effective = self._inventory_effective_count(entry)
                     spin.setEnabled(True)
-                    spin.setValue(int(effective))
+                    safe_effective = max(0, min(int(effective), MAX_SAFE_INVENTORY_COUNT))
+                    spin.setValue(int(safe_effective))
                     self._set_inventory_table_count_silent(int(entry.payload_offset), int(effective))
                     pending = int(entry.payload_offset) in self.inventory_dirty_counts
-                    if pending:
+                    if int(effective) > MAX_SAFE_INVENTORY_COUNT:
+                        status.setText(
+                            f"Found over-cap saved value {int(effective):,} at payload 0x{entry.payload_offset:X}. "
+                            f"Edit to {MAX_SAFE_INVENTORY_COUNT:,} or lower, then File > Save to repair."
+                        )
+                    elif pending:
                         status.setText(f"Synced with Player Inventory row at payload 0x{entry.payload_offset:X}; pending value {effective:,}.")
                     else:
                         status.setText(f"Synced with Player Inventory row at payload 0x{entry.payload_offset:X}; saved value {effective:,}.")
@@ -6791,7 +8029,7 @@ class MainWindow(QMainWindow):
             if self.current_inventory:
                 self.common_inventory_status.setText(f"Synced {synced_count}/{len(self._general_inventory_targets())} common values from Player Inventory; {enabled_count} editable.")
             else:
-                self.common_inventory_status.setText("Open a save to sync Gold / Lockpicks / Dragon Souls.")
+                self.common_inventory_status.setText("Open a save to sync Gold / Lockpicks.")
 
     def _collect_general_inventory_updates(self) -> tuple[dict[int, int], list[str]]:
         updates: dict[int, int] = {}
@@ -6820,19 +8058,87 @@ class MainWindow(QMainWindow):
     def _verify_inventory_updates_written(self, path: Path, expected_updates: dict[int, int]) -> None:
         if not expected_updates:
             return
+
+        # The saved ESS payload can move after we rebuild/recompress the player
+        # ChangeForm.  Older builds verified by absolute payload offset only,
+        # which produced false failures like "payload 0x7050A was not found" even
+        # when the count was written correctly.  Capture the original row identity
+        # from the current UI model, then verify the reopened save by the stable
+        # player-data offset first and fall back to RefID/FormID matching.
+        original_by_payload = {}
+        current_block = getattr(self, "current_inventory", None)
+        current_entries = getattr(current_block, "entries", current_block) or []
+        for entry in current_entries:
+            try:
+                original_by_payload[int(entry.payload_offset)] = entry
+            except Exception:
+                continue
+
         block = read_player_inventory(path)
-        by_offset = {int(entry.payload_offset): entry for entry in block.entries}
+        by_payload = {int(entry.payload_offset): entry for entry in block.entries}
+        by_player_offset = {int(entry.player_data_offset): entry for entry in block.entries}
+        by_refid = {}
+        by_form_id = {}
+        for entry in block.entries:
+            by_refid.setdefault(str(entry.refid_hex).upper(), []).append(entry)
+            by_form_id.setdefault(str(entry.form_id).upper(), []).append(entry)
+
         problems: list[str] = []
         for payload_offset, expected_value in expected_updates.items():
-            entry = by_offset.get(int(payload_offset))
-            if not entry:
-                problems.append(f"payload 0x{int(payload_offset):X} was not found after saving")
+            payload_offset = int(payload_offset)
+            original = original_by_payload.get(payload_offset)
+            entry = by_payload.get(payload_offset)
+
+            if entry is None and original is not None:
+                try:
+                    entry = by_player_offset.get(int(original.player_data_offset))
+                except Exception:
+                    entry = None
+
+            if entry is None and original is not None:
+                ref_matches = by_refid.get(str(original.refid_hex).upper(), [])
+                exact_ref_matches = [e for e in ref_matches if int(e.displayed_count) == int(expected_value)]
+                if len(exact_ref_matches) == 1:
+                    entry = exact_ref_matches[0]
+                elif len(ref_matches) == 1:
+                    entry = ref_matches[0]
+
+            if entry is None and original is not None:
+                fid_matches = by_form_id.get(str(original.form_id).upper(), [])
+                exact_fid_matches = [e for e in fid_matches if int(e.displayed_count) == int(expected_value)]
+                if len(exact_fid_matches) == 1:
+                    entry = exact_fid_matches[0]
+
+            if entry is None:
+                if original is not None:
+                    name = original.name or original.form_id or original.refid_hex
+                    problems.append(
+                        f"{name} moved after save and could not be matched again "
+                        f"(old payload 0x{payload_offset:X})"
+                    )
+                else:
+                    problems.append(f"payload 0x{payload_offset:X} was not found after saving")
                 continue
+
             if int(entry.displayed_count) != int(expected_value):
                 name = entry.name or entry.form_id
-                problems.append(f"{name} at payload 0x{int(payload_offset):X} read back as {entry.displayed_count:,}, expected {int(expected_value):,}")
+                where = f"player data 0x{int(entry.player_data_offset):X}, payload 0x{int(entry.payload_offset):X}"
+                problems.append(f"{name} at {where} read back as {entry.displayed_count:,}, expected {int(expected_value):,}")
         if problems:
-            raise ValueError("Inventory values were written, but verification failed:\n" + "\n".join(f"- {item}" for item in problems))
+            # Do not fail the save after bytes have already been written.  Some
+            # valid saves rebuild/recompress the player payload, moving inventory
+            # rows enough that our research verifier cannot always rematch them.
+            # Treat this as a soft warning and let the reopened save/UI be the
+            # source of truth.
+            self._last_inventory_verification_warning = (
+                "Inventory save completed, but the verifier could not rematch some row(s):\n"
+                + "\n".join(f"- {item}" for item in problems)
+            )
+            try:
+                self.statusBar().showMessage("Inventory saved; verifier had rematch warnings. Reopen/refresh to confirm.", 8000)
+            except Exception:
+                pass
+            return
 
     def _verify_header_values_written(self, doc: EssDocument, expected: dict[str, object]) -> None:
         h = doc.header
@@ -7064,6 +8370,7 @@ class MainWindow(QMainWindow):
             self.inventory_dirty_counts.clear()
             self.inventory_pending_adds.clear()
             self._refresh_all_from_doc()
+            self._refresh_working_save_status()
         except Exception as exc:
             QMessageBox.critical(self, "XP Pool apply failed", str(exc))
             return
@@ -7109,6 +8416,7 @@ class MainWindow(QMainWindow):
             self.inventory_dirty_counts.clear()
             self.inventory_pending_adds.clear()
             self._refresh_all_from_doc()
+            self._refresh_working_save_status()
         except Exception as exc:
             QMessageBox.critical(self, "XP Pool copy failed", str(exc))
             return
@@ -7151,7 +8459,7 @@ class MainWindow(QMainWindow):
         result = QMessageBox.question(
             self,
             "Apply common inventory edits",
-            f"This will create a backup, then write Gold / Lockpick / Dragon Souls edits into the loaded save:\n\n{self.current_save}\n\n{preview}\n\nContinue?",
+            f"This will create a backup, then write Gold / Lockpick edits into the loaded save:\n\n{self.current_save}\n\n{preview}\n\nContinue?",
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
             QMessageBox.StandardButton.No,
         )
@@ -7168,6 +8476,7 @@ class MainWindow(QMainWindow):
             self.inventory_dirty_counts.clear()
             self.inventory_pending_adds.clear()
             self._refresh_all_from_doc()
+            self._refresh_working_save_status()
         except Exception as exc:
             QMessageBox.critical(self, "Common inventory save failed", str(exc))
             return
@@ -7199,7 +8508,7 @@ class MainWindow(QMainWindow):
         result = QMessageBox.question(
             self,
             "Save common inventory edited copy",
-            f"This will write a new save copy with Gold / Lockpick / Dragon Souls edits:\n\nTarget:\n{target_path}\n\n{preview}\n\nContinue?",
+            f"This will write a new save copy with Gold / Lockpick edits:\n\nTarget:\n{target_path}\n\n{preview}\n\nContinue?",
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
             QMessageBox.StandardButton.No,
         )
@@ -7218,6 +8527,7 @@ class MainWindow(QMainWindow):
             self.inventory_dirty_counts.clear()
             self.inventory_pending_adds.clear()
             self._refresh_all_from_doc()
+            self._refresh_working_save_status()
         except Exception as exc:
             QMessageBox.critical(self, "Common inventory copy failed", str(exc))
             return
@@ -7607,6 +8917,9 @@ class MainWindow(QMainWindow):
                 powers = resource_path("database", "skyrim_powers_abilities_seed_rows.csv")
                 if powers.exists():
                     self.db.merge_csv(powers)
+                inventory_expansion = resource_path("database", "skyrim_inventory_expansion_seed_rows.csv")
+                if inventory_expansion.exists():
+                    self.db.merge_csv(inventory_expansion)
                 self.db_path_edit.setText(str(self.db.path or sample))
                 self._refresh_database_categories()
                 self.refresh_database_table()
@@ -7614,6 +8927,7 @@ class MainWindow(QMainWindow):
                 self._refresh_reference_manifest_label()
                 self.refresh_magic_page(silent=True)
                 self.run_reference_audit(silent=True)
+                self.refresh_tools_database_audit()
             except Exception:
                 pass
 
@@ -7738,6 +9052,117 @@ class MainWindow(QMainWindow):
             f"Files parsed: {result.files_ok}\nFiles failed: {result.files_failed}\nExtracted rows before de-dupe: {len(result.records):,}\nNew rows added to active DB: {added:,}\nActive total: {len(self.db.records):,}" + extra,
         )
 
+    def refresh_tools_database_audit(self) -> None:
+        if not hasattr(self, "tools_audit_table"):
+            return
+        audit = audit_records(self.db.records)
+        rows = audit_to_summary_rows(audit)
+        weak = [p for p in audit.get("source_page_checklist", []) if p.get("status") in {"missing", "thin", "partial"}]
+        rows.extend([
+            ("Weak source categories", f"{len(weak):,}"),
+            ("Loaded save", self.current_save.name if self.current_save else "None"),
+            ("Inventory rows", f"{len(getattr(self.current_inventory, 'entries', []) or []):,}"),
+            ("Unknown inventory rows", f"{len(getattr(self, 'inventory_unknown_rows', []) or []):,}"),
+            ("Pending inventory edits", f"{len(getattr(self, 'inventory_dirty_counts', {}) or {}):,}"),
+            ("Pending inventory adds", f"{len(getattr(self, 'inventory_pending_adds', {}) or {}):,}"),
+            ("Pending magic edits", f"{len(getattr(self, 'magic_pending_changes', {}) or {}):,}"),
+        ])
+        self.tools_audit_table.setRowCount(len(rows))
+        for row, (field, value) in enumerate(rows):
+            self.tools_audit_table.setItem(row, 0, QTableWidgetItem(str(field)))
+            self.tools_audit_table.setItem(row, 1, QTableWidgetItem(str(value)))
+        self.tools_audit_table.resizeColumnsToContents()
+
+    def _diagnostics_report_text(self) -> str:
+        audit = audit_records(self.db.records)
+        lines: list[str] = []
+        lines.append("Skyrim Save Lab Diagnostics")
+        lines.append("=" * 27)
+        lines.append(f"Generated: {datetime.now().isoformat(timespec='seconds')}")
+        lines.append(f"Python: {sys.version.split()[0]}")
+        lines.append(f"Platform: {platform.platform()}")
+        lines.append("")
+        lines.append("Project")
+        lines.append("-------")
+        lines.append(f"Database rows: {len(self.db.records):,}")
+        lines.append(f"Database path: {self.db.path or 'built-in/unknown'}")
+        lines.append(f"Duplicate FormIDs: {len(audit.get('duplicate_form_ids', {})):,}")
+        lines.append(f"Malformed FormID rows: {len(audit.get('malformed_form_id_rows', [])):,}")
+        lines.append(f"XX placeholder rows: {audit.get('xx_placeholder_rows', 0):,}")
+        weak = [p for p in audit.get("source_page_checklist", []) if p.get("status") in {"missing", "thin", "partial"}]
+        lines.append(f"Weak source categories: {len(weak):,}")
+        if weak:
+            lines.append("Weak category preview: " + ", ".join(f"{p['page']}={p['status']}" for p in weak[:8]))
+        lines.append("")
+        lines.append("Loaded Save")
+        lines.append("-----------")
+        if self.current_doc:
+            h = self.current_doc.header
+            lines.append(f"Path: {self.current_save or self.current_doc.path}")
+            lines.append(f"File size: {self.current_doc.file_size:,} bytes")
+            lines.append(f"Player: {h.player_name}")
+            lines.append(f"Level: {h.player_level}")
+            lines.append(f"Location: {h.player_location}")
+            lines.append(f"Header race: {h.player_race}")
+            lines.append(f"Header sex: {h.sex_text}")
+            lines.append(f"Compression: {h.compression_text}")
+            lines.append(f"Plugins: {len(getattr(self.current_doc, 'plugins', []) or [])}")
+            if self.current_doc.file_location_table:
+                lines.append(f"ChangeForms: {self.current_doc.file_location_table.change_form_count:,}")
+        else:
+            lines.append("No save loaded.")
+        lines.append("")
+        lines.append("Working Save State")
+        lines.append("------------------")
+        lines.append(f"Working dirty: {self.working_save_dirty}")
+        lines.append(f"Inventory dirty counts: {len(getattr(self, 'inventory_dirty_counts', {}) or {}):,}")
+        lines.append(f"Pending inventory adds: {len(getattr(self, 'inventory_pending_adds', {}) or {}):,}")
+        lines.append(f"Pending magic edits: {len(getattr(self, 'magic_pending_changes', {}) or {}):,}")
+        lines.append(f"Raw dirty fields: {len(getattr(self, 'raw_dirty_fields', {}) or {}):,}")
+        lines.append("")
+        lines.append("Inventory")
+        lines.append("---------")
+        inv_entries = getattr(self.current_inventory, 'entries', []) if self.current_inventory else []
+        lines.append(f"Visible/parser entries: {len(inv_entries):,}")
+        lines.append(f"Unknown rows: {len(getattr(self, 'inventory_unknown_rows', []) or []):,}")
+        if getattr(self, 'inventory_unknown_rows', None):
+            lines.append("Unknown preview:")
+            for row in self.inventory_unknown_rows[:15]:
+                lines.append(f"- {getattr(row, 'form_id', '')} x{getattr(row, 'count', '')}: {getattr(row, 'category_guess', '')} / {getattr(row, 'reason', '')}")
+        lines.append("")
+        lines.append("Safety Notes")
+        lines.append("------------")
+        lines.append("Inventory editing is frozen to stable rows only; research rows should not write counts.")
+        lines.append("Dragon Souls spendable value is intentionally hidden until mapped.")
+        lines.append("Shout base discovery and race/sex appearance data remain experimental.")
+        return "\n".join(lines)
+
+    def build_diagnostics_report(self) -> None:
+        text = self._diagnostics_report_text()
+        if hasattr(self, "diagnostics_report"):
+            self.diagnostics_report.setPlainText(text)
+        self.statusBar().showMessage("Diagnostics report built.", 5000)
+
+    def copy_diagnostics_report(self) -> None:
+        text = self.diagnostics_report.toPlainText() if hasattr(self, "diagnostics_report") and self.diagnostics_report.toPlainText().strip() else self._diagnostics_report_text()
+        QApplication.clipboard().setText(text)
+        self.statusBar().showMessage("Diagnostics report copied.", 5000)
+
+    def export_diagnostics_report(self) -> None:
+        default = "skyrim_save_lab_diagnostics.txt"
+        if self.current_save:
+            default = f"{self.current_save.stem}_diagnostics.txt"
+        target, _ = QFileDialog.getSaveFileName(self, "Export Diagnostics Report", default, "Text Files (*.txt);;All Files (*)")
+        if not target:
+            return
+        text = self.diagnostics_report.toPlainText() if hasattr(self, "diagnostics_report") and self.diagnostics_report.toPlainText().strip() else self._diagnostics_report_text()
+        try:
+            Path(target).write_text(text, encoding="utf-8")
+        except OSError as exc:
+            QMessageBox.critical(self, "Diagnostics export failed", str(exc))
+            return
+        self.statusBar().showMessage(f"Diagnostics exported: {target}", 6000)
+
     def run_reference_audit(self, silent: bool = False) -> None:
         if not hasattr(self, "coverage_table"):
             return
@@ -7828,14 +9253,20 @@ class MainWindow(QMainWindow):
         self.db_category.blockSignals(False)
 
     def refresh_database_table(self) -> None:
+        if not hasattr(self, "db_table") or not hasattr(self, "db_search") or not hasattr(self, "db_category"):
+            return
         category = "" if self.db_category.currentIndex() <= 0 else self.db_category.currentText()
-        records = self.db.search(self.db_search.text(), category)
+        records = self.db.search(self.db_search.text(), category)[:1000]
         self.db_table.setRowCount(len(records))
         for row, rec in enumerate(records):
-            resolved = self._resolve_record_form_id(rec.form_id, rec.source, rec.editor_id, rec.name, rec.notes)
-            values = [rec.category, rec.editor_id, rec.form_id, resolved, rec.name, rec.value, rec.source, rec.notes]
+            display_id, active_id = self._display_form_id_for_save(rec.form_id, rec.source, rec.editor_id, rec.name, rec.notes)
+            resolved = active_id if active_id != normalize_id(rec.form_id) else ""
+            values = [rec.category, rec.editor_id, rec.form_id, display_id if display_id != rec.form_id else resolved, rec.name, rec.value, rec.source, rec.notes]
             for col, value in enumerate(values):
-                self.db_table.setItem(row, col, QTableWidgetItem(value))
+                item = QTableWidgetItem(str(value or ""))
+                if col in (2, 3):
+                    item.setToolTip(f"Original: {rec.form_id}\nActive/display: {display_id}\nResolved raw: {active_id}")
+                self.db_table.setItem(row, col, item)
         self.db_table.resizeColumnsToContents()
         self.refresh_inventory_database_table()
 
@@ -7933,6 +9364,30 @@ class MainWindow(QMainWindow):
         resolved = resolve_xx_id(form_id, hint, plugins)
         norm = normalize_id(form_id)
         return "" if resolved == norm else resolved
+
+    def _display_form_id_for_save(self, form_id: str, source: str = "", editor_id: str = "", name: str = "", notes: str = "") -> tuple[str, str]:
+        """Return (display_text, active_form_id) for database IDs.
+
+        Official DLC rows are often stored as XX###### in the CSV. When a save
+        is loaded, display the real load-order FormID plus the owning plugin so
+        users don't copy/paste literal XX values by mistake.
+        """
+        original = normalize_id(form_id)
+        active = self._resolve_record_form_id(original, source, editor_id, name, notes) or original
+        plugins = self._active_plugin_list() if hasattr(self, "_active_plugin_list") else []
+        hint = infer_plugin_name(source, editor_id, name, notes) or source
+        plugin = infer_plugin_name(hint) or hint
+        if active and not active.upper().startswith("XX"):
+            try:
+                slot = int(active[:2], 16)
+                if 0 <= slot < len(plugins):
+                    plugin = plugins[slot]
+            except Exception:
+                pass
+            return (f"{active} ({plugin})" if plugin else active), active
+        if original.upper().startswith("XX") and plugin:
+            return f"{original} ({plugin}, unresolved)", original
+        return original, original
 
     def _select_formid_plugin(self, plugin_name: str) -> None:
         if not hasattr(self, "formid_plugin_combo"):

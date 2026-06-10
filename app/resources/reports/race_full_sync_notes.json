@@ -1,0 +1,11 @@
+{
+  "feature": "Race full-sync patch",
+  "status": "experimental",
+  "summary": "Race writes now replace all known playable/vampire race RefIDs inside Player ChangeForm 400014 and Live Player ChangeForm 400007 instead of only the first pair.",
+  "notes": [
+    "This reduces mixed-race/hybrid saves where showracemenu left stale old race refs beside the new race.",
+    "Header race text is patched only when the target editor ID fits the existing fixed header string slot.",
+    "The header string is not resized because shifting the ESS header can invalidate compressed payload location tables.",
+    "Appearance/head-part/FaceGen data may still require showracemenu for a completely clean visual rebuild."
+  ]
+}

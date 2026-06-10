@@ -64,13 +64,14 @@ _SHARED = """
     }
     QTabBar::tab:selected { font-weight: 600; }
 
-    QTableWidget {
+    QTableWidget, QTreeWidget {
         border-radius: 12px;
     }
-    QTableWidget::item {
+    QTableWidget::item, QTreeWidget::item {
         padding: 7px 10px;
         border-bottom: 1px solid transparent;
     }
+    QTreeWidget::branch { background: transparent; }
 """
 
 THEMES: dict[str, str] = {
@@ -121,13 +122,21 @@ THEMES: dict[str, str] = {
         QLineEdit:read-only { color: #D6DCE6; background: #11151D; }
         QComboBox::drop-down { border: none; width: 28px; }
 
-        QTableWidget {
+        QTableWidget, QTreeWidget {
             background: #0F1117;
             alternate-background-color: #171A22;
             gridline-color: #2A3040;
             border: 1px solid #303746;
+            border-radius: 12px;
         }
-        QTableWidget::item:selected { background: #2F3950; color: white; }
+        QTableWidget::item, QTreeWidget::item {
+            background: transparent;
+            color: #E9EDF3;
+            min-height: 24px;
+        }
+        QTableWidget::item:alternate, QTreeWidget::item:alternate { background: #171A22; }
+        QTableWidget::item:selected, QTreeWidget::item:selected { background: #2F3950; color: white; }
+        QTreeWidget::branch:selected { background: #2F3950; }
         QHeaderView::section {
             background: #202431;
             color: #E9EDF3;
@@ -191,13 +200,15 @@ THEMES: dict[str, str] = {
         QLineEdit:read-only { color: #3E4758; background: #F2F4F8; }
         QComboBox::drop-down { border: none; width: 28px; }
 
-        QTableWidget {
+        QTableWidget, QTreeWidget {
             background: white;
             alternate-background-color: #F4F6F9;
             gridline-color: #D8DEE9;
             border: 1px solid #C8D0DC;
+            border-radius: 12px;
         }
-        QTableWidget::item:selected { background: #4C6B92; color: white; }
+        QTableWidget::item, QTreeWidget::item { background: transparent; color: #2E3440; min-height: 24px; }
+        QTableWidget::item:selected, QTreeWidget::item:selected { background: #4C6B92; color: white; }
         QHeaderView::section {
             background: #E5E9F0;
             color: #2E3440;
@@ -261,13 +272,15 @@ THEMES: dict[str, str] = {
         QLineEdit:read-only { color: #E8D8B5; background: #18120C; }
         QComboBox::drop-down { border: none; width: 28px; }
 
-        QTableWidget {
+        QTableWidget, QTreeWidget {
             background: #100D09;
             alternate-background-color: #1B150E;
             gridline-color: #4A3920;
             border: 1px solid #4A3920;
+            border-radius: 12px;
         }
-        QTableWidget::item:selected { background: #7A5B2E; color: white; }
+        QTableWidget::item, QTreeWidget::item { background: transparent; color: #F1E5C9; min-height: 24px; }
+        QTableWidget::item:selected, QTreeWidget::item:selected { background: #7A5B2E; color: white; }
         QHeaderView::section {
             background: #2A2014;
             color: #FFE7B2;
@@ -333,13 +346,15 @@ THEMES: dict[str, str] = {
         QLineEdit:read-only { color: #D8DCF2; background: #101424; }
         QComboBox::drop-down { border: none; width: 28px; }
 
-        QTableWidget {
+        QTableWidget, QTreeWidget {
             background: #0D101B;
             alternate-background-color: #14182A;
             gridline-color: #303652;
             border: 1px solid #333B5B;
+            border-radius: 12px;
         }
-        QTableWidget::item:selected { background: #33406F; color: white; }
+        QTableWidget::item, QTreeWidget::item { background: transparent; color: #E8EAF6; min-height: 24px; }
+        QTableWidget::item:selected, QTreeWidget::item:selected { background: #33406F; color: white; }
         QHeaderView::section {
             background: #20243A;
             color: #E8EAF6;
@@ -404,13 +419,15 @@ THEMES: dict[str, str] = {
         QLineEdit:read-only { color: #EBD1D5; background: #140D0F; }
         QComboBox::drop-down { border: none; width: 28px; }
 
-        QTableWidget {
+        QTableWidget, QTreeWidget {
             background: #0D0809;
             alternate-background-color: #171012;
             gridline-color: #4E242A;
             border: 1px solid #4E242A;
+            border-radius: 12px;
         }
-        QTableWidget::item:selected { background: #7A2430; color: white; }
+        QTableWidget::item, QTreeWidget::item { background: transparent; color: #FFEDEF; min-height: 24px; }
+        QTableWidget::item:selected, QTreeWidget::item:selected { background: #7A2430; color: white; }
         QHeaderView::section {
             background: #2A171A;
             color: #FFEDEF;
@@ -475,13 +492,15 @@ THEMES: dict[str, str] = {
         QLineEdit:read-only { color: #D7EDF3; background: #0F1A20; }
         QComboBox::drop-down { border: none; width: 28px; }
 
-        QTableWidget {
+        QTableWidget, QTreeWidget {
             background: #0A1115;
             alternate-background-color: #111D23;
             gridline-color: #2E4A56;
             border: 1px solid #2E4A56;
+            border-radius: 12px;
         }
-        QTableWidget::item:selected { background: #2B6578; color: white; }
+        QTableWidget::item, QTreeWidget::item { background: transparent; color: #EAF6FA; min-height: 24px; }
+        QTableWidget::item:selected, QTreeWidget::item:selected { background: #2B6578; color: white; }
         QHeaderView::section {
             background: #20323B;
             color: #EAF6FA;
@@ -545,13 +564,15 @@ THEMES: dict[str, str] = {
         QLineEdit:read-only { color: #4B3F2E; background: #EFE2CA; }
         QComboBox::drop-down { border: none; width: 28px; }
 
-        QTableWidget {
+        QTableWidget, QTreeWidget {
             background: #FFF8EA;
             alternate-background-color: #F2E6CF;
             gridline-color: #CDBA96;
             border: 1px solid #BCA57C;
+            border-radius: 12px;
         }
-        QTableWidget::item:selected { background: #886E45; color: white; }
+        QTableWidget::item, QTreeWidget::item { background: transparent; color: #342C21; min-height: 24px; }
+        QTableWidget::item:selected, QTreeWidget::item:selected { background: #886E45; color: white; }
         QHeaderView::section {
             background: #D8C7A8;
             color: #342C21;

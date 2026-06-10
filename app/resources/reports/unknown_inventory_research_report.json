@@ -1,0 +1,16 @@
+{
+  "unknown_inventory_research_update": {
+    "added_ui": "Player Inventory > Unknown Research tab",
+    "added_core": "app/core/unknown_inventory.py",
+    "added_seed": "app/resources/database/skyrim_inventory_expansion_seed_rows.csv",
+    "latest_save_test": "SAVEDATA(16).DAT",
+    "unknown_before": 10,
+    "unknown_after": 0,
+    "new_seed_rows": 26,
+    "focus": "soul gems and generic enchanted weapons/apparel found in user inventory saves",
+    "notes": [
+      "Unknown Research exports FormID, count, RefID bytes, payload/player offsets, category guess, and reason.",
+      "Curated rows are safe database labels only; no save-writing behavior changed."
+    ]
+  }
+}

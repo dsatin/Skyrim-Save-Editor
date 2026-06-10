@@ -60,6 +60,10 @@ class IdDatabase:
     def __init__(self) -> None:
         self.records: list[IdRecord] = []
         self.path: Path | None = None
+        # Precomputed lower-case search blobs make the large in-app database
+        # feel instant while typing instead of rebuilding one haystack per row
+        # on every keypress.
+        self._search_index: list[tuple[IdRecord, str]] = []
 
     def load_csv(self, path: str | Path) -> list[IdRecord]:
         path = Path(path)
@@ -69,6 +73,7 @@ class IdDatabase:
             reader = csv.DictReader(f)
             rows = list(reader)
         self.records = self._dedupe([self._from_row(row) for row in rows])
+        self._rebuild_search_index()
         self.path = path
         return self.records
 
@@ -76,6 +81,7 @@ class IdDatabase:
         reader = csv.DictReader(io.StringIO(text.lstrip("\ufeff")))
         rows = list(reader)
         self.records = self._dedupe([self._from_row(row) for row in rows])
+        self._rebuild_search_index()
         self.path = Path(label)
         return self.records
 
@@ -87,6 +93,7 @@ class IdDatabase:
             reader = csv.DictReader(f)
             incoming = [self._from_row(row) for row in reader]
         self.records = self._dedupe([*self.records, *incoming])
+        self._rebuild_search_index()
         self.path = Path(f"Merged + {path.name}")
         return self.records
 
@@ -94,6 +101,7 @@ class IdDatabase:
         reader = csv.DictReader(io.StringIO(text.lstrip("\ufeff")))
         incoming = [self._from_row(row) for row in reader]
         self.records = self._dedupe([*self.records, *incoming])
+        self._rebuild_search_index()
         self.path = Path(f"Merged + {label}")
         return self.records
 
@@ -157,18 +165,28 @@ class IdDatabase:
             raw=normalized,
         )
 
-    def search(self, text: str = "", category: str = "") -> list[IdRecord]:
-        q = text.casefold().strip()
-        cat = category.casefold().strip()
-        out: list[IdRecord] = []
+    def _rebuild_search_index(self) -> None:
+        self._search_index = []
         for rec in self.records:
-            if cat and rec.category.casefold() != cat:
-                continue
             haystack = " ".join([
                 rec.category, rec.editor_id, rec.form_id, rec.name, rec.value, rec.source, rec.notes,
                 " ".join(rec.raw.values()),
             ]).casefold()
-            if not q or q in haystack:
+            self._search_index.append((rec, haystack))
+
+    def search(self, text: str = "", category: str = "") -> list[IdRecord]:
+        q = text.casefold().strip()
+        cat = category.casefold().strip()
+        out: list[IdRecord] = []
+        index = self._search_index or [(rec, " ".join([
+            rec.category, rec.editor_id, rec.form_id, rec.name, rec.value, rec.source, rec.notes,
+            " ".join(rec.raw.values()),
+        ]).casefold()) for rec in self.records]
+        tokens = [tok for tok in q.split() if tok]
+        for rec, haystack in index:
+            if cat and rec.category.casefold() != cat:
+                continue
+            if not tokens or all(tok in haystack for tok in tokens):
                 out.append(rec)
         return out
 
