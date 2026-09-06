@@ -41,6 +41,40 @@ The **Parsed JSON** tab remains available for export/research, validation, forma
 
 Always keep a clean backup before testing. The editor creates `.bak` files before overwriting, but experimental edits should still be tested with Save As first.
 
+## Desktop builds
+
+### Windows executable
+
+Run `build.bat` from a Windows command prompt. It installs the build
+dependencies and uses `skyrim_save_lab.spec` to create
+`dist/SkyrimSaveLab.exe`.
+
+### Linux AppImage
+
+Install the build dependencies in a virtual environment and run the packaging
+script:
+
+```bash
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements-build.txt
+PYTHON_BIN=.venv/bin/python ./packaging/appimage/build-appimage.sh
+```
+
+The resulting portable application is written to `dist/`. The build script
+supports x86-64 and ARM64 Linux, downloads `appimagetool` into the user's cache
+when needed, and can also use an existing tool through the `APPIMAGETOOL`
+environment variable.
+
+Run the AppImage with:
+
+```bash
+./dist/SkyrimSaveLab-*.AppImage
+```
+
+GitHub Actions builds both desktop formats for pull requests, version tags,
+and manual workflow runs. The resulting Windows executable and Linux AppImage
+are available as separate workflow artifacts.
+
 ## UI readability update
 
 - Parsed Tree now uses theme-aware tree colors instead of native white rows in dark themes.

@@ -2221,12 +2221,23 @@ class MainWindow(QMainWindow):
     def _default_skyrim_save_folder(self) -> Path:
         """Default PC Skyrim Special Edition save folder.
 
-        Keep this as a real Windows path instead of deriving from Path.home() so
-        the packaged app opens exactly where most end users expect. Users can
-        still pick a different base folder for PS4/decrypted saves or custom
-        profiles.
+        Check the common native Windows and Steam/Proton locations. Users can
+        still pick a different base folder for custom Steam libraries,
+        PS4/decrypted saves, or mod-manager profiles.
         """
-        return Path(r"C:\Users\pc\Documents\My Games\Skyrim Special Edition\Saves")
+        if platform.system() == "Linux":
+            proton_suffix = Path(
+                "steamapps/compatdata/489830/pfx/drive_c/users/steamuser/"
+                "Documents/My Games/Skyrim Special Edition/Saves"
+            )
+            candidates = (
+                Path.home() / ".local/share/Steam" / proton_suffix,
+                Path.home() / ".steam/steam" / proton_suffix,
+                Path.home() / ".var/app/com.valvesoftware.Steam/.local/share/Steam" / proton_suffix,
+            )
+            return next((folder for folder in candidates if folder.exists()), candidates[0])
+
+        return Path.home() / "Documents/My Games/Skyrim Special Edition/Saves"
 
     def _load_saved_base_folder(self) -> Path | None:
         try:

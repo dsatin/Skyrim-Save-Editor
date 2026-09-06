@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Skyrim Save Lab
+Comment=Inspect and edit Skyrim save files
+Exec=SkyrimSaveLab
+Icon=io.github.xcier.SkyrimSaveLab
+Categories=Game;
+Terminal=false
