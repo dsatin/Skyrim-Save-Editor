@@ -104,7 +104,7 @@ SKYRIM_QUICK_CODE_PRESETS: tuple[SkyrimQuickCodePreset, ...] = (
         0.0,
         255.0,
         0,
-        "Searches the perk-points structure and writes the requested unsigned value.",
+        "Searches the perk-points structure and writes one unsigned byte.",
         "Default max is 255 because the pasted code uses 000000FF.",
     ),
 )
@@ -417,7 +417,7 @@ def generate_skyrim_quick_code_preset(preset_id: str, value: float | int | None 
         return f"8001000A 80BF0000\n00000000 80BF0000\n28000034 {hx}\n28000038 00000000"
     if preset.preset_id == "perk_points":
         hx = _u32_hex(round(float(v)))
-        return f"80010008 00000041\n37464137 00000000\n8801000C 01000000\n00000000 00000000\n2800000C {hx}"
+        return f"80010008 00000041\n37464137 00000000\n8801000C 01000000\n00000000 00000000\n0800000C {hx}"
     raise KeyError(f"Unknown Skyrim quick-code preset: {preset_id}")
 
 

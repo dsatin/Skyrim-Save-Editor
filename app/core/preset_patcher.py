@@ -965,6 +965,21 @@ def build_skyrim_preset_patch_plan(source: str | Path, preset_id: str, value: fl
         requested = float(requested)
     code_text = generate_skyrim_quick_code_preset(preset_id, requested)
 
+    if preset_id == "perk_points":
+        from app.core.perk_points import read_perk_points
+        field = read_perk_points(source)
+        ctx = load_player_data(source)
+        if ctx.compressed:
+            raise PresetPatchError("Use General > Perk Points for compressed player records.")
+        data = bytearray(ctx.doc.payload.data)
+        offset = ctx.raw_start_rel + field.offset
+        writes: list[PresetWrite] = []
+        _record_write(data, offset, bytes([int(requested)]), "SE v78 perk points; one byte", writes)
+        return PresetPatchPlan(
+            preset_id, preset.name, preset.value_label, requested, code_text,
+            [], writes, len(data),
+        ), bytes(data)
+
     doc = read_ess(source, change_form_preview_limit=0)
     if not doc.payload:
         raise EssParseError("Save payload was not decoded; preset patching needs the decompressed ESS payload.")

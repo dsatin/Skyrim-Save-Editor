@@ -54,6 +54,7 @@ from PyQt6.QtWidgets import (
 )
 
 from app.core.backups import make_backup
+from app.ui.perk_points_panel import PerkPointsPanel
 from app.core.id_database import IdDatabase, export_template
 from app.core.id_coverage import build_coverage_summary, export_inventory_csv, export_reference_csv
 from app.core.form_id_tools import base_reference_notes, describe_form_id, infer_plugin_name, normalize_id, resolve_xx_id
@@ -954,6 +955,9 @@ class MainWindow(QMainWindow):
         common_layout.addWidget(essentials)
         common_layout.addStretch(1)
         self.general_tabs.addTab(common_tab, "Common")
+
+        self.perk_points_panel = PerkPointsPanel(lambda: self.current_save, self)
+        self.general_tabs.addTab(self.perk_points_panel, "Perk Points")
 
         layout.addWidget(self.general_tabs, 1)
         return page
@@ -2435,6 +2439,7 @@ class MainWindow(QMainWindow):
             return
         self._refresh_summary()
         self._refresh_header_editor()
+        self.perk_points_panel.refresh()
         self.refresh_skill_values_from_save(silent=True)
         self.refresh_actor_values_from_save(silent=True)
         self.refresh_inventory(silent=True)
