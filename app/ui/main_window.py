@@ -54,6 +54,7 @@ from PyQt6.QtWidgets import (
 )
 
 from app.core.backups import make_backup
+from app.ui.perk_points_panel import PerkPointsPanel
 from app.core.id_database import IdDatabase, export_template
 from app.core.id_coverage import build_coverage_summary, export_inventory_csv, export_reference_csv
 from app.core.form_id_tools import base_reference_notes, describe_form_id, infer_plugin_name, normalize_id, resolve_xx_id
@@ -954,6 +955,9 @@ class MainWindow(QMainWindow):
         common_layout.addWidget(essentials)
         common_layout.addStretch(1)
         self.general_tabs.addTab(common_tab, "Common")
+
+        self.perk_points_panel = PerkPointsPanel(lambda: self.current_save, self)
+        self.general_tabs.addTab(self.perk_points_panel, "Perk Points")
 
         layout.addWidget(self.general_tabs, 1)
         return page
@@ -2221,12 +2225,23 @@ class MainWindow(QMainWindow):
     def _default_skyrim_save_folder(self) -> Path:
         """Default PC Skyrim Special Edition save folder.
 
-        Keep this as a real Windows path instead of deriving from Path.home() so
-        the packaged app opens exactly where most end users expect. Users can
-        still pick a different base folder for PS4/decrypted saves or custom
-        profiles.
+        Check the common native Windows and Steam/Proton locations. Users can
+        still pick a different base folder for custom Steam libraries,
+        PS4/decrypted saves, or mod-manager profiles.
         """
-        return Path(r"C:\Users\pc\Documents\My Games\Skyrim Special Edition\Saves")
+        if platform.system() == "Linux":
+            proton_suffix = Path(
+                "steamapps/compatdata/489830/pfx/drive_c/users/steamuser/"
+                "Documents/My Games/Skyrim Special Edition/Saves"
+            )
+            candidates = (
+                Path.home() / ".local/share/Steam" / proton_suffix,
+                Path.home() / ".steam/steam" / proton_suffix,
+                Path.home() / ".var/app/com.valvesoftware.Steam/.local/share/Steam" / proton_suffix,
+            )
+            return next((folder for folder in candidates if folder.exists()), candidates[0])
+
+        return Path.home() / "Documents/My Games/Skyrim Special Edition/Saves"
 
     def _load_saved_base_folder(self) -> Path | None:
         try:
@@ -2424,6 +2439,7 @@ class MainWindow(QMainWindow):
             return
         self._refresh_summary()
         self._refresh_header_editor()
+        self.perk_points_panel.refresh()
         self.refresh_skill_values_from_save(silent=True)
         self.refresh_actor_values_from_save(silent=True)
         self.refresh_inventory(silent=True)
